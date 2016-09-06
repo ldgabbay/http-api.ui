@@ -337,6 +337,10 @@ body.loading .api-container {
     border-style: solid;
     border-color: #DDD;
 }
+.no-request-params {
+    border: 0;
+    padding: 0;
+}
 .body-content-type-label {
     font-weight: 600;
 }
