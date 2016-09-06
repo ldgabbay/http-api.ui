@@ -1,0 +1,10 @@
+[
+    {
+        "name": "Sample",
+        "path": "spec/sample.json"
+    },
+    {
+        "name": "Initialization",
+        "path": "spec/initialization.json"
+    }
+]

@@ -1,0 +1,362 @@
+/* Reset */
+[ng\:cloak],
+[ng-cloak],
+.ng-cloak {
+    display: none !important;
+}
+*, *:before, *:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+}
+html,
+body,
+.ui-view {
+    height: 100%;
+}
+html {
+    font-family: "Open Sans", san-serif, arial;
+    font-size: 14px;
+    font-weight: 400;
+    color: #434A54;
+}
+body {
+    margin: 0;
+}
+body:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+}
+p {
+    margin: 0 0 10px;
+}
+table,
+tr {
+    width: 100%;
+    border-bottom: 1px solid #F8F8F8;
+}
+table {
+    border-collapse: collapse;
+    font-size: 13px;
+    text-align: left;
+}
+tr:last-child {
+    border-bottom: 0;
+}
+thead {
+    background-color: #F8F8F8;
+    font-weight: 600;
+}
+th {
+    padding: 5px 10px;
+    vertical-align: bottom;
+}
+td {
+    padding: 10px;
+}
+td ul {
+    margin: 0;
+    padding-left: 15px;
+}
+pre {
+    margin: 0;
+}
+
+/* Global */
+.loading-container {
+    display: none;
+    width: 100%;
+    height: 100%;
+}
+body.loading .loading-container {
+    display: table;
+}
+body.loading .api-container {
+    display: none;
+}
+.table,
+.table-cell {
+    width: 100%;
+    height: 100%;
+}
+.table {
+    display: table;
+}
+.table-cell {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+.toggle-header {
+    display: table;
+    width: 100%;
+    cursor: pointer;
+}
+.toggle-header-title,
+.toggle-header-subtitle {
+    display: table-cell;
+}
+.toggle-header-subtitle {
+    text-align: right;
+}
+.toggle-content {
+    padding-bottom: 20px;
+}
+.label {
+    margin: 20px 0 10px;
+    text-transform: uppercase;
+    color: #888;
+}
+.toggle-tabs {
+    list-style-type: none;
+    padding: 0 0 0 5px;
+    margin: 0;
+    border-bottom: 1px solid #DDD;
+    height: 27px;
+}
+.toggle-tabs:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.toggle-tab {
+    position: relative;
+    float: left;
+    padding: 5px 10px;
+    margin-left: 5px;
+    border-width: 1px 1px 0 1px;
+    border-style: solid;
+    background-color: #F8F8F8;
+    border-color: #DDD;
+    border-bottom-color: #FFF;
+    font-size: 13px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+.toggle-tab:hover,
+.toggle-tab.selected {
+    background-color: #FFF;
+}
+.toggle-tab.selected {
+    font-weight: 600;
+    cursor: default;
+}
+.toggle-tab.selected:after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    display: inline-block;
+    width: 100%;
+    height: 3px;
+    background-color: #FFF;
+}
+
+/* Header */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: #888;
+    z-index: 1;
+}
+.api-container {
+    width: 100%;
+    min-width: 1024px;
+    padding: 20px;
+}
+
+/* Navigation */
+.navigation-outer,
+.navigation-inner {
+    width: 200px;
+}
+.navigation-outer {
+    float: left;
+}
+.navigation-inner {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    overflow-y: scroll;
+    padding: 20px;
+    background-color: #4A4A4A;
+}
+.api-selector {
+    margin-bottom: 30px;
+}
+.api-selector {
+    display: block;
+    width: 100%;
+    margin-bottom: 30px;
+}
+.navigation-locations,
+.navigation-methods {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+.navigation-location > span,
+.navigation-method > span {
+    display: block;
+    cursor: pointer;
+    color: #D9D9D9;
+}
+.navigation-location > span:hover,
+.navigation-method > span:hover {
+    color: #FFF;
+}
+.navigation-locations {
+    margin-bottom: 30px;
+}
+.navigation-location > span {
+    height: 40px;
+    line-height: 40px;
+}
+.navigation-method {
+    padding-left: 20px;
+}
+.navigation-method > span {
+    height: 30px;
+    line-height: 30px;
+}
+
+/* Section */
+.sections {
+    width: auto;
+    margin-left: 200px;
+}
+
+/* Location */
+.location-header {
+    border-bottom: 1px solid #DDD;
+    padding: 10px 0;
+}
+.location-location {
+    font-size: 24px;
+}
+
+/* Method */
+.method {
+    margin: 10px 0 0 10px;
+    border: 1px solid #888;
+}
+.method-header {
+    background-color: #F8F8F8;
+}
+.method-method-location {
+    display: inline-block;
+    padding: 10px;
+    font-size: 18px;
+    background-color: #888;
+    color: #FFF;
+}
+.method-location.is-symbolic {
+    font-style: italic;
+}
+.method-summary {
+    padding-right: 10px;
+}
+.method-body {
+    padding: 0 10px 10px;
+}
+
+/* Method - GET */
+.method-get {
+    border-color: #2392F7;
+}
+.method-get .method-header {
+    background-color: #E8F3FE;
+}
+.method-get .method-method-location {
+    background-color: #2392F7;
+}
+.method-get .label {
+    color: #2392F7;
+}
+
+/* Method - DELETE */
+.method-delete {
+    border-color: #A41E22;
+}
+.method-delete .method-header {
+    background-color: #F5E8E8;
+}
+.method-delete .method-method-location {
+    background-color: #A41E22;
+}
+.method-delete .label {
+    color: #A41E22;
+}
+
+/* Method - POST */
+.method-post {
+    border-color: #10A54A;
+}
+.method-post .method-header {
+    background-color: #E7F6EC;
+}
+.method-post .method-method-location {
+    background-color: #10A54A;
+}
+.method-post .label {
+    color: #10A54A;
+}
+
+/* Method - PUT/PATCH */
+.method-put,
+.method-patch {
+    border-color: #C5862B;
+}
+.method-put .method-header,
+.method-patch .method-header {
+    background-color: #F9F2E9;
+}
+.method-put .method-method-location,
+.method-patch .method-method-location {
+    background-color: #C5862B;
+}
+.method-put .label,
+.method-patch .label {
+    color: #C5862B;
+}
+
+/* Request/Response */
+.request,
+.response {
+    padding: 10px;
+    border-width: 0 1px 1px;
+    border-style: solid;
+    border-color: #DDD;
+}
+.body-content-type-label {
+    font-weight: 600;
+}
+.response-sub-label {
+    margin-top: 0;
+    color: #888 !important;
+}
+.response-summary,
+.response-description {
+    margin-bottom: 20px;
+}
+.response-divider {
+    height: 20px;
+}
+
+@media (max-width: 1024px) {
+    .navigation-outer {
+        display: none;
+    }
+    .sections {
+        margin-left: 0;
+    }
+}
