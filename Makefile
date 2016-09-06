@@ -1,4 +1,7 @@
-.PHONY: build
+.PHONY: build specs
 
 build:
-	rsync -avz . root@104.236.228.51:/var/www/api-docs
+	aws s3 sync . s3://docs.pegasussolutions.com/ --delete --exclude '*.json'
+
+specs:
+	aws s3 sync . s3://docs.pegasussolutions.com/ --delete --exclude '*' --include '*.json'
