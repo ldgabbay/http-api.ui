@@ -2,6 +2,7 @@
     'use strict';
 
     angular.module('api', [
-        'hljs'
+        'hljs',
+        'mohsen1.json-schema-view'
     ]);
 })();

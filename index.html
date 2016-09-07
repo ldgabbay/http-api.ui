@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>API Documentation</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" />
     <link rel="stylesheet" href="assets/lib/github.min.css" />
     <link rel="stylesheet" href="assets/lib/json-schema-view.min.css" />
     <link rel="stylesheet" href="assets/css/api.css" />
@@ -23,97 +24,83 @@
                 <select class="api-selector" ng-options="spec.path as spec.name for spec in vm.specList" ng-model="vm.specUrl">
                     <option>Select an API</option>
                 </select>
-                <div class="navigation-section" ng-repeat="section in vm.spec.sections">
-                    <ul class="navigation-locations" ng-repeat="location in section.locations">
-                        <li class="navigation-location" ng-if="vm.spec.locations[location]">
-                            <span ng-bind="location" ng-click="vm.scrollTo(vm.spec.locations[location])"></span>
-                            <ul class="navigation-methods" ng-if="vm.spec.locations[location].methods && vm.spec.locations[location].methods.length">
-                                <li class="navigation-method" ng-repeat="method in vm.spec.locations[location].methods">
-                                    <span class="{{'method-' + method.method.toLowerCase() + '-label'}}" ng-bind="method.method" ng-click="vm.scrollTo(vm.spec.locations[location], method)"></span>
+                <div class="navigation-menu">
+                    <ul class="navigation-sections">
+                        <li class="navigation-section" ng-repeat="section in vm.spec.sections">
+                            <span ng-bind="section.name" ng-click="vm.scrollToMethod(section)"></span>
+                            <ul class="navigation-locations" ng-repeat="location in section.locations">
+                                <li class="navigation-location" ng-if="vm.spec.locations[location]">
+                                    <span ng-bind="location" ng-click="vm.scrollToMethod(section, vm.spec.locations[location])"></span>
+                                    <ul class="navigation-methods" ng-if="vm.spec.locations[location].methods && vm.spec.locations[location].methods.length">
+                                        <li class="navigation-method" ng-repeat="method in vm.spec.locations[location].methods">
+                                            <span class="{{'method-' + method.method.toLowerCase() + '-label'}}" ng-bind="method.method" ng-click="vm.scrollToMethod(section, vm.spec.locations[location], method)"></span>
+                                        </li>
+                                    </ul><!-- .navigation-methods -->
+                                </li><!-- .navigation-location -->
+                            </ul><!-- .navigation-locations -->
+                        </li><!-- .navigation-section -->
+                    </ul><!-- .navigation-sections -->
+                    <ul ng-if="vm.spec.schemas.json">
+                        <li>
+                            <span ng-click="vm.scrollToSchema()">Schemas</span>
+                            <ul class="navigation-schemas">
+                                <li class="navigation-schema" ng-repeat="(name, schema) in vm.spec.schemas.json">
+                                    <span ng-bind="name" ng-click="vm.scrollToSchema(name)"></span>
                                 </li>
-                            </ul><!-- .navigation-methods -->
-                        </li><!-- .navigation-location -->
-                    </ul><!-- .navigation-locations -->
-                </div><!-- .navigation-section -->
+                            </ul><!-- .navigation-schemas -->
+                        </li>
+                    </ul>
+                </div><!-- .navigation-menu -->
             </div><!-- .navigation-inner -->
         </div><!-- .navigation-outer -->
         <div class="sections" ng-if="vm.spec.sections">
             <div class="section" ng-repeat="section in vm.spec.sections">
-                <div class="locations">
-                    <div class="location" ng-repeat="location in section.locations">
-                        <div class="location-inner" ng-if="vm.spec.locations[location]">
-                            <div class="toggle-header location-header" ng-click="vm.spec.locations[location].__hide = !vm.spec.locations[location].__hide" ng-attr-id="{{vm.slugify(vm.spec.locations[location].location)}}">
-                                <div class="toggle-header-title location-location" ng-bind="location" ng-class="{'is-symbolic': vm.spec.locations[location].type.toLowerCase() === 'symbolic'}"></div>
-                                <div class="toggle-header-subtitle location-summary" ng-if="vm.spec.locations[location].summary" ng-bind="vm.spec.locations[location].summary"></div>
-                            </div>
-                            <div class="toggle-content location-body" ng-hide="vm.spec.locations[location].__hide">
-                                <div ng-if="vm.spec.locations[location].description">
-                                    <div class="label">Description</div>
-                                    <p class="description location-description" ng-bind="vm.spec.locations[location].description"></p>
+                <div class="toggle-header section-header" ng-click="section.__hide = !section.__hide" ng-attr-id="{{vm.slugify(section.name)}}">
+                    <div class="toggle-header-title section-name" ng-bind="section.name"></div>
+                    <div class="toggle-header-subtitle section-summary" ng-if="section.summary" ng-bind="section.summary"></div>
+                </div>
+                <div class="toggle-content section-body" ng-hide="section.__hide">
+                    <div ng-if="section.description">
+                        <div class="label">Description</div>
+                        <p class="description section-description" ng-bind="section.description"></p>
+                    </div>
+                    <div class="locations">
+                        <div class="location" ng-repeat="location in section.locations">
+                            <div class="location-inner" ng-if="vm.spec.locations[location]">
+                                <div class="toggle-header location-header" ng-click="vm.spec.locations[location].__hide = !vm.spec.locations[location].__hide" ng-attr-id="{{vm.slugify(section.name + '-' + vm.spec.locations[location].location)}}">
+                                    <div class="toggle-header-title location-location" ng-bind="location" ng-class="{'is-symbolic': vm.spec.locations[location].type.toLowerCase() === 'symbolic'}"></div>
+                                    <div class="toggle-header-subtitle location-summary" ng-if="vm.spec.locations[location].summary" ng-bind="vm.spec.locations[location].summary"></div>
                                 </div>
-                                <div class="methods" ng-if="vm.spec.locations[location].methods && vm.spec.locations[location].methods.length">
-                                    <div class="label methods-header">Methods</div>
-                                    <div class="method {{'method-' + method.method.toLowerCase()}}" ng-repeat="method in vm.spec.locations[location].methods" ng-attr-id="{{vm.slugify(vm.spec.locations[location].location + '-' + method.method)}}">
-                                        <div class="toggle-header method-header" ng-click="method.__hide = !method.__hide">
-                                            <div class="toggle-header-title">
-                                                <div class="method-method-location">
-                                                    <span class="method-method" ng-bind="method.method"></span>
-                                                    <span class="method-location" ng-bind="vm.spec.locations[location].location" ng-class="{'is-symbolic': vm.spec.locations[location].type.toLowerCase() === 'symbolic'}"></span>
+                                <div class="toggle-content location-body" ng-hide="vm.spec.locations[location].__hide">
+                                    <div ng-if="vm.spec.locations[location].description">
+                                        <div class="label">Description</div>
+                                        <p class="description location-description" ng-bind="vm.spec.locations[location].description"></p>
+                                    </div>
+                                    <div class="methods" ng-if="vm.spec.locations[location].methods && vm.spec.locations[location].methods.length">
+                                        <div class="label methods-header">Methods</div>
+                                        <div class="method {{'method-' + method.method.toLowerCase()}}" ng-repeat="method in vm.spec.locations[location].methods" ng-attr-id="{{vm.slugify(section.name + '-' + vm.spec.locations[location].location + '-' + method.method)}}">
+                                            <div class="toggle-header method-header" ng-click="method.__hide = !method.__hide">
+                                                <div class="toggle-header-title">
+                                                    <div class="monospace-text method-method-location">
+                                                        <span class="method-method" ng-bind="method.method"></span>
+                                                        <span class="method-location" ng-bind="vm.spec.locations[location].location" ng-class="{'is-symbolic': vm.spec.locations[location].type.toLowerCase() === 'symbolic'}"></span>
+                                                    </div>
                                                 </div>
+                                                <div class="toggle-header-subtitle method-summary" ng-if="method.summary" ng-bind="method.summary"></div>
                                             </div>
-                                            <div class="toggle-header-subtitle method-summary" ng-if="method.summary" ng-bind="method.summary"></div>
-                                        </div>
-                                        <div class="toggle-content method-body" ng-hide="method.__hide">
-                                            <div ng-if="method.description">
-                                                <div class="label">Description</div>
-                                                <p class="description method-description" ng-bind="method.description"></p>
-                                            </div>
-                                            <div class="requests">
-                                                <div class="label">Parameters</div>
-                                                <div class="request no-request-params" ng-if="vm.isEmptyObject(method.request)">No request parameters</div>
-                                                <ul class="toggle-tabs" ng-if="!vm.isEmptyObject(method.request)">
-                                                    <li class="toggle-tab" ng-repeat="(requestType, requestParameterList) in method.request" ng-bind="requestType" ng-click="vm.toggleParameterType(method.request, requestType)" ng-class="{'selected': !method.request[requestType].__hide}" ng-init="vm.toggleFirstParameterType($index, method.request, requestType)"></li>
-                                                </ul>
-                                                <div class="request" ng-if="!vm.isEmptyObject(method.request)" ng-repeat="(requestType, requestParameterList) in method.request" ng-hide="method.request[requestType].__hide">
-                                                    <table class="parameter-list" ng-if="vm.isParameterList(requestType)">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Name</th>
-                                                                <th>Description</th>
-                                                                <th>Frequency</th>
-                                                                <th>Criteria</th>
-                                                                <th>Examples</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr class="parameter" ng-repeat="parameter in method.request[requestType]" ng-include="'parameter.html'"></tr>
-                                                        </tbody>
-                                                    </table>
-                                                    <div class="body-list" ng-if="vm.isBodyList(requestType)">
-                                                        <div class="body" ng-repeat="body in method.request[requestType]" ng-include="'body.html'"></div>
-                                                    </div>
-                                                </div><!-- .request -->
-                                            </div><!-- .requests -->
-                                            <div class="responses">
-                                                <div class="label">Responses</div>
-                                                <ul class="toggle-tabs" ng-if="method.response && method.response.length">
-                                                    <li class="toggle-tab" ng-repeat="response in method.response" ng-click="vm.toggleResponse(method.response, response)" ng-class="{'selected': !response.__hide}" ng-init="vm.toggleFirstResponse($index, method.response, response)">
-                                                        <span ng-bind="response.statusCode"></span>
-                                                        <span ng-bind="response.statusMessage"></span>
-                                                    </li>
-                                                </ul>
-                                                <div class="response" ng-repeat="response in method.response" ng-hide="response.__hide">
-                                                    <div ng-if="response.summary">
-                                                        <div class="label response-sub-label">Summary</div>
-                                                        <p class="summary response-summary" ng-bind="response.summary"></p>
-                                                    </div>
-                                                    <div ng-if="response.description">
-                                                        <div class="label response-sub-label">Description</div>
-                                                        <p class="description response-description" ng-bind="response.description"></p>
-                                                    </div>
-                                                    <div ng-if="response.header">
-                                                        <div class="label response-sub-label">Header</div>
-                                                        <table class="parameter-list" ng-if="response.header">
+                                            <div class="toggle-content method-body" ng-hide="method.__hide">
+                                                <div ng-if="method.description">
+                                                    <div class="label">Description</div>
+                                                    <p class="description method-description" ng-bind="method.description"></p>
+                                                </div>
+                                                <div class="requests">
+                                                    <div class="label">Parameters</div>
+                                                    <div class="request no-request-params" ng-if="vm.isEmptyObject(method.request)">No request parameters</div>
+                                                    <ul class="toggle-tabs" ng-if="!vm.isEmptyObject(method.request)">
+                                                        <li class="toggle-tab" ng-repeat="(requestType, requestParameterList) in method.request" ng-bind="requestType" ng-click="vm.toggleParameterType(method.request, requestType)" ng-class="{'selected': !method.request[requestType].__hide}" ng-init="vm.toggleFirstParameterType($index, method.request, requestType)"></li>
+                                                    </ul>
+                                                    <div class="request" ng-if="!vm.isEmptyObject(method.request)" ng-repeat="(requestType, requestParameterList) in method.request" ng-hide="method.request[requestType].__hide">
+                                                        <table class="parameter-list" ng-if="vm.isParameterList(requestType)">
                                                             <thead>
                                                                 <tr>
                                                                     <th>Name</th>
@@ -124,32 +111,83 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr class="parameter" ng-repeat="parameter in response.header" ng-include="'parameter.html'"></tr>
+                                                                <tr class="parameter" ng-repeat="parameter in method.request[requestType]" ng-include="'parameter.html'"></tr>
                                                             </tbody>
                                                         </table>
-                                                    </div>
-                                                    <div class="response-divider" ng-if="response.header && response.body"></div>
-                                                    <div ng-if="response.body">
-                                                        <div class="label response-sub-label">Body</div>
-                                                        <div class="body-list">
-                                                            <div class="body" ng-repeat="body in response.body" ng-include="'body.html'"></div>
-                                                        </div><!-- .body-list -->
-                                                    </div>
-                                                </div><!-- .response -->
-                                            </div><!-- .responses -->
-                                        </div><!-- .method-body -->
-                                    </div><!-- .method -->
-                                </div><!-- .methods -->
-                            </div><!-- .location-body -->
-                        </div><!-- .location-inner -->
-                    </div><!-- .location -->
-                </div><!-- .locations -->
-                <div class="schemas">
-                    <div class="schema">
-                    </div><!-- .schema -->
-                </div><!-- .schemas -->
+                                                        <div class="body-list" ng-if="vm.isBodyList(requestType)">
+                                                            <div class="body" ng-repeat="body in method.request[requestType]" ng-include="'body.html'"></div>
+                                                        </div>
+                                                    </div><!-- .request -->
+                                                </div><!-- .requests -->
+                                                <div class="responses">
+                                                    <div class="label">Responses</div>
+                                                    <ul class="toggle-tabs" ng-if="method.response && method.response.length">
+                                                        <li class="toggle-tab" ng-repeat="response in method.response" ng-click="vm.toggleResponse(method.response, response)" ng-class="{'selected': !response.__hide}" ng-init="vm.toggleFirstResponse($index, method.response, response)">
+                                                            <span ng-bind="response.statusCode"></span>
+                                                            <span ng-bind="response.statusMessage"></span>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="response" ng-repeat="response in method.response" ng-hide="response.__hide">
+                                                        <div ng-if="response.summary">
+                                                            <div class="label response-sub-label">Summary</div>
+                                                            <p class="summary response-summary" ng-bind="response.summary"></p>
+                                                        </div>
+                                                        <div ng-if="response.description">
+                                                            <div class="label response-sub-label">Description</div>
+                                                            <p class="description response-description" ng-bind="response.description"></p>
+                                                        </div>
+                                                        <div ng-if="response.header">
+                                                            <div class="label response-sub-label">Header</div>
+                                                            <table class="parameter-list" ng-if="response.header">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Name</th>
+                                                                        <th>Description</th>
+                                                                        <th>Frequency</th>
+                                                                        <th>Criteria</th>
+                                                                        <th>Examples</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr class="parameter" ng-repeat="parameter in response.header" ng-include="'parameter.html'"></tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="response-divider" ng-if="response.header && response.body"></div>
+                                                        <div ng-if="response.body">
+                                                            <div class="label response-sub-label">Body</div>
+                                                            <div class="body-list">
+                                                                <div class="body" ng-repeat="body in response.body" ng-include="'body.html'"></div>
+                                                            </div><!-- .body-list -->
+                                                        </div>
+                                                    </div><!-- .response -->
+                                                </div><!-- .responses -->
+                                            </div><!-- .method-body -->
+                                        </div><!-- .method -->
+                                    </div><!-- .methods -->
+                                </div><!-- .location-body -->
+                            </div><!-- .location-inner -->
+                        </div><!-- .location -->
+                    </div><!-- .locations -->
+                </div><!-- .section-body -->
             </div><!-- .section -->
         </div><!-- .sections -->
+        <div class="schemas" ng-if="vm.spec.schemas.json">
+            <div class="toggle-header schemas-header" id="schemas" ng-click="vm.hideSchemas = !vm.hideSchemas">
+                <div class="toggle-header-title">Schemas</div>
+            </div>
+            <div class="schemas-body" ng-hide="vm.hideSchemas">
+                <div class="schema" ng-repeat="(name, schema) in vm.spec.schemas.json">
+                    <div class="toggle-header schema-header" ng-click="vm.hiddenSchemas[name] = !vm.hiddenSchemas[name]" ng-attr-id="{{'schema-' + vm.slugify(name)}}">
+                        <div class="toggle-header-title schema-name" ng-bind="name"></div>
+                    </div>
+                    <div class="toggle-content schema-body" ng-hide="vm.hiddenSchemas[name]">
+                        <!--<json-schema-view schema="schema" open="2"></json-schema-view>-->
+                        <div hljs lhljs-language="json" hljs-source="vm.prettifyJsonObject(schema)"></div>
+                    </div>
+                </div><!-- .schema -->
+            </div><!-- .schemas-body -->
+        </div><!-- .schemas -->
     </div><!-- .container -->
 
     <script type="text/ng-template" id="parameter.html">
@@ -187,7 +225,7 @@
                 <tr class="parameter" ng-repeat="parameter in body.parameters" ng-include="'parameter.html'"></tr>
             </tbody>
         </table>
-        <div class="schema" ng-if="body.type === 'json' && body.schema" hljs lhljs-language="json" hljs-source="vm.prettifyJsonObject(body.schema)">[SCHEMA]</div>
+        <div ng-if="body.type === 'json' && body.schema" hljs lhljs-language="json" hljs-source="vm.prettifyJsonObject(body.schema)"></div>
     </script>
     
     <script src="assets/lib/angular.min.js"></script>

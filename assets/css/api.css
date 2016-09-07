@@ -79,6 +79,9 @@ body.loading .loading-container {
 body.loading .api-container {
     display: none;
 }
+.monospace-text {
+    font-family: 'Ubuntu Mono', monospace;
+}
 .table,
 .table-cell {
     width: 100%;
@@ -198,41 +201,39 @@ body.loading .api-container {
     width: 100%;
     margin-bottom: 30px;
 }
-.navigation-locations,
-.navigation-methods {
+.navigation-menu ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
-.navigation-location > span,
-.navigation-method > span {
+.navigation-menu ul ul li {
+    padding-left: 10px;
+}
+.navigation-menu li > span {
     display: block;
     cursor: pointer;
     color: #D9D9D9;
+    line-height: 1.6;
 }
-.navigation-location > span:hover,
-.navigation-method > span:hover {
+.navigation-menu li > span:hover {
     color: #FFF;
 }
-.navigation-locations {
-    margin-bottom: 30px;
-}
-.navigation-location > span {
-    height: 40px;
-    line-height: 40px;
-}
-.navigation-method {
-    padding-left: 20px;
-}
-.navigation-method > span {
-    height: 30px;
-    line-height: 30px;
+ul.navigation-sections {
+    margin-bottom: 20px;
 }
 
 /* Section */
 .sections {
     width: auto;
-    margin-left: 200px;
+    margin: 0 0 30px 200px;
+}
+.section-header {
+    border-bottom: 1px solid #DDD;
+    padding: 10px 0;
+}
+.section-name {
+    font-size: 32px;
+    color: #000;
 }
 
 /* Location */
@@ -356,11 +357,35 @@ body.loading .api-container {
     height: 20px;
 }
 
+/* Schemas */
+.schemas {
+    width: auto;
+    margin-left: 200px;
+}
+.schemas-header {
+    padding: 10px 0;
+}
+.schemas-header .toggle-header-title {
+    font-size: 32px;
+    color: #000;
+}
+.schemas-body {
+    border-top: 1px solid #DDD;
+}
+.schema-header {
+    border-bottom: 1px solid #DDD;
+    padding: 10px 0;
+}
+.schema-name {
+    font-size: 24px;
+}
+
 @media (max-width: 1024px) {
     .navigation-outer {
         display: none;
     }
-    .sections {
+    .sections,
+    .schemas {
         margin-left: 0;
     }
 }

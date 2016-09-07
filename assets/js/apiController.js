@@ -9,12 +9,15 @@
     
     function apiController($anchorScroll, $scope, $timeout, api) {
         var vm = this;
+        vm.hiddenSchemas = {};
+        vm.hideSchemas = false;
         vm.isBodyList = isBodyList;
         vm.isEmptyObject = isEmptyObject;
         vm.isParameterList = isParameterList;
         vm.loading = false;
         vm.prettifyJsonObject = prettifyJsonObject;
-        vm.scrollTo = scrollTo;
+        vm.scrollToMethod = scrollToMethod;
+        vm.scrollToSchema = scrollToSchema;
         vm.slugify = slugify;
         vm.spec = null;
         vm.specList = null;
@@ -90,17 +93,36 @@
             return JSON.stringify(obj, null, 2);
         }
 
-        function scrollTo(location, method) {
-            var id = location.location;
-            location.__hide = false;
+        function scrollToMethod(section, location, method) {
+            var id = section.name;
+            section.__hide = false;
+            
+            if (location) {
+                id += '-' + location.location
+                location.__hide = false;
+            }
             
             if (method) {
+                id += '-' + method.method;
                 method.__hide = false;
-                id = id + '-' + method.method;
             }
             
             $timeout(function(){
                 $anchorScroll(vm.slugify(id));
+            });
+        }
+
+        function scrollToSchema(name) {
+            var slug = 'schemas';
+            vm.hideSchemas = false;
+
+            if (name) {
+                vm.hiddenSchemas[name] = false;
+                slug = 'schema-' + vm.slugify(name);
+            }
+
+            $timeout(function(){
+                $anchorScroll(slug);
             });
         }
 
