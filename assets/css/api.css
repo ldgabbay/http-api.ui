@@ -332,18 +332,16 @@ body.loading .api-container {
 }
 
 /* Request/Response */
-.requests-content {
+.requests-content,
+.response {
     padding: 10px;
     border: 1px solid #DDD;
 }
-.request + .request {
-    margin-top: 20px;
-}
 .response {
-    padding: 10px;
-    border-width: 0 1px 1px;
-    border-style: solid;
-    border-color: #DDD;
+    border-top-width: 0;
+}
+.response .description {
+    margin-bottom: 0;
 }
 .body-content-type-label {
     font-weight: 600;
@@ -352,13 +350,8 @@ body.loading .api-container {
     margin-top: 0;
     color: #888 !important;
 }
-.response-description {
-    margin-bottom: 20px;
-}
-.response-status {
-    margin-bottom: 0;
-}
-div + div > .method-sub-label {
+div + div > .method-sub-label,
+.request + .request {
     margin-top: 20px;
 }
 

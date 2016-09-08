@@ -103,7 +103,7 @@
         function scrollToMethod(section, method) {
             var id = section.name;
             section.__hide = false;
-            console.log(method);
+            
             if (method) {
                 id += '-' + method.method + '-' + method.location;
                 method.__hide = false;
@@ -131,11 +131,11 @@
         function scrollToSchemaReference(event, schema) {
             if (!schema.type
             || schema.type !== 'reference'
-            || schema.name !== event.target.innerText.replace(/"/g, '')) {
+            || schema.tag !== event.target.innerText.replace(/"/g, '')) {
                 return;
             }
 
-            vm.scrollToSchema(schema.name);
+            vm.scrollToSchema(schema.tag);
         }
 
         function slugify(str) {
