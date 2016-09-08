@@ -1,8 +1,13 @@
 (function(){
     'use strict';
 
-    angular.module('api', [
-        'hljs',
-        'mohsen1.json-schema-view'
-    ]);
+    angular
+        .module('api', ['hljs'])
+        .config(config);
+
+    config.$inject = ['$compileProvider'];
+
+    function config($compileProvider) {
+        $compileProvider.debugInfoEnabled(false);
+    }
 })();

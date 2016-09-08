@@ -1,5 +1,9 @@
 [
     {
+        "name": "Sample Spec",
+        "path": "spec/sample-spec.json"
+    },
+    {
         "name": "Sample",
         "path": "spec/sample.json"
     },

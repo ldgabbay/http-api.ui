@@ -16,7 +16,7 @@ body,
     height: 100%;
 }
 html {
-    font-family: "Open Sans", san-serif, arial;
+    font-family: "Ubuntu", "Open Sans", sans-serif, arial;
     font-size: 14px;
     font-weight: 400;
     color: #434A54;
@@ -41,6 +41,7 @@ tr {
     border-bottom: 1px solid #F8F8F8;
 }
 table {
+    table-layout: fixed;
     border-collapse: collapse;
     font-size: 13px;
     text-align: left;
@@ -58,10 +59,14 @@ th {
 }
 td {
     padding: 10px;
+    vertical-align: top;
 }
-td ul {
-    margin: 0;
-    padding-left: 15px;
+tbody tr:nth-child(even) {
+    background-color: #F9F9F9;
+}
+pre,
+code {
+    font-family: "Ubuntu Mono", monospace;
 }
 pre {
     margin: 0;
@@ -80,7 +85,7 @@ body.loading .api-container {
     display: none;
 }
 .monospace-text {
-    font-family: 'Ubuntu Mono', monospace;
+    font-family: "Ubuntu Mono", monospace;
 }
 .table,
 .table-cell {
@@ -120,7 +125,6 @@ body.loading .api-container {
     padding: 0 0 0 5px;
     margin: 0;
     border-bottom: 1px solid #DDD;
-    height: 27px;
 }
 .toggle-tabs:after {
     content: "";
@@ -138,7 +142,7 @@ body.loading .api-container {
     border-color: #DDD;
     border-bottom-color: #FFF;
     font-size: 13px;
-    text-transform: uppercase;
+    font-variant: small-caps;
     cursor: pointer;
 }
 .toggle-tab:hover,
@@ -158,6 +162,9 @@ body.loading .api-container {
     width: 100%;
     height: 3px;
     background-color: #FFF;
+}
+.is-symbolic {
+    font-style: italic;
 }
 
 /* Header */
@@ -179,7 +186,7 @@ body.loading .api-container {
 /* Navigation */
 .navigation-outer,
 .navigation-inner {
-    width: 200px;
+    width: 230px;
 }
 .navigation-outer {
     float: left;
@@ -209,23 +216,23 @@ body.loading .api-container {
 .navigation-menu ul ul li {
     padding-left: 10px;
 }
-.navigation-menu li > span {
+.navigation-menu li > div {
     display: block;
     cursor: pointer;
     color: #D9D9D9;
     line-height: 1.6;
 }
-.navigation-menu li > span:hover {
+.navigation-menu li > div:hover {
     color: #FFF;
 }
-ul.navigation-sections {
+.navigation-section {
     margin-bottom: 20px;
 }
 
 /* Section */
 .sections {
     width: auto;
-    margin: 0 0 30px 200px;
+    margin-left: 230px;
 }
 .section-header {
     border-bottom: 1px solid #DDD;
@@ -235,19 +242,16 @@ ul.navigation-sections {
     font-size: 32px;
     color: #000;
 }
-
-/* Location */
-.location-header {
-    border-bottom: 1px solid #DDD;
-    padding: 10px 0;
+.section-body {
+    margin-bottom: 30px;
 }
-.location-location {
-    font-size: 24px;
+.section-description {
+    margin-bottom: 20px;
 }
 
 /* Method */
 .method {
-    margin: 10px 0 0 10px;
+    margin-top: 10px;
     border: 1px solid #888;
 }
 .method-header {
@@ -259,9 +263,6 @@ ul.navigation-sections {
     font-size: 18px;
     background-color: #888;
     color: #FFF;
-}
-.method-location.is-symbolic {
-    font-style: italic;
 }
 .method-summary {
     padding-right: 10px;
@@ -331,36 +332,76 @@ ul.navigation-sections {
 }
 
 /* Request/Response */
-.request,
+.requests-content {
+    padding: 10px;
+    border: 1px solid #DDD;
+}
+.request + .request {
+    margin-top: 20px;
+}
 .response {
     padding: 10px;
     border-width: 0 1px 1px;
     border-style: solid;
     border-color: #DDD;
 }
-.no-request-params {
-    border: 0;
-    padding: 0;
-}
 .body-content-type-label {
     font-weight: 600;
 }
-.response-sub-label {
+.method-sub-label {
     margin-top: 0;
     color: #888 !important;
 }
-.response-summary,
 .response-description {
     margin-bottom: 20px;
 }
-.response-divider {
-    height: 20px;
+.response-status {
+    margin-bottom: 0;
+}
+div + div > .method-sub-label {
+    margin-top: 20px;
+}
+
+/* Parameter Table */
+.parameter-name {
+    width: 185px;
+}
+.parameter-frequency {
+    width: 100px;
+}
+.parameter-description p {
+    margin: 0;
+}
+p + .list-container,
+.list-container + .list-container {
+    margin-top: 20px;
+}
+.list-container:before {
+    font-weight: 600;
+}
+.list-container li {
+    word-wrap: break-word;
+}
+.criteria:before {
+    content: "Criteria";
+}
+.examples:before {
+    content: "Examples";
+}
+
+/* Request/Response Body */
+.is-reference .hljs-value:last-of-type .hljs-string {
+    cursor: pointer;
+}
+.is-reference .hljs-value:last-of-type .hljs-string:hover {
+    border-bottom: 1px dotted #D14;
 }
 
 /* Schemas */
 .schemas {
     width: auto;
-    margin-left: 200px;
+    margin-left: 230px;
+    margin-bottom: 30px;
 }
 .schemas-header {
     padding: 10px 0;

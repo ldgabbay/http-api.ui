@@ -9,6 +9,12 @@
     
     function apiController($anchorScroll, $scope, $timeout, api) {
         var vm = this;
+        var options = {
+            specListUrl: 'specs.json',
+            apiContainerSelector: '.api-container',
+            jsonTabSize: 2
+        };
+
         vm.hiddenSchemas = {};
         vm.hideSchemas = false;
         vm.isBodyList = isBodyList;
@@ -18,6 +24,7 @@
         vm.prettifyJsonObject = prettifyJsonObject;
         vm.scrollToMethod = scrollToMethod;
         vm.scrollToSchema = scrollToSchema;
+        vm.scrollToSchemaReference = scrollToSchemaReference;
         vm.slugify = slugify;
         vm.spec = null;
         vm.specList = null;
@@ -30,7 +37,7 @@
         activate();
 
         function activate() {
-            $anchorScroll.yOffset = 20;
+            $anchorScroll.yOffset = parseInt(angular.element(options.apiContainerSelector).css('padding-top'));
             getApiList();
         }
 
@@ -39,7 +46,7 @@
 
             vm.loading = true;
 
-            api.get('specs.json')
+            api.get(options.specListUrl)
             .then(function(response) {
                 vm.specList = response;
 
@@ -90,20 +97,15 @@
         }
 
         function prettifyJsonObject(obj) {
-            return JSON.stringify(obj, null, 2);
+            return JSON.stringify(obj, null, options.jsonTabSize);
         }
 
-        function scrollToMethod(section, location, method) {
+        function scrollToMethod(section, method) {
             var id = section.name;
             section.__hide = false;
-            
-            if (location) {
-                id += '-' + location.location
-                location.__hide = false;
-            }
-            
+            console.log(method);
             if (method) {
-                id += '-' + method.method;
+                id += '-' + method.method + '-' + method.location;
                 method.__hide = false;
             }
             
@@ -124,6 +126,16 @@
             $timeout(function(){
                 $anchorScroll(slug);
             });
+        }
+
+        function scrollToSchemaReference(event, schema) {
+            if (!schema.type
+            || schema.type !== 'reference'
+            || schema.name !== event.target.innerText.replace(/"/g, '')) {
+                return;
+            }
+
+            vm.scrollToSchema(schema.name);
         }
 
         function slugify(str) {
