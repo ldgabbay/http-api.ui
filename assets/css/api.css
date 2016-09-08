@@ -356,6 +356,10 @@ div + div > .method-sub-label,
 }
 
 /* Parameter Table */
+.parameter-name,
+.examples {
+    font-size: 14px;
+}
 .parameter-name {
     width: 185px;
 }
@@ -376,7 +380,7 @@ p + .list-container,
     word-wrap: break-word;
 }
 .criteria:before {
-    content: "Criteria";
+    content: "Format Rules";
 }
 .examples:before {
     content: "Examples";
