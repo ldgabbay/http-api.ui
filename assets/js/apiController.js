@@ -15,7 +15,6 @@
             jsonTabSize: 2
         };
 
-        vm.hiddenSchemas = {};
         vm.hideSchemas = false;
         vm.isBodyList = isBodyList;
         vm.isEmptyObject = isEmptyObject;
@@ -119,7 +118,7 @@
             vm.hideSchemas = false;
 
             if (name) {
-                vm.hiddenSchemas[name] = false;
+                vm.spec.schemas.json[name].__hide = false;
                 slug = 'schema-' + vm.slugify(name);
             }
 

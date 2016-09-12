@@ -139,19 +139,32 @@
             <div class="toggle-header schemas-header" id="schemas" ng-click="vm.hideSchemas = !vm.hideSchemas">
                 <div class="toggle-header-title">Schemas</div>
             </div>
-            <div class="schemas-body" ng-hide="vm.hideSchemas">
-                <div class="schema" ng-repeat="(name, schema) in vm.spec.schemas.json">
-                    <div class="toggle-header schema-header" ng-click="vm.hiddenSchemas[name] = !vm.hiddenSchemas[name]" ng-attr-id="{{'schema-' + vm.slugify(name)}}">
-                        <div class="toggle-header-title schema-name" ng-bind="name"></div>
-                    </div>
-                    <div class="toggle-content schema-body" ng-hide="vm.hiddenSchemas[name]">
-                        <div hljs lhljs-language="json" hljs-source="vm.prettifyJsonObject(schema)"></div>
-                    </div>
-                </div><!-- .schema -->
+            <div class="schemas-body" ng-if="vm.spec.schemas.json" ng-hide="vm.hideSchemas">
+                <div class="schema schema-property expandable" ng-repeat="(key, value) in vm.spec.schemas.json" ng-attr-id="{{'schema-' + vm.slugify(key)}}" ng-class="{'expanded': !value.__hide, 'collapsed': value.__hide}" ng-click="value.__hide = !value.__hide; $event.stopPropagation()" ng-include="'schema.html'"></div>
             </div><!-- .schemas-body -->
         </div><!-- .schemas -->
     </div><!-- .container -->
 
+    <script type="text/ng-template" id="schema.html">
+        <div class="schema-key">
+            <span ng-bind="key"></span>
+        </div>
+        <div class="schema-value" ng-include="'value.html'"></div>
+    </script>
+
+    <script type="text/ng-template" id="value.html">
+        <div class="schema-object" ng-if="value.type.toLowerCase() === 'object'" ng-include="'property.html'"></div>
+        <div ng-if="value.type.toLowerCase() !== 'object'">
+            <div class="value-type" ng-bind="value.type"></div>
+            <div class="value-frequency" ng-bind="frequency"></div>
+            <div class="value-description" ng-bind="description"></div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="property.html">
+        <div class="schema-property" ng-repeat="property in value.properties" ng-init="key = property.key; value = property.schema; description = property.description; frequency = property.frequency" ng-class="{'expandable': value.type.toLowerCase() === 'object' || description, 'expanded': !value.__hide, 'collapsed': value.__hide}" ng-click="value.__hide = !value.__hide; $event.stopPropagation()" ng-include="'schema.html'"></div>
+    </script>
+    
     <script type="text/ng-template" id="parameterTableHead.html">
         <tr>
             <th class="parameter-name">Name</th>
@@ -191,7 +204,7 @@
         </table>
         <div ng-if="body.type === 'json' && body.schema" ng-class="{'is-reference': body.schema.type === 'reference'}" hljs lhljs-language="json" hljs-source="vm.prettifyJsonObject(body.schema)" ng-click="vm.scrollToSchemaReference($event, body.schema)"></div>
     </script>
-    
+
     <script src="assets/lib/jquery-3.1.0.min.js"></script>
     <script src="assets/lib/angular.min.js"></script>
     <script src="assets/lib/highlight.min.js"></script>

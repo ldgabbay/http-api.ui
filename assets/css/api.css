@@ -427,3 +427,101 @@ p + .list-container,
         margin-left: 0;
     }
 }
+
+/* Schema Parser */
+.schema-object {
+    display: table;
+}
+.schema-object:before,
+.schema-object:after {
+    color: #434A54;
+    width: 0.5em;
+    cursor: pointer;
+}
+.schema-object:before {
+    content: "{";
+}
+.schema-object:after {
+    content: "}";
+}
+.schema-property {
+    display: table-row;
+}
+.schema-property .schema-property {
+    display: none;
+}
+.schema-key,
+.schema-value {
+    display: table-cell;
+    vertical-align: top;
+}
+.schema-key > span {
+    padding: 0 0.5em 0 1em;
+    color: #008080;
+    cursor: pointer;
+}
+.schema > .schema-key > span {
+    padding-left: 0;
+}
+.schema-key > span:before,
+.schema-key > span:after {
+    color: #434A54;
+}
+.schema-key > span:before {
+    content: "\"";
+}
+.schema-key > span:after {
+    content: "\":";
+}
+.schema-value {
+    color: #D14;
+    overflow: hidden;
+    padding-bottom: 0.5em;
+}
+.schema > .schema-key,
+.schema > .schema-value {
+    padding: 10px 0 20px;
+}
+.schema-property.expandable > .schema-value:before {
+    color: #434A54;
+    padding-right: 0.5em;
+    cursor: pointer;
+}
+.schema-property.expandable.expanded > .schema-value:before {
+    content: "\25BC";
+}
+.schema-property.expandable.collapsed > .schema-value:before {
+    content: "\25B6";
+}
+.schema-value:before,
+.schema-value > div {
+    float: left;
+}
+.value-type,
+.value-frequency {
+    display: inline-block;
+}
+.value-frequency {
+    color: #434A54;
+}
+.value-frequency:before {
+    content: "(";
+}
+.value-frequency:after {
+    content: ")";
+}
+.value-description {
+    color: #888;
+    margin-top: 0.25em;
+    display: none;
+}
+.schema-property.expandable.expanded > .schema-value > div > .value-description {
+    display: block;
+}
+.schema-property.expandable.expanded > .schema-value > .schema-object > .schema-property {
+    display: table-row;
+}
+.schema-property.expandable.collapsed > .schema-value > .schema-object:before,
+.schema-property.expandable.collapsed > .schema-value > .schema-object:after {
+    display: inline-block;
+}
