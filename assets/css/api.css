@@ -186,7 +186,7 @@ body.loading .api-container {
 /* Navigation */
 .navigation-outer,
 .navigation-inner {
-    width: 230px;
+    width: 280px;
 }
 .navigation-outer {
     float: left;
@@ -232,7 +232,7 @@ body.loading .api-container {
 /* Section */
 .sections {
     width: auto;
-    margin-left: 230px;
+    margin-left: 280px;
 }
 .section-header {
     border-bottom: 1px solid #DDD;
@@ -343,8 +343,17 @@ body.loading .api-container {
 .response .description {
     margin-bottom: 0;
 }
-.body-content-type-label {
+.body-content-type-label,
+.body-reference-label,
+.body-type-label {
+    font-size: 15px;
     font-weight: 600;
+}
+.body-reference-value {
+    cursor: pointer;
+}
+.body-reference-value:hover {
+    text-decoration: underline;
 }
 .method-sub-label {
     margin-top: 0;
@@ -380,24 +389,16 @@ p + .list-container,
     word-wrap: break-word;
 }
 .criteria:before {
-    content: "Format Rules";
+    content: "Criteria";
 }
 .examples:before {
     content: "Examples";
 }
 
-/* Request/Response Body */
-.is-reference .hljs-value:last-of-type .hljs-string {
-    cursor: pointer;
-}
-.is-reference .hljs-value:last-of-type .hljs-string:hover {
-    border-bottom: 1px dotted #D14;
-}
-
 /* Schemas */
 .schemas {
     width: auto;
-    margin-left: 230px;
+    margin-left: 280px;
     margin-bottom: 30px;
 }
 .schemas-header {
@@ -447,9 +448,6 @@ p + .list-container,
 .schema-property {
     display: table-row;
 }
-.schema-property .schema-property {
-    display: none;
-}
 .schema-key,
 .schema-value {
     display: table-cell;
@@ -480,14 +478,14 @@ p + .list-container,
 }
 .schema > .schema-key,
 .schema > .schema-value {
-    padding: 10px 0 20px;
+    padding: 10px 0;
 }
 .schema-property.expandable > .schema-value:before {
     color: #434A54;
     padding-right: 0.5em;
     cursor: pointer;
 }
-.schema-property.expandable.expanded > .schema-value:before {
+.schema-property.expandable > .schema-value:before {
     content: "\25BC";
 }
 .schema-property.expandable.collapsed > .schema-value:before {
@@ -513,13 +511,10 @@ p + .list-container,
 .value-description {
     color: #888;
     margin-top: 0.25em;
+}
+.schema-property.expandable.collapsed > .schema-value > div > .value-description,
+.schema-property.expandable.collapsed > .schema-value > .schema-object > .schema-property {
     display: none;
-}
-.schema-property.expandable.expanded > .schema-value > div > .value-description {
-    display: block;
-}
-.schema-property.expandable.expanded > .schema-value > .schema-object > .schema-property {
-    display: table-row;
 }
 .schema-property.expandable.collapsed > .schema-value > .schema-object:before,
 .schema-property.expandable.collapsed > .schema-value > .schema-object:after {

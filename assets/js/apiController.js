@@ -19,6 +19,7 @@
         vm.isBodyList = isBodyList;
         vm.isEmptyObject = isEmptyObject;
         vm.isParameterList = isParameterList;
+        vm.isString = isString;
         vm.loading = false;
         vm.prettifyJsonObject = prettifyJsonObject;
         vm.scrollToMethod = scrollToMethod;
@@ -95,6 +96,10 @@
             return ['path', 'query', 'header'].indexOf(requestType.toLowerCase()) !== -1;
         }
 
+        function isString(value) {
+            return typeof value === 'string';
+        }
+
         function prettifyJsonObject(obj) {
             return JSON.stringify(obj, null, options.jsonTabSize);
         }
@@ -118,7 +123,7 @@
             vm.hideSchemas = false;
 
             if (name) {
-                vm.spec.schemas.json[name].__hide = false;
+                vm.spec.schemas.json[name].__show = true;
                 slug = 'schema-' + vm.slugify(name);
             }
 

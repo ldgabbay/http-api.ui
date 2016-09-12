@@ -90,7 +90,7 @@
                                                 </tbody>
                                             </table><!-- .parameter-list -->
                                             <div class="body-list" ng-if="vm.isBodyList(requestType)">
-                                                <div class="body" ng-repeat="body in vm.spec.methods[method].request[requestType]" ng-include="'body.html'"></div>
+                                                <div class="body" ng-repeat="body in vm.spec.methods[method].request[requestType]  track by $index" ng-include="'body.html'"></div>
                                             </div>
                                         </div><!-- .request -->
                                     </div><!-- .requests-content -->
@@ -124,7 +124,7 @@
                                         <div ng-if="response.body">
                                             <div class="label method-sub-label">Body</div>
                                             <div class="body-list">
-                                                <div class="body" ng-repeat="body in response.body" ng-include="'body.html'"></div>
+                                                <div class="body" ng-repeat="body in response.body track by $index" ng-include="'body.html'"></div>
                                             </div><!-- .body-list -->
                                         </div>
                                     </div><!-- .response -->
@@ -140,7 +140,7 @@
                 <div class="toggle-header-title">Schemas</div>
             </div>
             <div class="schemas-body" ng-if="vm.spec.schemas.json" ng-hide="vm.hideSchemas">
-                <div class="schema schema-property expandable" ng-repeat="(key, value) in vm.spec.schemas.json" ng-attr-id="{{'schema-' + vm.slugify(key)}}" ng-class="{'expanded': !value.__hide, 'collapsed': value.__hide}" ng-click="value.__hide = !value.__hide; $event.stopPropagation()" ng-include="'schema.html'"></div>
+                <div class="schema schema-property expandable" ng-repeat="(key, value) in vm.spec.schemas.json" ng-attr-id="{{'schema-' + vm.slugify(key)}}" ng-class="{'collapsed': !value.__show}" ng-click="value.__show = !value.__show; $event.stopPropagation()" ng-include="'schema.html'"></div>
             </div><!-- .schemas-body -->
         </div><!-- .schemas -->
     </div><!-- .container -->
@@ -162,7 +162,7 @@
     </script>
 
     <script type="text/ng-template" id="property.html">
-        <div class="schema-property" ng-repeat="property in value.properties" ng-init="key = property.key; value = property.schema; description = property.description; frequency = property.frequency" ng-class="{'expandable': value.type.toLowerCase() === 'object' || description, 'expanded': !value.__hide, 'collapsed': value.__hide}" ng-click="value.__hide = !value.__hide; $event.stopPropagation()" ng-include="'schema.html'"></div>
+        <div class="schema-property" ng-repeat="property in value.properties" ng-init="key = vm.isString(property.key) ? property.key : '??????'; value = property.schema; description = property.description; frequency = property.frequency" ng-class="{'expandable': value.type.toLowerCase() === 'object' || description, 'collapsed': !value.__show}" ng-click="value.__show = !value.__show; $event.stopPropagation()" ng-include="'schema.html'"></div>
     </script>
     
     <script type="text/ng-template" id="parameterTableHead.html">
@@ -196,13 +196,20 @@
             <span class="body-content-type-label">Content Type:</span>
             <span class="body-content-type-value" ng-bind="body.contentType"></span>
         </p>
-        <table class="parameter-list" ng-if="body.type === 'form' && body.parameters">
+        <p class="description body-reference" ng-if="body.type.toLowerCase() === 'json' && body.schema.type.toLowerCase() === 'reference'">
+            <span class="body-reference-label">Reference:</span>
+            <span class="monospace-text body-reference-value" ng-click="vm.scrollToSchemaReference($event, body.schema)" ng-bind="body.schema.tag"></span>
+        </p>
+        <p class="description body-type" ng-if="body.type.toLowerCase() !== 'form' && body.type.toLowerCase() !== 'json'">
+            <span class="body-type-label">Type:</span>
+            <span class="body-type-value" ng-bind="body.type"></span>
+        </p>
+        <table class="parameter-list" ng-if="body.type.toLowerCase() === 'form'">
             <thead ng-include="'parameterTableHead.html'"></thead>
             <tbody>
                 <tr class="parameter" ng-repeat="parameter in body.parameters" ng-include="'parameter.html'"></tr>
             </tbody>
         </table>
-        <div ng-if="body.type === 'json' && body.schema" ng-class="{'is-reference': body.schema.type === 'reference'}" hljs lhljs-language="json" hljs-source="vm.prettifyJsonObject(body.schema)" ng-click="vm.scrollToSchemaReference($event, body.schema)"></div>
     </script>
 
     <script src="assets/lib/jquery-3.1.0.min.js"></script>
