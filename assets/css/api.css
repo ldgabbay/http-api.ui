@@ -379,11 +379,15 @@ div + div > .method-sub-label,
     margin: 0;
 }
 p + .list-container,
-.list-container + .list-container {
-    margin-top: 20px;
+.list-container + .list-container,
+.value-description + .list-container {
+    margin-top: 10px;
 }
 .list-container:before {
     font-weight: 600;
+}
+.list-container ul {
+    margin: 0.5em 0;
 }
 .list-container li {
     word-wrap: break-word;
@@ -449,6 +453,7 @@ p + .list-container,
     display: table-row;
 }
 .schema-key,
+.schema-key-frequency,
 .schema-value {
     display: table-cell;
     vertical-align: top;
@@ -465,16 +470,29 @@ p + .list-container,
 .schema-key > span:after {
     color: #434A54;
 }
-.schema-key > span:before {
+.schema-key:not(.is-regex) > span:before {
     content: "\"";
 }
-.schema-key > span:after {
+.schema-key:not(.is-regex) > span:after {
     content: "\":";
+}
+.schema-key-frequency > span {
+    color: #434A54;
+    padding-right: 0.5em;
+}
+.schema-key-frequency > span:before {
+    content: "(";
+}
+.schema-key-frequency > span:after {
+    content: ")";
 }
 .schema-value {
     color: #D14;
     overflow: hidden;
     padding-bottom: 0.5em;
+}
+.schema-property:last-of-type > .schema-value {
+    padding-bottom: 0;
 }
 .schema > .schema-key,
 .schema > .schema-value {
@@ -484,6 +502,8 @@ p + .list-container,
     color: #434A54;
     padding-right: 0.5em;
     cursor: pointer;
+    width: 20px;
+    text-align: center;
 }
 .schema-property.expandable > .schema-value:before {
     content: "\25BC";
@@ -495,24 +515,14 @@ p + .list-container,
 .schema-value > div {
     float: left;
 }
-.value-type,
-.value-frequency {
-    display: inline-block;
+.value-type {
+    padding-right: 0.5em;
 }
-.value-frequency {
-    color: #434A54;
-}
-.value-frequency:before {
-    content: "(";
-}
-.value-frequency:after {
-    content: ")";
-}
-.value-description {
+.value-details {
     color: #888;
-    margin-top: 0.25em;
+    padding-top: 0.25em;
 }
-.schema-property.expandable.collapsed > .schema-value > div > .value-description,
+.schema-property.expandable.collapsed > .schema-value > div > .value-details,
 .schema-property.expandable.collapsed > .schema-value > .schema-object > .schema-property {
     display: none;
 }

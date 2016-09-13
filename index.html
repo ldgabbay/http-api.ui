@@ -146,23 +146,29 @@
     </div><!-- .container -->
 
     <script type="text/ng-template" id="schema.html">
-        <div class="schema-key">
+        <div class="schema-key" ng-class="{'is-regex': vm.isRegEx(key)}">
             <span ng-bind="key"></span>
+        </div>
+        <div class="schema-key-frequency">
+            <span ng-if="frequency" ng-bind="frequency"></span>
         </div>
         <div class="schema-value" ng-include="'value.html'"></div>
     </script>
 
     <script type="text/ng-template" id="value.html">
-        <div class="schema-object" ng-if="value.type.toLowerCase() === 'object'" ng-include="'property.html'"></div>
-        <div ng-if="value.type.toLowerCase() !== 'object'">
+        <div>
             <div class="value-type" ng-bind="value.type"></div>
-            <div class="value-frequency" ng-bind="frequency"></div>
-            <div class="value-description" ng-bind="description"></div>
+            <div class="value-details" ng-if="value.type.toLowerCase() !== 'object'">
+                <div class="value-description" ng-if="description" ng-bind="description"></div>
+                <div ng-if="value.criteria && value.criteria.length" ng-init="criteria = value.criteria" ng-include="'criteria.html'" include-replace></div>
+                <div ng-if="value.examples && value.examples.length" ng-init="examples = value.examples" ng-include="'examples.html'" include-replace></div>
+            </div>
         </div>
+        <div class="schema-object" ng-if="value.type.toLowerCase() === 'object'" ng-include="'property.html'"></div>
     </script>
 
     <script type="text/ng-template" id="property.html">
-        <div class="schema-property" ng-repeat="property in value.properties" ng-init="key = vm.isString(property.key) ? property.key : '??????'; value = property.schema; description = property.description; frequency = property.frequency" ng-class="{'expandable': value.type.toLowerCase() === 'object' || description, 'collapsed': !value.__show}" ng-click="value.__show = !value.__show; $event.stopPropagation()" ng-include="'schema.html'"></div>
+        <div class="schema-property" ng-repeat="property in value.properties" ng-init="key = vm.isString(property.key) ? property.key : '??????'; value = property.schema; description = property.description; frequency = property.frequency" ng-class="{'expandable': value.type.toLowerCase() === 'object' || description || (value.criteria && value.criteria.length) || (value.examples && value.examples.length), 'collapsed': !value.__show}" ng-click="value.__show = !value.__show; $event.stopPropagation()" ng-include="'schema.html'"></div>
     </script>
     
     <script type="text/ng-template" id="parameterTableHead.html">
@@ -178,17 +184,25 @@
         <td class="parameter-frequency" ng-bind="parameter.frequency"></td>
         <td class="parameter-description">
             <p ng-if="parameter.description" ng-bind="parameter.description"></p>
-            <div class="list-container criteria" ng-if="parameter.criteria && parameter.criteria.length">
-                <ul>
-                    <li class="criterion" ng-repeat="criteria in parameter.criteria" ng-bind="criteria"></li>
-                </ul>
-            </div>
-            <div class="list-container examples" ng-if="parameter.examples && parameter.examples.length">
-                <ul class="monospace-text">
-                    <li class="example" ng-repeat="example in parameter.examples" ng-bind="example"></li>
-                </ul>
-            </div>
+            <div ng-if="parameter.criteria && parameter.criteria.length" ng-init="criteria = parameter.criteria" ng-include="'criteria.html'" include-replace></div>
+            <div ng-if="parameter.examples && parameter.examples.length" ng-init="examples = parameter.examples" ng-include="'examples.html'" include-replace></div>
         </td>
+    </script>
+
+    <script type="text/ng-template" id="criteria.html">
+        <div class="list-container criteria">
+            <ul>
+                <li class="criterion" ng-repeat="criterion in criteria" ng-bind="criterion"></li>
+            </ul>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="examples.html">
+        <div class="list-container examples">
+            <ul class="monospace-text">
+                <li class="example" ng-repeat="example in examples" ng-bind="example"></li>
+            </ul>
+        </div>
     </script>
 
     <script type="text/ng-template" id="body.html">
@@ -219,5 +233,6 @@
     <script src="assets/js/apiModule.js"></script>
     <script src="assets/js/apiFactory.js"></script>
     <script src="assets/js/apiController.js"></script>
+    <script src="assets/js/directives/includeReplace.js"></script>
 </body>
 </html>

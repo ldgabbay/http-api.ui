@@ -19,6 +19,7 @@
         vm.isBodyList = isBodyList;
         vm.isEmptyObject = isEmptyObject;
         vm.isParameterList = isParameterList;
+        vm.isRegEx = isRegEx;
         vm.isString = isString;
         vm.loading = false;
         vm.prettifyJsonObject = prettifyJsonObject;
@@ -96,8 +97,16 @@
             return ['path', 'query', 'header'].indexOf(requestType.toLowerCase()) !== -1;
         }
 
-        function isString(value) {
-            return typeof value === 'string';
+        function isRegEx(input) {
+            if (!input || typeof input !== 'string' || input.length === 0) {
+                return false;
+            }
+
+            return input[0] === '/' && input[input.length - 1] === '/';
+        }
+
+        function isString(input) {
+            return typeof input === 'string';
         }
 
         function prettifyJsonObject(obj) {
