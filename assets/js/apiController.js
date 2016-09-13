@@ -9,12 +9,22 @@
     
     function apiController($anchorScroll, $scope, $timeout, api) {
         var vm = this;
+        var options = {
+            specListUrl: 'specs.json',
+            apiContainerSelector: '.api-container',
+            jsonTabSize: 2
+        };
+
+        vm.hideSchemas = false;
         vm.isBodyList = isBodyList;
         vm.isEmptyObject = isEmptyObject;
         vm.isParameterList = isParameterList;
+        vm.isRegEx = isRegEx;
+        vm.isString = isString;
         vm.loading = false;
         vm.prettifyJsonObject = prettifyJsonObject;
-        vm.scrollTo = scrollTo;
+        vm.scrollToMethod = scrollToMethod;
+        vm.scrollToSchema = scrollToSchema;
         vm.slugify = slugify;
         vm.spec = null;
         vm.specList = null;
@@ -27,7 +37,7 @@
         activate();
 
         function activate() {
-            $anchorScroll.yOffset = 20;
+            $anchorScroll.yOffset = parseInt(angular.element(options.apiContainerSelector).css('padding-top'));
             getApiList();
         }
 
@@ -36,7 +46,7 @@
 
             vm.loading = true;
 
-            api.get('specs.json')
+            api.get(options.specListUrl)
             .then(function(response) {
                 vm.specList = response;
 
@@ -86,21 +96,51 @@
             return ['path', 'query', 'header'].indexOf(requestType.toLowerCase()) !== -1;
         }
 
-        function prettifyJsonObject(obj) {
-            return JSON.stringify(obj, null, 2);
+        function isRegEx(input) {
+            if (!input || typeof input !== 'string' || input.length === 0) {
+                return false;
+            }
+
+            return input[0] === '/' && input[input.length - 1] === '/';
         }
 
-        function scrollTo(location, method) {
-            var id = location.location;
-            location.__hide = false;
+        function isString(input) {
+            return typeof input === 'string';
+        }
+
+        function prettifyJsonObject(obj) {
+            return JSON.stringify(obj, null, options.jsonTabSize);
+        }
+
+        function scrollToMethod(section, method) {
+            var id = section.name;
+            section.__hide = false;
             
             if (method) {
+                id += '-' + method.method + '-' + method.location;
                 method.__hide = false;
-                id = id + '-' + method.method;
             }
             
             $timeout(function(){
                 $anchorScroll(vm.slugify(id));
+            });
+        }
+
+        function scrollToSchema(name) {
+            if (!name) {
+                return;
+            }
+
+            var slug = 'schemas';
+            vm.hideSchemas = false;
+
+            if (name && vm.spec.schemas.json[name]) {
+                vm.spec.schemas.json[name].__show = true;
+                slug = 'schema-' + vm.slugify(name);
+            }
+
+            $timeout(function(){
+                $anchorScroll(slug);
             });
         }
 
