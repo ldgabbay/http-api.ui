@@ -90,7 +90,7 @@
                                                 </tbody>
                                             </table><!-- .parameter-list -->
                                             <div class="body-list" ng-if="vm.isBodyList(requestType)">
-                                                <div class="body" ng-repeat="body in vm.spec.methods[method].request[requestType]" ng-include="'body.html'"></div>
+                                                <div class="body" ng-repeat="body in vm.spec.methods[method].request[requestType]  track by $index" ng-include="'body.html'"></div>
                                             </div>
                                         </div><!-- .request -->
                                     </div><!-- .requests-content -->
@@ -124,7 +124,7 @@
                                         <div ng-if="response.body">
                                             <div class="label method-sub-label">Body</div>
                                             <div class="body-list">
-                                                <div class="body" ng-repeat="body in response.body" ng-include="'body.html'"></div>
+                                                <div class="body" ng-repeat="body in response.body track by $index" ng-include="'body.html'"></div>
                                             </div><!-- .body-list -->
                                         </div>
                                     </div><!-- .response -->
@@ -139,19 +139,38 @@
             <div class="toggle-header schemas-header" id="schemas" ng-click="vm.hideSchemas = !vm.hideSchemas">
                 <div class="toggle-header-title">Schemas</div>
             </div>
-            <div class="schemas-body" ng-hide="vm.hideSchemas">
-                <div class="schema" ng-repeat="(name, schema) in vm.spec.schemas.json">
-                    <div class="toggle-header schema-header" ng-click="vm.hiddenSchemas[name] = !vm.hiddenSchemas[name]" ng-attr-id="{{'schema-' + vm.slugify(name)}}">
-                        <div class="toggle-header-title schema-name" ng-bind="name"></div>
-                    </div>
-                    <div class="toggle-content schema-body" ng-hide="vm.hiddenSchemas[name]">
-                        <div hljs lhljs-language="json" hljs-source="vm.prettifyJsonObject(schema)"></div>
-                    </div>
-                </div><!-- .schema -->
+            <div class="schemas-body" ng-if="vm.spec.schemas.json" ng-hide="vm.hideSchemas">
+                <div class="schema schema-property expandable" ng-repeat="(key, value) in vm.spec.schemas.json" ng-attr-id="{{'schema-' + vm.slugify(key)}}" ng-class="{'collapsed': !value.__show}" ng-click="value.__show = !value.__show; $event.stopPropagation()" ng-include="'schema.html'"></div>
             </div><!-- .schemas-body -->
         </div><!-- .schemas -->
     </div><!-- .container -->
 
+    <script type="text/ng-template" id="schema.html">
+        <div class="schema-key" ng-class="{'is-regex': vm.isRegEx(key)}">
+            <span ng-bind="key"></span>
+        </div>
+        <div class="schema-key-frequency">
+            <span ng-if="frequency" ng-bind="frequency"></span>
+        </div>
+        <div class="schema-value" ng-include="'value.html'"></div>
+    </script>
+
+    <script type="text/ng-template" id="value.html">
+        <div>
+            <div class="value-type" ng-class="{'is-reference': value.type.toLowerCase() === 'reference'}" ng-click="vm.scrollToSchema(value.tag)" ng-bind="value.type.toLowerCase() === 'reference' ? value.tag : value.type"></div>
+            <div class="value-details" ng-if="value.type.toLowerCase() !== 'object'">
+                <div class="value-description" ng-if="description" ng-bind="description"></div>
+                <div ng-if="value.criteria && value.criteria.length" ng-init="criteria = value.criteria" ng-include="'criteria.html'" include-replace></div>
+                <div ng-if="value.examples && value.examples.length" ng-init="examples = value.examples" ng-include="'examples.html'" include-replace></div>
+            </div>
+        </div>
+        <div class="schema-object" ng-if="value.type.toLowerCase() === 'object'" ng-include="'property.html'"></div>
+    </script>
+
+    <script type="text/ng-template" id="property.html">
+        <div class="schema-property" ng-repeat="property in value.properties" ng-init="key = vm.isString(property.key) ? property.key : '??????'; value = property.schema; description = property.description; frequency = property.frequency" ng-class="{'expandable': value.type.toLowerCase() === 'object' || description || (value.criteria && value.criteria.length) || (value.examples && value.examples.length), 'collapsed': !value.__show}" ng-click="value.__show = !value.__show; $event.stopPropagation()" ng-include="'schema.html'"></div>
+    </script>
+    
     <script type="text/ng-template" id="parameterTableHead.html">
         <tr>
             <th class="parameter-name">Name</th>
@@ -165,17 +184,25 @@
         <td class="parameter-frequency" ng-bind="parameter.frequency"></td>
         <td class="parameter-description">
             <p ng-if="parameter.description" ng-bind="parameter.description"></p>
-            <div class="list-container criteria" ng-if="parameter.criteria && parameter.criteria.length">
-                <ul>
-                    <li class="criterion" ng-repeat="criteria in parameter.criteria" ng-bind="criteria"></li>
-                </ul>
-            </div>
-            <div class="list-container examples" ng-if="parameter.examples && parameter.examples.length">
-                <ul class="monospace-text">
-                    <li class="example" ng-repeat="example in parameter.examples" ng-bind="example"></li>
-                </ul>
-            </div>
+            <div ng-if="parameter.criteria && parameter.criteria.length" ng-init="criteria = parameter.criteria" ng-include="'criteria.html'" include-replace></div>
+            <div ng-if="parameter.examples && parameter.examples.length" ng-init="examples = parameter.examples" ng-include="'examples.html'" include-replace></div>
         </td>
+    </script>
+
+    <script type="text/ng-template" id="criteria.html">
+        <div class="list-container criteria">
+            <ul>
+                <li class="criterion" ng-repeat="criterion in criteria" ng-bind="criterion"></li>
+            </ul>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="examples.html">
+        <div class="list-container examples">
+            <ul class="monospace-text">
+                <li class="example" ng-repeat="example in examples" ng-bind="example"></li>
+            </ul>
+        </div>
     </script>
 
     <script type="text/ng-template" id="body.html">
@@ -183,15 +210,22 @@
             <span class="body-content-type-label">Content Type:</span>
             <span class="body-content-type-value" ng-bind="body.contentType"></span>
         </p>
-        <table class="parameter-list" ng-if="body.type === 'form' && body.parameters">
+        <p class="description body-reference" ng-if="body.type.toLowerCase() === 'json' && body.schema.type.toLowerCase() === 'reference'">
+            <span class="body-reference-label">Reference:</span>
+            <span class="monospace-text body-reference-value" ng-click="vm.scrollToSchema(body.schema.tag)" ng-bind="body.schema.tag"></span>
+        </p>
+        <p class="description body-type" ng-if="body.type.toLowerCase() !== 'form' && body.type.toLowerCase() !== 'json'">
+            <span class="body-type-label">Type:</span>
+            <span class="body-type-value" ng-bind="body.type"></span>
+        </p>
+        <table class="parameter-list" ng-if="body.type.toLowerCase() === 'form'">
             <thead ng-include="'parameterTableHead.html'"></thead>
             <tbody>
                 <tr class="parameter" ng-repeat="parameter in body.parameters" ng-include="'parameter.html'"></tr>
             </tbody>
         </table>
-        <div ng-if="body.type === 'json' && body.schema" ng-class="{'is-reference': body.schema.type === 'reference'}" hljs lhljs-language="json" hljs-source="vm.prettifyJsonObject(body.schema)" ng-click="vm.scrollToSchemaReference($event, body.schema)"></div>
     </script>
-    
+
     <script src="assets/lib/jquery-3.1.0.min.js"></script>
     <script src="assets/lib/angular.min.js"></script>
     <script src="assets/lib/highlight.min.js"></script>
@@ -199,5 +233,6 @@
     <script src="assets/js/apiModule.js"></script>
     <script src="assets/js/apiFactory.js"></script>
     <script src="assets/js/apiController.js"></script>
+    <script src="assets/js/directives/includeReplace.js"></script>
 </body>
 </html>

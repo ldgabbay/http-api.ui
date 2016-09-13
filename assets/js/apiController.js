@@ -15,16 +15,16 @@
             jsonTabSize: 2
         };
 
-        vm.hiddenSchemas = {};
         vm.hideSchemas = false;
         vm.isBodyList = isBodyList;
         vm.isEmptyObject = isEmptyObject;
         vm.isParameterList = isParameterList;
+        vm.isRegEx = isRegEx;
+        vm.isString = isString;
         vm.loading = false;
         vm.prettifyJsonObject = prettifyJsonObject;
         vm.scrollToMethod = scrollToMethod;
         vm.scrollToSchema = scrollToSchema;
-        vm.scrollToSchemaReference = scrollToSchemaReference;
         vm.slugify = slugify;
         vm.spec = null;
         vm.specList = null;
@@ -96,6 +96,18 @@
             return ['path', 'query', 'header'].indexOf(requestType.toLowerCase()) !== -1;
         }
 
+        function isRegEx(input) {
+            if (!input || typeof input !== 'string' || input.length === 0) {
+                return false;
+            }
+
+            return input[0] === '/' && input[input.length - 1] === '/';
+        }
+
+        function isString(input) {
+            return typeof input === 'string';
+        }
+
         function prettifyJsonObject(obj) {
             return JSON.stringify(obj, null, options.jsonTabSize);
         }
@@ -115,27 +127,21 @@
         }
 
         function scrollToSchema(name) {
+            if (!name) {
+                return;
+            }
+
             var slug = 'schemas';
             vm.hideSchemas = false;
 
-            if (name) {
-                vm.hiddenSchemas[name] = false;
+            if (name && vm.spec.schemas.json[name]) {
+                vm.spec.schemas.json[name].__show = true;
                 slug = 'schema-' + vm.slugify(name);
             }
 
             $timeout(function(){
                 $anchorScroll(slug);
             });
-        }
-
-        function scrollToSchemaReference(event, schema) {
-            if (!schema.type
-            || schema.type !== 'reference'
-            || schema.tag !== event.target.innerText.replace(/"/g, '')) {
-                return;
-            }
-
-            vm.scrollToSchema(schema.tag);
         }
 
         function slugify(str) {

@@ -1,6 +1,10 @@
 [
     {
+        "name": "Test Spec",
+        "path": "spec/test.json"
+    },
+    {
         "name": "Sample Spec",
-        "path": "spec/sample-spec.json"
+        "path": "spec/sample.json"
     }
 ]
