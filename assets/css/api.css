@@ -518,6 +518,12 @@ p + .list-container,
 .value-type {
     padding-right: 0.5em;
 }
+.value-type.is-reference {
+    cursor: pointer;
+}
+.value-type.is-reference:hover {
+    text-decoration: underline;
+}
 .value-details {
     color: #888;
     padding-top: 0.25em;

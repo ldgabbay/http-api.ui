@@ -157,7 +157,7 @@
 
     <script type="text/ng-template" id="value.html">
         <div>
-            <div class="value-type" ng-bind="value.type"></div>
+            <div class="value-type" ng-class="{'is-reference': value.type.toLowerCase() === 'reference'}" ng-click="vm.scrollToSchema(value.tag)" ng-bind="value.type.toLowerCase() === 'reference' ? value.tag : value.type"></div>
             <div class="value-details" ng-if="value.type.toLowerCase() !== 'object'">
                 <div class="value-description" ng-if="description" ng-bind="description"></div>
                 <div ng-if="value.criteria && value.criteria.length" ng-init="criteria = value.criteria" ng-include="'criteria.html'" include-replace></div>
@@ -212,7 +212,7 @@
         </p>
         <p class="description body-reference" ng-if="body.type.toLowerCase() === 'json' && body.schema.type.toLowerCase() === 'reference'">
             <span class="body-reference-label">Reference:</span>
-            <span class="monospace-text body-reference-value" ng-click="vm.scrollToSchemaReference($event, body.schema)" ng-bind="body.schema.tag"></span>
+            <span class="monospace-text body-reference-value" ng-click="vm.scrollToSchema(body.schema.tag)" ng-bind="body.schema.tag"></span>
         </p>
         <p class="description body-type" ng-if="body.type.toLowerCase() !== 'form' && body.type.toLowerCase() !== 'json'">
             <span class="body-type-label">Type:</span>

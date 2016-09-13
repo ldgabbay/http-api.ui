@@ -25,7 +25,6 @@
         vm.prettifyJsonObject = prettifyJsonObject;
         vm.scrollToMethod = scrollToMethod;
         vm.scrollToSchema = scrollToSchema;
-        vm.scrollToSchemaReference = scrollToSchemaReference;
         vm.slugify = slugify;
         vm.spec = null;
         vm.specList = null;
@@ -128,10 +127,14 @@
         }
 
         function scrollToSchema(name) {
+            if (!name) {
+                return;
+            }
+
             var slug = 'schemas';
             vm.hideSchemas = false;
 
-            if (name) {
+            if (name && vm.spec.schemas.json[name]) {
                 vm.spec.schemas.json[name].__show = true;
                 slug = 'schema-' + vm.slugify(name);
             }
@@ -139,16 +142,6 @@
             $timeout(function(){
                 $anchorScroll(slug);
             });
-        }
-
-        function scrollToSchemaReference(event, schema) {
-            if (!schema.type
-            || schema.type !== 'reference'
-            || schema.tag !== event.target.innerText.replace(/"/g, '')) {
-                return;
-            }
-
-            vm.scrollToSchema(schema.tag);
         }
 
         function slugify(str) {
