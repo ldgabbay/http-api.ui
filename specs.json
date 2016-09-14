@@ -1,10 +1,6 @@
 [
-    {
-        "name": "Test Spec",
-        "path": "spec/test.json"
-    },
-    {
-        "name": "Sample Spec",
-        "path": "spec/sample.json"
-    }
+   {
+       "name": "Main",
+       "path": "main.json"
+   }
 ]
