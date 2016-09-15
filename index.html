@@ -151,13 +151,12 @@
             <td class="key">
                 <span ng-bind="schemaName"></span>
             </td>
-            <td class="type">
-                <span ng-bind="schema.type"></span>
-            </td>
         </tr>
         <tr class="property-value">
-            <td colspan="2">
-                <table class="object" ng-init="properties = schema.properties" ng-include="'properties.html'"></table>
+            <td>
+                <div>
+                    <table class="object" ng-init="properties = schema.properties" ng-include="'properties.html'"></table>
+                </div>
             </td>
         </tr>
     </script>
