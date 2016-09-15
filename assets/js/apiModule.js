@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('api', ['hljs'])
+        .module('api', [])
         .config(config);
 
     config.$inject = ['$compileProvider'];

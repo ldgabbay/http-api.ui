@@ -35,35 +35,6 @@ h1, h2, h3, h4, h5, h6 {
 p {
     margin: 0 0 10px;
 }
-table,
-tr {
-    width: 100%;
-    border-bottom: 1px solid #F8F8F8;
-}
-table {
-    table-layout: fixed;
-    border-collapse: collapse;
-    font-size: 13px;
-    text-align: left;
-}
-tr:last-child {
-    border-bottom: 0;
-}
-thead {
-    background-color: #F8F8F8;
-    font-weight: 600;
-}
-th {
-    padding: 5px 10px;
-    vertical-align: bottom;
-}
-td {
-    padding: 10px;
-    vertical-align: top;
-}
-tbody tr:nth-child(even) {
-    background-color: #F9F9F9;
-}
 pre,
 code {
     font-family: "Ubuntu Mono", monospace;
@@ -270,6 +241,35 @@ body.loading .api-container {
 .method-body {
     padding: 0 10px 10px;
 }
+.method table,
+.method tr {
+    width: 100%;
+    border-bottom: 1px solid #F8F8F8;
+}
+.method table {
+    table-layout: fixed;
+    border-collapse: collapse;
+    font-size: 13px;
+    text-align: left;
+}
+.method tr:last-child {
+    border-bottom: 0;
+}
+.method thead {
+    background-color: #F8F8F8;
+    font-weight: 600;
+}
+.method th {
+    padding: 5px 10px;
+    vertical-align: bottom;
+}
+.method td {
+    padding: 10px;
+    vertical-align: top;
+}
+.method tbody tr:nth-child(even) {
+    background-color: #F9F9F9;
+}
 
 /* Method - GET */
 .method-get {
@@ -414,6 +414,7 @@ p + .list-container,
 }
 .schemas-body {
     border-top: 1px solid #DDD;
+    padding-top: 20px;
 }
 .schema-header {
     border-bottom: 1px solid #DDD;
@@ -434,105 +435,99 @@ p + .list-container,
 }
 
 /* Schema Parser */
-.schema-object {
-    display: table;
+.schema-container {
+    padding: 5px 10px;
 }
-.schema-object:before,
-.schema-object:after {
-    color: #434A54;
-    width: 0.5em;
-    cursor: pointer;
+.schema-container:nth-child(even) {
+    background-color: #F8F8F8;
 }
-.schema-object:before {
-    content: "{";
+.schema,
+.schema .object {
+    border-collapse: collapse;
 }
-.schema-object:after {
-    content: "}";
+.schema .key,
+.schema .frequency,
+.schema .type,
+.schema .property-value > td {
+    padding-right: 1.5em;
 }
-.schema-property {
-    display: table-row;
+.schema .key,
+.schema .frequency {
+    width: 1px;
 }
-.schema-key,
-.schema-key-frequency,
-.schema-value {
-    display: table-cell;
-    vertical-align: top;
+.schema .key {
+    padding-left: 1.5em;
 }
-.schema-key > span {
-    padding: 0 0.5em 0 1em;
-    color: #008080;
-    cursor: pointer;
+.schema .key {
+    position: relative;
 }
-.schema > .schema-key > span {
-    padding-left: 0;
-}
-.schema-key > span:before,
-.schema-key > span:after {
+.schema .key:before,
+.schema .frequency span {
     color: #434A54;
 }
-.schema-key:not(.is-regex) > span:before {
-    content: "\"";
-}
-.schema-key:not(.is-regex) > span:after {
-    content: "\":";
-}
-.schema-key-frequency > span {
-    color: #434A54;
-    padding-right: 0.5em;
-}
-.schema-key-frequency > span:before {
-    content: "(";
-}
-.schema-key-frequency > span:after {
-    content: ")";
-}
-.schema-value {
-    color: #D14;
-    overflow: hidden;
-    padding-bottom: 0.5em;
-}
-.schema-property:last-of-type > .schema-value {
-    padding-bottom: 0;
-}
-.schema > .schema-key,
-.schema > .schema-value {
-    padding: 10px 0;
-}
-.schema-property.expandable > .schema-value:before {
-    color: #434A54;
-    padding-right: 0.5em;
-    cursor: pointer;
-    width: 20px;
-    text-align: center;
-}
-.schema-property.expandable > .schema-value:before {
+.schema .property.expandable .key:before {
     content: "\25BC";
+    display: inline-block;
+    width: 1em;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
-.schema-property.expandable.collapsed > .schema-value:before {
-    content: "\25B6";
+.schema .object .key span.is-regex {
+    color: #2392F7;
 }
-.schema-value:before,
-.schema-value > div {
-    float: left;
+.schema .object .key span:not(.is-regex):before,
+.schema .object .key span:not(.is-regex):after {
+    content: "\"";
+    color: #434A54;
 }
-.value-type {
-    padding-right: 0.5em;
+.schema .key span {
+    color: #008080;
 }
-.value-type.is-reference {
+.schema .type span {
+    color: #D14;
+}
+.schema .type span.is-reference {
     cursor: pointer;
 }
-.value-type.is-reference:hover {
-    text-decoration: underline;
+.schema .type span.is-reference:hover {
+    border-bottom: 1px dotted #D14;
 }
-.value-details {
+.schema .property-value {
     color: #888;
-    padding-top: 0.25em;
 }
-.schema-property.expandable.collapsed > .schema-value > div > .value-details,
-.schema-property.expandable.collapsed > .schema-value > .schema-object > .schema-property {
+.schema .property-value > td {
+    padding-left: 1.5em;
+}
+.schema .description {
+    margin: 0;
+}
+.schema .description,
+.schema .list-container {
+    margin-left: 1.5em;
+}
+.schema p + .list-container,
+.schema .list-container + .list-container {
+    margin-top: 0.5em;
+}
+.schema .list-container ul {
+    margin-bottom: 0;
+    padding-left: 2.5em;
+}
+.schema .list-container:last-of-type ul {
+    margin-bottom: 0.5em;
+}
+
+/* Schema Parser Collapsed */
+.schema .property.expandable {
+    cursor: pointer;
+}
+.schema .property:not(.expandable) + .property-value {
     display: none;
 }
-.schema-property.expandable.collapsed > .schema-value > .schema-object:before,
-.schema-property.expandable.collapsed > .schema-value > .schema-object:after {
-    display: inline-block;
+.schema .property.collapsed + .property-value {
+    display: none;
+}
+.schema .property.expandable.collapsed .key:before {
+    content: "\25B6";
 }

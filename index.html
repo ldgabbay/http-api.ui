@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>API Documentation</title>
     <link href="https://fonts.googleapis.com/css?family=Ubuntu|Ubuntu+Mono" rel="stylesheet">
-    <link rel="stylesheet" href="assets/lib/github.min.css" />
     <link rel="stylesheet" href="assets/css/api.css" />
 </head>
 <body ng-app="api" ng-controller="apiController as vm" ng-class="{loading: vm.loading}" ng-cloak>
@@ -140,35 +139,53 @@
                 <div class="toggle-header-title">Schemas</div>
             </div>
             <div class="schemas-body" ng-if="vm.spec.schemas.json" ng-hide="vm.hideSchemas">
-                <div class="schema schema-property expandable" ng-repeat="(key, value) in vm.spec.schemas.json" ng-attr-id="{{'schema-' + vm.slugify(key)}}" ng-class="{'collapsed': !value.__show}" ng-click="value.__show = !value.__show; $event.stopPropagation()" ng-include="'schema.html'"></div>
+                <div class="schema-container" ng-repeat="(schemaName, schema) in vm.spec.schemas.json">
+                    <table class="schema" ng-include="'schema.html'"></table>
+                </div>
             </div><!-- .schemas-body -->
         </div><!-- .schemas -->
     </div><!-- .container -->
 
     <script type="text/ng-template" id="schema.html">
-        <div class="schema-key" ng-class="{'is-regex': vm.isRegEx(key)}">
-            <span ng-bind="key"></span>
-        </div>
-        <div class="schema-key-frequency">
-            <span ng-if="frequency" ng-bind="frequency"></span>
-        </div>
-        <div class="schema-value" ng-include="'value.html'"></div>
+        <tr class="property" ng-attr-id="schema-{{vm.slugify(schemaName)}}" ng-class="{'expandable': schema.type.toLowerCase() === 'object' && schema.properties && schema.properties.length, 'collapsed': !schema.__show}" ng-click="schema.__show = !schema.__show">
+            <td class="key">
+                <span ng-bind="schemaName"></span>
+            </td>
+            <td class="type">
+                <span ng-bind="schema.type"></span>
+            </td>
+        </tr>
+        <tr class="property-value">
+            <td colspan="2">
+                <table class="object" ng-init="properties = schema.properties" ng-include="'properties.html'"></table>
+            </td>
+        </tr>
     </script>
 
-    <script type="text/ng-template" id="value.html">
-        <div>
-            <div class="value-type" ng-class="{'is-reference': value.type.toLowerCase() === 'reference'}" ng-click="vm.scrollToSchema(value.tag)" ng-bind="value.type.toLowerCase() === 'reference' ? value.tag : value.type"></div>
-            <div class="value-details" ng-if="value.type.toLowerCase() !== 'object'">
-                <div class="value-description" ng-if="description" ng-bind="description"></div>
-                <div ng-if="value.criteria && value.criteria.length" ng-init="criteria = value.criteria" ng-include="'criteria.html'" include-replace></div>
-                <div ng-if="value.examples && value.examples.length" ng-init="examples = value.examples" ng-include="'examples.html'" include-replace></div>
-            </div>
-        </div>
-        <div class="schema-object" ng-if="value.type.toLowerCase() === 'object'" ng-include="'property.html'"></div>
-    </script>
-
-    <script type="text/ng-template" id="property.html">
-        <div class="schema-property" ng-repeat="property in value.properties" ng-init="key = vm.isString(property.key) ? property.key : '??????'; value = property.schema; description = property.description; frequency = property.frequency" ng-class="{'expandable': value.type.toLowerCase() === 'object' || description || (value.criteria && value.criteria.length) || (value.examples && value.examples.length), 'collapsed': !value.__show}" ng-click="value.__show = !value.__show; $event.stopPropagation()" ng-include="'schema.html'"></div>
+    <script type="text/ng-template" id="properties.html">
+        <tr class="property" ng-repeat-start="property in properties" ng-class="{'expandable': (property.schema.type.toLowerCase() === 'object' && property.schema.properties && property.schema.properties.length) || property.description || (property.schema.criteria && property.schema.criteria.length) || (property.schema.examples && property.schema.examples.length), 'collapsed': !property.__show}" ng-click="property.__show = !property.__show">
+            <td class="key">
+                <span ng-class="{'is-regex': !vm.isString(property.key)}" ng-bind="vm.isString(property.key) ? property.key : 'any'"></span>
+            </td>
+            <td class="frequency">
+                <span ng-if="property.frequency" ng-bind="property.frequency"></span>
+            </td>
+            <td class="type">
+                <span ng-class="{'is-reference': property.schema.type.toLowerCase() === 'reference'}" ng-click="vm.scrollToSchema(property.schema.tag)" ng-bind="property.schema.type.toLowerCase() === 'reference' ? property.schema.tag : property.schema.type"></span>
+            </td>
+        </tr>
+        <tr class="property-value" ng-repeat-end>
+            <td colspan="3">
+                <div ng-if="property.schema.type.toLowerCase() !== 'object'">
+                    <p class="description" ng-if="property.description" ng-bind="property.description"></p>
+                    <div ng-if="property.schema.criteria && property.schema.criteria.length" ng-init="criteria = property.schema.criteria" ng-include="'criteria.html'" include-replace></div>
+                    <div ng-if="property.schema.examples && property.schema.examples.length" ng-init="examples = property.schema.examples" ng-include="'examples.html'" include-replace></div>
+                </div>
+                <div ng-if="property.schema.type.toLowerCase() === 'object'">
+                    <table class="object" ng-init="properties = property.schema.properties" ng-include="'properties.html'"></table>
+                </div>
+            </td>
+        </tr>
     </script>
     
     <script type="text/ng-template" id="parameterTableHead.html">
@@ -228,8 +245,6 @@
 
     <script src="assets/lib/jquery-3.1.0.min.js"></script>
     <script src="assets/lib/angular.min.js"></script>
-    <script src="assets/lib/highlight.min.js"></script>
-    <script src="assets/lib/angular-highlightjs.min.js"></script>
     <script src="assets/js/apiModule.js"></script>
     <script src="assets/js/apiFactory.js"></script>
     <script src="assets/js/apiController.js"></script>

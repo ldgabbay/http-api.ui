@@ -81,7 +81,7 @@
                 })['finally'](function() {
                     vm.loading = false;
                 });
-            }, 500);
+            });
         }
 
         function isBodyList(requestType) {
