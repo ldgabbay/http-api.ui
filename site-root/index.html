@@ -58,7 +58,7 @@
                 <div class="toggle-content section-body" ng-hide="section.__hide">
                     <div ng-if="section.description">
                         <div class="label">Description</div>
-                        <p class="description section-description" ng-bind="section.description"></p>
+                        <p class="description section-description" ng-bind-html="section.description | lineBreak | unsafeHTML"></p>
                     </div>
                     <div class="methods">
                         <div class="method {{'method-' + vm.spec.methods[method].method.toLowerCase()}}" ng-repeat="method in section.methods" ng-attr-id="{{vm.slugify(section.name + '-' + vm.spec.methods[method].method + ' ' + vm.spec.methods[method].location)}}">
@@ -74,7 +74,7 @@
                             <div class="toggle-content method-body" ng-hide="vm.spec.methods[method].__hide">
                                 <div ng-if="vm.spec.methods[method].description">
                                     <div class="label">Description</div>
-                                    <p class="description method-description" ng-bind="vm.spec.methods[method].description"></p>
+                                    <p class="description method-description" ng-bind-html="vm.spec.methods[method].description | lineBreak | unsafeHTML"></p>
                                 </div>
                                 <div class="requests">
                                     <div class="label">Request</div>
@@ -102,7 +102,7 @@
                                     <div class="response" ng-repeat="response in vm.spec.methods[method].response" ng-hide="response.__hide">
                                         <div ng-if="response.description">
                                             <div class="label method-sub-label">Description</div>
-                                            <p class="description response-description" ng-bind="response.description"></p>
+                                            <p class="description response-description" ng-bind-html="response.description | lineBreak | unsafeHTML"></p>
                                         </div>
                                         <div>
                                             <div class="label method-sub-label">Status</div>
@@ -151,9 +151,12 @@
             <td class="key">
                 <span ng-bind="schemaName"></span>
             </td>
+            <td class="type">
+                <span ng-class="{'is-reference': schema.type.toLowerCase() === 'reference'}" ng-click="vm.scrollToSchema(schema.tag)" ng-bind="schema.type.toLowerCase() === 'reference' ? schema.tag : schema.type"></span>
+            </td>
         </tr>
         <tr class="property-value">
-            <td>
+            <td colspan="2">
                 <div>
                     <table class="object" ng-init="properties = schema.properties" ng-include="'properties.html'"></table>
                 </div>
@@ -175,12 +178,20 @@
         </tr>
         <tr class="property-value" ng-repeat-end>
             <td colspan="3">
+                <div class="key-pattern" ng-if="!vm.isString(property.key)">
+                    <p class="description pattern" ng-if="property.key.pattern">
+                        <span ng-bind="property.key.pattern"></span>
+                    </p>
+                    <div ng-if="property.key.criteria && property.key.criteria.length" ng-init="criteria = property.key.criteria" ng-include="'criteria.html'" include-replace></div>
+                    <div ng-if="property.key.examples && property.key.examples.length" ng-init="examples = property.key.examples" ng-include="'examples.html'" include-replace></div>
+                </div>
                 <div ng-if="property.schema.type.toLowerCase() !== 'object'">
-                    <p class="description" ng-if="property.description" ng-bind="property.description"></p>
+                    <p class="description" ng-if="property.description" ng-bind-html="property.description | lineBreak | unsafeHTML"></p>
                     <div ng-if="property.schema.criteria && property.schema.criteria.length" ng-init="criteria = property.schema.criteria" ng-include="'criteria.html'" include-replace></div>
                     <div ng-if="property.schema.examples && property.schema.examples.length" ng-init="examples = property.schema.examples" ng-include="'examples.html'" include-replace></div>
                 </div>
                 <div ng-if="property.schema.type.toLowerCase() === 'object'">
+                    <p class="description" ng-if="property.description" ng-bind-html="property.description | lineBreak | unsafeHTML"></p>
                     <table class="object" ng-init="properties = property.schema.properties" ng-include="'properties.html'"></table>
                 </div>
             </td>
@@ -199,7 +210,7 @@
         <td class="monospace-text parameter-name" ng-bind="parameter.name"></td>
         <td class="parameter-frequency" ng-bind="parameter.frequency"></td>
         <td class="parameter-description">
-            <p ng-if="parameter.description" ng-bind="parameter.description"></p>
+            <p ng-if="parameter.description" ng-bind-html="parameter.description | lineBreak | unsafeHTML"></p>
             <div ng-if="parameter.criteria && parameter.criteria.length" ng-init="criteria = parameter.criteria" ng-include="'criteria.html'" include-replace></div>
             <div ng-if="parameter.examples && parameter.examples.length" ng-init="examples = parameter.examples" ng-include="'examples.html'" include-replace></div>
         </td>
@@ -248,5 +259,7 @@
     <script src="assets/js/apiFactory.js"></script>
     <script src="assets/js/apiController.js"></script>
     <script src="assets/js/directives/includeReplace.js"></script>
+    <script src="assets/js/filters/lineBreak.js"></script>
+    <script src="assets/js/filters/unsafeHTML.js"></script>
 </body>
 </html>

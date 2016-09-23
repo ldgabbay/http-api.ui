@@ -42,6 +42,9 @@ code {
 pre {
     margin: 0;
 }
+table {
+    width: 100%;
+}
 
 /* Global */
 .loading-container {
@@ -383,20 +386,38 @@ p + .list-container,
 .value-description + .list-container {
     margin-top: 10px;
 }
-.list-container:before {
+.list-container:before,
+.pattern:before {
     font-weight: 600;
 }
-.list-container ul {
+.list-container ul,
+.pattern span {
     margin: 0.5em 0;
 }
 .list-container li {
     word-wrap: break-word;
 }
 .criteria:before {
-    content: "Criteria";
+    content: "Criteria:";
 }
 .examples:before {
-    content: "Examples";
+    content: "Examples:";
+}
+.pattern:before {
+    content: "Pattern:";
+}
+.key-pattern .criteria:before {
+    content: "Key Criteria:";
+}
+.key-pattern .examples:before {
+    content: "Key Examples:";
+}
+.key-pattern .pattern:before {
+    content: "Key Pattern:";
+}
+.pattern span:before,
+.pattern span:after {
+    content: "/";
 }
 
 /* Schemas */
@@ -510,12 +531,19 @@ p + .list-container,
 .schema .list-container + .list-container {
     margin-top: 0.5em;
 }
-.schema .list-container ul {
+.schema .list-container ul,
+.schema .pattern span {
     margin-bottom: 0;
+}
+.schema .list-container ul {
     padding-left: 2.5em;
 }
 .schema .list-container:last-of-type ul {
     margin-bottom: 0.5em;
+}
+.schema .pattern span {
+    display: block;
+    padding-left: 1.5em;
 }
 
 /* Schema Parser Collapsed */
