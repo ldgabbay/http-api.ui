@@ -140,19 +140,19 @@
             </div>
             <div class="schemas-body" ng-if="vm.spec.schemas.json" ng-hide="vm.hideSchemas">
                 <div class="schema-container" ng-repeat="(schemaName, schema) in vm.spec.schemas.json">
-                    <table class="schema" ng-include="'schema.html'"></table>
+                    <table class="schema" ng-init="isRootSchema = true" ng-include="'schema.html'"></table>
                 </div>
             </div><!-- .schemas-body -->
         </div><!-- .schemas -->
     </div><!-- .container -->
 
     <script type="text/ng-template" id="schema.html">
-        <tr class="property" ng-attr-id="schema-{{vm.slugify(schemaName)}}" ng-class="{'expandable': schema.type.toLowerCase() === 'object' && schema.properties && schema.properties.length, 'collapsed': !schema.__show}" ng-click="schema.__show = !schema.__show">
+        <tr class="property" ng-attr-id="{{isRootSchema ? 'schema-' + vm.slugify(schemaName) : null}}" ng-class="{'expandable': vm.isExpandable(null, schema), 'collapsed': !schema.__show}" ng-click="schema.__show = !schema.__show">
             <td class="key">
                 <span ng-bind="schemaName"></span>
             </td>
             <td class="type">
-                <span ng-class="{'is-reference': schema.type.toLowerCase() === 'reference'}" ng-click="vm.scrollToSchema(schema.tag)" ng-bind="schema.type.toLowerCase() === 'reference' ? schema.tag : schema.type"></span>
+                <span ng-bind="schema.type"></span>
             </td>
         </tr>
         <tr class="property-value">
@@ -165,7 +165,7 @@
     </script>
 
     <script type="text/ng-template" id="properties.html">
-        <tr class="property" ng-repeat-start="property in properties" ng-class="{'expandable': (property.schema.type.toLowerCase() === 'object' && property.schema.properties && property.schema.properties.length) || property.description || (property.schema.criteria && property.schema.criteria.length) || (property.schema.examples && property.schema.examples.length), 'collapsed': !property.__show}" ng-click="property.__show = !property.__show">
+        <tr class="property" ng-repeat-start="property in properties" ng-class="{'expandable': vm.isExpandable(property, property.schema), 'collapsed': !property.__show}" ng-click="property.__show = !property.__show">
             <td class="key">
                 <span ng-class="{'is-regex': !vm.isString(property.key)}" ng-bind="vm.isString(property.key) ? property.key : 'any'"></span>
             </td>
@@ -173,7 +173,7 @@
                 <span ng-if="property.frequency" ng-bind="property.frequency"></span>
             </td>
             <td class="type">
-                <span ng-class="{'is-reference': property.schema.type.toLowerCase() === 'reference'}" ng-click="vm.scrollToSchema(property.schema.tag)" ng-bind="property.schema.type.toLowerCase() === 'reference' ? property.schema.tag : property.schema.type"></span>
+                <span ng-class="{'is-reference': property.schema.type.toLowerCase() === 'reference'}" ng-click="vm.scrollToSchema(property.schema.type.toLowerCase() === 'reference' ? property.schema.tag : null)" ng-bind="property.schema.type.toLowerCase() === 'inline' ? 'schema' : property.schema.type.toLowerCase() === 'reference' ? property.schema.tag : property.schema.type"></span>
             </td>
         </tr>
         <tr class="property-value" ng-repeat-end>
@@ -193,6 +193,9 @@
                 <div ng-if="property.schema.type.toLowerCase() === 'object'">
                     <p class="description" ng-if="property.description" ng-bind-html="property.description | lineBreak | unsafeHTML"></p>
                     <table class="object" ng-init="properties = property.schema.properties" ng-include="'properties.html'"></table>
+                </div>
+                <div ng-if="property.schema.type.toLowerCase() === 'inline'">
+                    <table class="object" ng-init="properties = vm.copyObject(vm.spec.schemas.json[property.schema.tag].properties)" ng-include="'properties.html'"></table>
                 </div>
             </td>
         </tr>
@@ -241,6 +244,9 @@
             <span class="body-reference-label">Reference:</span>
             <span class="monospace-text body-reference-value" ng-click="vm.scrollToSchema(body.schema.tag)" ng-bind="body.schema.tag"></span>
         </p>
+        <div class="schema-container" ng-if="body.type.toLowerCase() === 'json' && body.schema.type.toLowerCase() === 'inline'" ng-init="schemaName = body.schema.tag; schema = vm.copyObject(vm.spec.schemas.json[body.schema.tag])">
+            <table class="schema" ng-include="'schema.html'"></table>
+        </div>
         <p class="description body-type" ng-if="body.type.toLowerCase() !== 'form' && body.type.toLowerCase() !== 'json'">
             <span class="body-type-label">Type:</span>
             <span class="body-type-value" ng-bind="body.type"></span>

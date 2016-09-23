@@ -244,34 +244,41 @@ body.loading .api-container {
 .method-body {
     padding: 0 10px 10px;
 }
-.method table,
-.method tr {
+.method .parameter-list,
+.method .parameter-list tr {
     width: 100%;
     border-bottom: 1px solid #F8F8F8;
 }
-.method table {
+.method .parameter-list {
     table-layout: fixed;
     border-collapse: collapse;
     font-size: 13px;
     text-align: left;
 }
-.method tr:last-child {
+.method .parameter-list tr:last-child {
     border-bottom: 0;
 }
-.method thead {
+.method .parameter-list thead {
     background-color: #F8F8F8;
     font-weight: 600;
 }
-.method th {
+.method .parameter-list th {
     padding: 5px 10px;
     vertical-align: bottom;
 }
-.method td {
+.method .parameter-list td {
     padding: 10px;
     vertical-align: top;
 }
-.method tbody tr:nth-child(even) {
+.method .parameter-list tbody tr:nth-child(even) {
     background-color: #F9F9F9;
+}
+.method .schema-container {
+    border: 0;
+    padding: 0;
+}
+.method .schema {
+    margin: 0;
 }
 
 /* Method - GET */
@@ -390,8 +397,7 @@ p + .list-container,
 .pattern:before {
     font-weight: 600;
 }
-.list-container ul,
-.pattern span {
+.list-container ul {
     margin: 0.5em 0;
 }
 .list-container li {
@@ -414,6 +420,9 @@ p + .list-container,
 }
 .key-pattern .pattern:before {
     content: "Key Pattern:";
+}
+.pattern span {
+    padding-left: 0.5em;
 }
 .pattern span:before,
 .pattern span:after {
@@ -457,7 +466,14 @@ p + .list-container,
 
 /* Schema Parser */
 .schema-container {
-    padding: 5px 10px;
+    padding: 0 20px;
+    border-width: 1px 1px 0;
+    border-style: solid;
+    border-color: #DDD;
+    overflow: hidden;
+}
+.schema-container:last-of-type {
+    border-bottom-width: 1px;
 }
 .schema-container:nth-child(even) {
     background-color: #F8F8F8;
@@ -465,6 +481,9 @@ p + .list-container,
 .schema,
 .schema .object {
     border-collapse: collapse;
+}
+.schema {
+    margin: 20px 0;
 }
 .schema .key,
 .schema .frequency,
@@ -531,8 +550,7 @@ p + .list-container,
 .schema .list-container + .list-container {
     margin-top: 0.5em;
 }
-.schema .list-container ul,
-.schema .pattern span {
+.schema .list-container ul {
     margin-bottom: 0;
 }
 .schema .list-container ul {
@@ -540,10 +558,6 @@ p + .list-container,
 }
 .schema .list-container:last-of-type ul {
     margin-bottom: 0.5em;
-}
-.schema .pattern span {
-    display: block;
-    padding-left: 1.5em;
 }
 
 /* Schema Parser Collapsed */

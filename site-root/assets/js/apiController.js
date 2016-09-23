@@ -15,9 +15,11 @@
             jsonTabSize: 2
         };
 
+        vm.copyObject = copyObject;
         vm.hideSchemas = false;
         vm.isBodyList = isBodyList;
         vm.isEmptyObject = isEmptyObject;
+        vm.isExpandable = isExpandable;
         vm.isParameterList = isParameterList;
         vm.isRegEx = isRegEx;
         vm.isString = isString;
@@ -87,9 +89,22 @@
         function isBodyList(requestType) {
             return requestType.toLowerCase() === 'body';
         }
-        
+
+        function copyObject(obj) {
+            return angular.copy(obj);
+        }
+
         function isEmptyObject(obj) {
             return angular.equals({}, obj);
+        }
+
+        function isExpandable(property, schema) {
+            return (property && property.description)
+                || (property && !isString(property.key) && (property.key.pattern || (property.key.criteria && property.key.criteria.length) || (property.key.examples && property.key.examples.length)))
+                || (schema.type.toLowerCase() === 'object' && schema.properties && schema.properties.length)
+                || (schema.criteria && schema.criteria.length)
+                || (schema.examples && schema.examples.length)
+                || (schema.type.toLowerCase() === 'inline' && vm.spec.schemas.json[schema.tag] && vm.spec.schemas.json[schema.tag].properties && vm.spec.schemas.json[schema.tag].properties.length);
         }
         
         function isParameterList(requestType) {
