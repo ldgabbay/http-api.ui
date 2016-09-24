@@ -1,4 +1,4 @@
-(function(){
+(function() {
     'use strict';
 
     angular
@@ -25,6 +25,7 @@
         vm.isString = isString;
         vm.loading = false;
         vm.prettifyJsonObject = prettifyJsonObject;
+        vm.propertyHasDetails = propertyHasDetails;
         vm.scrollToMethod = scrollToMethod;
         vm.scrollToSchema = scrollToSchema;
         vm.slugify = slugify;
@@ -35,6 +36,7 @@
         vm.toggleFirstResponse = toggleFirstResponse;
         vm.toggleParameterType = toggleParameterType;
         vm.toggleResponse = toggleResponse;
+        vm.transformItemsToProperties = transformItemsToProperties;
 
         activate();
 
@@ -74,7 +76,7 @@
             vm.loading = true;
             vm.spec = null;
 
-            $timeout(function(){
+            $timeout(function() {
                 api.get(url)
                 .then(function(response) {
                     vm.spec = response;
@@ -104,7 +106,8 @@
                 || (schema.type.toLowerCase() === 'object' && schema.properties && schema.properties.length)
                 || (schema.criteria && schema.criteria.length)
                 || (schema.examples && schema.examples.length)
-                || (schema.type.toLowerCase() === 'inline' && vm.spec.schemas.json[schema.tag] && vm.spec.schemas.json[schema.tag].properties && vm.spec.schemas.json[schema.tag].properties.length);
+                || (schema.type.toLowerCase() === 'inline' && vm.spec.schemas.json[schema.tag] && vm.spec.schemas.json[schema.tag].properties && vm.spec.schemas.json[schema.tag].properties.length)
+                || (schema.type.toLowerCase() === 'array' && schema.items && schema.items.length);
         }
         
         function isParameterList(requestType) {
@@ -127,6 +130,12 @@
             return JSON.stringify(obj, null, options.jsonTabSize);
         }
 
+        function propertyHasDetails(property) {
+            return property.description
+                || (property.schema.criteria && property.schema.criteria.length)
+                || (property.schema.examples && property.schema.examples.length);
+        }
+
         function scrollToMethod(section, method) {
             var id = section.name;
             section.__hide = false;
@@ -136,7 +145,7 @@
                 method.__hide = false;
             }
             
-            $timeout(function(){
+            $timeout(function() {
                 $anchorScroll(vm.slugify(id));
             });
         }
@@ -154,7 +163,7 @@
                 slug = 'schema-' + vm.slugify(name);
             }
 
-            $timeout(function(){
+            $timeout(function() {
                 $anchorScroll(slug);
             });
         }
@@ -196,6 +205,13 @@
             });
 
             response.__hide = false;
+        }
+
+        function transformItemsToProperties(items) {
+            return items.map(function(item) {
+                item.key = item.index;
+                return item;
+            });
         }
     }
 })();

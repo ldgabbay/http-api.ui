@@ -185,17 +185,19 @@
                     <div ng-if="property.key.criteria && property.key.criteria.length" ng-init="criteria = property.key.criteria" ng-include="'criteria.html'" include-replace></div>
                     <div ng-if="property.key.examples && property.key.examples.length" ng-init="examples = property.key.examples" ng-include="'examples.html'" include-replace></div>
                 </div>
-                <div ng-if="property.schema.type.toLowerCase() !== 'object'">
+                <div ng-if="vm.propertyHasDetails(property)">
                     <p class="description" ng-if="property.description" ng-bind-html="property.description | lineBreak | unsafeHTML"></p>
                     <div ng-if="property.schema.criteria && property.schema.criteria.length" ng-init="criteria = property.schema.criteria" ng-include="'criteria.html'" include-replace></div>
                     <div ng-if="property.schema.examples && property.schema.examples.length" ng-init="examples = property.schema.examples" ng-include="'examples.html'" include-replace></div>
                 </div>
                 <div ng-if="property.schema.type.toLowerCase() === 'object'">
-                    <p class="description" ng-if="property.description" ng-bind-html="property.description | lineBreak | unsafeHTML"></p>
                     <table class="object" ng-init="properties = property.schema.properties" ng-include="'properties.html'"></table>
                 </div>
                 <div ng-if="property.schema.type.toLowerCase() === 'inline'">
                     <table class="object" ng-init="properties = vm.copyObject(vm.spec.schemas.json[property.schema.tag].properties)" ng-include="'properties.html'"></table>
+                </div>
+                <div ng-if="property.schema.type.toLowerCase() === 'array'">
+                    <table class="object" ng-init="properties = vm.transformItemsToProperties(property.schema.items)" ng-include="'properties.html'"></table>
                 </div>
             </td>
         </tr>
