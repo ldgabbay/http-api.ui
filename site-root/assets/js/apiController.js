@@ -22,6 +22,7 @@
         vm.isExpandable = isExpandable;
         vm.isParameterList = isParameterList;
         vm.isRegEx = isRegEx;
+        vm.isSet = isSet;
         vm.isString = isString;
         vm.loading = false;
         vm.prettifyJsonObject = prettifyJsonObject;
@@ -120,6 +121,10 @@
             }
 
             return input[0] === '/' && input[input.length - 1] === '/';
+        }
+
+        function isSet(property) {
+            return typeof property !== 'undefined';
         }
 
         function isString(input) {

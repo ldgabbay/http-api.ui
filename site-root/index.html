@@ -167,7 +167,7 @@
     <script type="text/ng-template" id="properties.html">
         <tr class="property" ng-repeat-start="property in properties" ng-class="{'expandable': vm.isExpandable(property, property.schema), 'collapsed': !property.__show}" ng-click="property.__show = !property.__show">
             <td class="key">
-                <span ng-class="{'is-regex': !vm.isString(property.key)}" ng-bind="vm.isString(property.key) ? property.key : 'any'"></span>
+                <span ng-class="{'is-regex': !vm.isString(property.key), 'is-array-index': vm.isSet(property.index)}" ng-bind="vm.isString(property.key) ? property.key : 'any'"></span>
             </td>
             <td class="frequency">
                 <span ng-if="property.frequency" ng-bind="property.frequency"></span>

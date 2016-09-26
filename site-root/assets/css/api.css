@@ -518,13 +518,20 @@ p + .list-container,
     top: 0;
     left: 0;
 }
-.schema .object .key span.is-regex {
+.schema .object .key span.is-regex,
+.schema .object .key span.is-array-index {
     color: #2392F7;
 }
 .schema .object .key span:not(.is-regex):before,
 .schema .object .key span:not(.is-regex):after {
     content: "\"";
     color: #434A54;
+}
+.schema .object .key span.is-array-index:before {
+    content: "[";
+}
+.schema .object .key span.is-array-index:after {
+    content: "]";
 }
 .schema .key span {
     color: #008080;
