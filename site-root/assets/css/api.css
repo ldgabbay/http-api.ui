@@ -496,9 +496,11 @@ p + .list-container,
 .schema .property-value > td {
     padding-right: 1.5em;
 }
-.schema .key,
-.schema .frequency {
+.schema .property td {
     width: 1px;
+}
+.schema .property td:last-of-type {
+    width: auto
 }
 .schema .key {
     padding-left: 1.5em;
@@ -533,10 +535,12 @@ p + .list-container,
 .schema .object .key span.is-array-index:after {
     content: "]";
 }
-.schema .key span {
+.schema .key span,
+.schema .type span.is-inline {
     color: #008080;
 }
-.schema .type span {
+.schema .type span,
+.schema .type-inline span {
     color: #D14;
 }
 .schema .type span.is-reference {

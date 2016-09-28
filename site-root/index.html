@@ -173,11 +173,14 @@
                 <span ng-if="property.frequency" ng-bind="property.frequency"></span>
             </td>
             <td class="type">
-                <span ng-class="{'is-reference': property.schema.type.toLowerCase() === 'reference'}" ng-click="vm.scrollToSchema(property.schema.type.toLowerCase() === 'reference' ? property.schema.tag : null)" ng-bind="(property.schema.type.toLowerCase() === 'inline' || property.schema.type.toLowerCase() === 'reference') ? property.schema.tag : property.schema.type"></span>
+                <span ng-class="{'is-reference': property.schema.type.toLowerCase() === 'reference', 'is-inline': property.schema.type.toLowerCase() === 'inline'}" ng-click="vm.scrollToSchema(property.schema.type.toLowerCase() === 'reference' ? property.schema.tag : null)" ng-bind="(property.schema.type.toLowerCase() === 'inline' || property.schema.type.toLowerCase() === 'reference') ? property.schema.tag : property.schema.type"></span>
+            </td>
+            <td class="type-inline">
+                <span ng-bind="property.schema.type.toLowerCase() === 'inline' ? vm.spec.schemas.json[property.schema.tag].type : ''"></span>
             </td>
         </tr>
         <tr class="property-value" ng-repeat-end>
-            <td colspan="3">
+            <td colspan="4">
                 <div class="key-pattern" ng-if="!vm.isString(property.key)">
                     <p class="description pattern" ng-if="property.key.pattern">
                         <span ng-bind="property.key.pattern"></span>
