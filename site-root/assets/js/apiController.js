@@ -137,8 +137,8 @@
 
         function propertyHasDetails(property) {
             return property.description
-                || (property.schema.criteria && property.schema.criteria.length)
-                || (property.schema.examples && property.schema.examples.length);
+                || (property.schema && property.schema.criteria && property.schema.criteria.length)
+                || (property.schema && property.schema.examples && property.schema.examples.length);
         }
 
         function scrollToMethod(section, method) {
