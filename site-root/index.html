@@ -58,7 +58,7 @@
                 <div class="toggle-content section-body" ng-hide="section.__hide">
                     <div ng-if="section.description">
                         <div class="label">Description</div>
-                        <p class="description section-description" ng-bind-html="section.description | lineBreak | unsafeHTML"></p>
+                        <p class="description section-description" ng-bind-html="section.description | unsafeHTML"></p>
                     </div>
                     <div class="methods">
                         <div class="method {{'method-' + vm.spec.methods[method].method.toLowerCase()}}" ng-repeat="method in section.methods" ng-attr-id="{{vm.slugify(section.name + '-' + vm.spec.methods[method].method + ' ' + vm.spec.methods[method].location)}}">
@@ -74,7 +74,7 @@
                             <div class="toggle-content method-body" ng-hide="vm.spec.methods[method].__hide">
                                 <div ng-if="vm.spec.methods[method].description">
                                     <div class="label">Description</div>
-                                    <p class="description method-description" ng-bind-html="vm.spec.methods[method].description | lineBreak | unsafeHTML"></p>
+                                    <p class="description method-description" ng-bind-html="vm.spec.methods[method].description | unsafeHTML"></p>
                                 </div>
                                 <div class="requests">
                                     <div class="label">Request</div>
@@ -102,7 +102,7 @@
                                     <div class="response" ng-repeat="response in vm.spec.methods[method].response" ng-hide="response.__hide">
                                         <div ng-if="response.description">
                                             <div class="label method-sub-label">Description</div>
-                                            <p class="description response-description" ng-bind-html="response.description | lineBreak | unsafeHTML"></p>
+                                            <p class="description response-description" ng-bind-html="response.description | unsafeHTML"></p>
                                         </div>
                                         <div>
                                             <div class="label method-sub-label">Status</div>
@@ -189,7 +189,7 @@
                     <div ng-if="property.key.examples && property.key.examples.length" ng-init="examples = property.key.examples" ng-include="'examples.html'" include-replace></div>
                 </div>
                 <div ng-if="vm.propertyHasDetails(property)">
-                    <p class="description" ng-if="property.description" ng-bind-html="property.description | lineBreak | unsafeHTML"></p>
+                    <p class="description" ng-if="property.description" ng-bind-html="property.description | unsafeHTML"></p>
                     <div ng-if="property.schema.criteria && property.schema.criteria.length" ng-init="criteria = property.schema.criteria" ng-include="'criteria.html'" include-replace></div>
                     <div ng-if="property.schema.examples && property.schema.examples.length" ng-init="examples = property.schema.examples" ng-include="'examples.html'" include-replace></div>
                 </div>
@@ -218,7 +218,7 @@
         <td class="monospace-text parameter-name" ng-bind="parameter.name"></td>
         <td class="parameter-frequency" ng-bind="parameter.frequency"></td>
         <td class="parameter-description">
-            <p ng-if="parameter.description" ng-bind-html="parameter.description | lineBreak | unsafeHTML"></p>
+            <p ng-if="parameter.description" ng-bind-html="parameter.description | unsafeHTML"></p>
             <div ng-if="parameter.criteria && parameter.criteria.length" ng-init="criteria = parameter.criteria" ng-include="'criteria.html'" include-replace></div>
             <div ng-if="parameter.examples && parameter.examples.length" ng-init="examples = parameter.examples" ng-include="'examples.html'" include-replace></div>
         </td>
@@ -227,7 +227,7 @@
     <script type="text/ng-template" id="criteria.html">
         <div class="list-container criteria">
             <ul>
-                <li class="criterion" ng-repeat="criterion in criteria" ng-bind="criterion"></li>
+                <li class="criterion" ng-repeat="criterion in criteria" ng-bind-html="criterion | unsafeHTML"></li>
             </ul>
         </div>
     </script>
@@ -270,7 +270,6 @@
     <script src="assets/js/apiFactory.js"></script>
     <script src="assets/js/apiController.js"></script>
     <script src="assets/js/directives/includeReplace.js"></script>
-    <script src="assets/js/filters/lineBreak.js"></script>
     <script src="assets/js/filters/unsafeHTML.js"></script>
 </body>
 </html>
