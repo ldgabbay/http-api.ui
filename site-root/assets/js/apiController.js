@@ -5,14 +5,23 @@
         .module('api')
         .controller('apiController', apiController);
 
-    apiController.$inject = ['$anchorScroll', '$scope', '$timeout', 'api'];
+    apiController.$inject = ['$anchorScroll', '$scope', '$state', '$stateParams', '$timeout', 'api'];
     
-    function apiController($anchorScroll, $scope, $timeout, api) {
+    function apiController($anchorScroll, $scope, $state, $stateParams, $timeout, api) {
         var vm = this;
         var options = {
             specListUrl: 'specs.json',
             apiContainerSelector: '.api-container',
-            jsonTabSize: 2
+            jsonTabSize: 2,
+            stateChangeOptions: {
+                notify: false,
+                reload: false
+            },
+            stateChangeOptionsWithOverride: {
+                location: 'replace',
+                notify: false,
+                reload: false
+            }
         };
 
         vm.copyObject = copyObject;
@@ -56,10 +65,35 @@
                 vm.specList = response;
 
                 if (vm.specList.length) {
-                    vm.specUrl = vm.specList[0].path;
+                    if (!!$stateParams.spec) {
+                        var spec = $stateParams.spec.toLowerCase();
+
+                        for (var i = 0, len = vm.specList.length; i < len; i++) {
+                            if (vm.slugify(vm.specList[i].name) === spec) {
+                                vm.specUrl = vm.specList[i].path;
+                                
+                                break;
+                            }
+                        }
+                    }
+
+                    if (!vm.specUrl) {
+                        vm.specUrl = vm.specList[0].path;
+                    }
 
                     $scope.$watch('vm.specUrl', function(newVal, oldVal) {
                         getApiSpecificicationJson(newVal);
+
+                        for (var i = 0, len = vm.specList.length; i < len; i++) {
+                            if (vm.specList[i].path === newVal) {
+                                $state.go('apiDeeplink', {
+                                    spec: vm.slugify(vm.specList[i].name),
+                                    section: $stateParams.section
+                                }, options.stateChangeOptionsWithOverride);
+
+                                break;
+                            }
+                        }
                     });
                 } else {
                     alert('No API specifications found.');
@@ -81,6 +115,10 @@
                 api.get(url)
                 .then(function(response) {
                     vm.spec = response;
+
+                    if (!!$stateParams.section) {
+                        _scrollToSection($stateParams.section);
+                    }
                 }, function(response) {
                     alert('An error occurred while retrieving API specifications from ' + url);
                 })['finally'](function() {
@@ -141,21 +179,27 @@
                 || (property.schema && property.schema.examples && property.schema.examples.length);
         }
 
-        function scrollToMethod(section, method) {
+        function scrollToMethod(section, method, overrideState) {
             var id = section.name;
             section.__hide = false;
             
             if (method) {
                 id += '-' + method.method + '-' + method.location;
                 method.__hide = false;
+
             }
             
+            $state.go('apiDeeplink', {
+                spec: $stateParams.spec,
+                section: vm.slugify(id)
+            }, overrideState ? options.stateChangeOptionsWithOverride : options.stateChangeOptions);
+
             $timeout(function() {
                 $anchorScroll(vm.slugify(id));
             });
         }
 
-        function scrollToSchema(name) {
+        function scrollToSchema(name, overrideState) {
             if (!name) {
                 return;
             }
@@ -168,6 +212,11 @@
                 slug = 'schema-' + vm.slugify(name);
             }
 
+            $state.go('apiDeeplink', {
+                spec: $stateParams.spec,
+                section: slug
+            }, overrideState ? options.stateChangeOptionsWithOverride : options.stateChangeOptions);
+
             $timeout(function() {
                 $anchorScroll(slug);
             });
@@ -175,11 +224,11 @@
 
         function slugify(str) {
             return str.toString().toLowerCase()
-            .replace(/\s+/g, '-')           // Replace spaces with -
-            .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-            .replace(/\-\-+/g, '-')         // Replace multiple - with single -
-            .replace(/^-+/, '')             // Trim - from start of text
-            .replace(/-+$/, '');            // Trim - from end of text
+                .replace(/\s+/g, '-')       // Replace spaces with -
+                .replace(/[^\w\-]+/g, '')   // Remove all non-word chars
+                .replace(/\-\-+/g, '-')     // Replace multiple - with single -
+                .replace(/^-+/, '')         // Trim - from start of text
+                .replace(/-+$/, '');        // Trim - from end of text
         }
 
         function toggleFirstParameterType(index, requestObj, requestType) {
@@ -217,6 +266,34 @@
                 item.key = item.index;
                 return item;
             });
+        }
+
+        function _scrollToSection(section) {
+            section = section.toLowerCase();
+
+            var schemas = [];
+            for (var key in vm.spec.schemas.json) {
+                if (vm.spec.schemas.json.hasOwnProperty(key) && ('schema-' + vm.slugify(key)) === section) {
+                    vm.scrollToSchema(key, true);
+                    return;
+                }
+            }
+            
+            for (var i = 0, len = vm.spec.sections.length; i < len; i++) {
+                if (vm.slugify(vm.spec.sections[i].name) === section) {
+                    vm.scrollToMethod(vm.spec.sections[i], null, true);
+                    return;
+                }
+            }
+
+            for (var j = 0, lenJ = vm.spec.sections.length; j < lenJ; j++) {
+                for (var k = 0, lenK = vm.spec.sections[j].methods.length; k < lenK; k++) {
+                    if (vm.slugify(vm.spec.sections[j].name + '-' + vm.spec.sections[j].methods[k]) === section && vm.spec.methods[vm.spec.sections[j].methods[k]]) {
+                        vm.scrollToMethod(vm.spec.sections[j], vm.spec.methods[vm.spec.sections[j].methods[k]], true);
+                        return;
+                    }
+                }
+            }
         }
     }
 })();

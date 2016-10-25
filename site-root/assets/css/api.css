@@ -47,15 +47,19 @@ table {
 }
 
 /* Global */
+.loading,
+.loading-container {
+    height: 100%;
+}
 .loading-container {
     display: none;
     width: 100%;
     height: 100%;
 }
-body.loading .loading-container {
+.loading .loading-container {
     display: table;
 }
-body.loading .api-container {
+.loading .api-container {
     display: none;
 }
 .monospace-text {
