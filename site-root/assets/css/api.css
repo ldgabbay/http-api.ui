@@ -475,7 +475,7 @@ p + .list-container,
 
 /* Schema Parser */
 .schema-container {
-    padding: 0 20px;
+    padding: 5px;
     border-width: 1px 1px 0;
     border-style: solid;
     border-color: #DDD;
@@ -487,34 +487,16 @@ p + .list-container,
 .schema-container:nth-child(even) {
     background-color: #F8F8F8;
 }
-.schema,
-.schema .object {
-    border-collapse: collapse;
-}
 .schema {
-    margin: 20px 0;
-}
-.schema .key,
-.schema .frequency,
-.schema .type,
-.schema .property-value > td {
-    padding-right: 1.5em;
+    border-collapse: collapse;
+    color: #888;
 }
 .schema .property td {
     width: 1px;
+    padding-left: 1.5em;
 }
 .schema .property td:last-of-type {
     width: auto
-}
-.schema .key {
-    padding-left: 1.5em;
-}
-.schema .key {
-    position: relative;
-}
-.schema .key:before,
-.schema .frequency span {
-    color: #434A54;
 }
 .schema .property.expandable .key:before {
     content: "\25BC";
@@ -524,71 +506,39 @@ p + .list-container,
     top: 0;
     left: 0;
 }
-.schema .object .key span.is-regex,
-.schema .object .key span.is-array-index {
-    color: #2392F7;
-}
-.schema .object .key span:not(.is-regex):before,
-.schema .object .key span:not(.is-regex):after {
-    content: "\"";
-    color: #434A54;
-}
-.schema .object .key span.is-array-index:before {
-    content: "[";
-}
-.schema .object .key span.is-array-index:after {
-    content: "]";
-}
-.schema .key span,
-.schema .type span.is-inline {
+.schema .key {
+    position: relative;
     color: #008080;
 }
-.schema .type span,
-.schema .type-inline span {
+.schema .key.is-regex,
+.schema .key.is-array-index {
+    color: #2392F7;
+}
+.schema .key:before,
+.schema .frequency,
+.schema .key.is-array-index span:before,
+.schema .key.is-array-index span:after {
+    color: #434A54;
+}
+.schema .key.is-array-index span:before {
+    content: "[";
+}
+.schema .key.is-array-index span:after {
+    content: "]";
+}
+.schema .type {
     color: #D14;
 }
-.schema .type span.is-reference {
-    cursor: pointer;
+.schema .property-properties {
+    border: 1px solid #DDD;
 }
-.schema .type span.is-reference:hover {
-    border-bottom: 1px dotted #D14;
-}
-.schema .property-value {
-    color: #888;
-}
-.schema .property-value > td {
-    padding-left: 1.5em;
-}
-.schema .description {
-    margin: 0;
-}
-.schema .description,
-.schema .list-container {
-    margin-left: 1.5em;
-}
-.schema p + .list-container,
-.schema .list-container + .list-container {
-    margin-top: 0.5em;
-}
-.schema .list-container ul {
-    margin-bottom: 0;
-}
-.schema .list-container ul {
-    padding-left: 2.5em;
-}
-.schema .list-container:last-of-type ul {
-    margin-bottom: 0.5em;
+.schema .property-properties > td {
+    padding: 5px;
 }
 
 /* Schema Parser Collapsed */
 .schema .property.expandable {
     cursor: pointer;
-}
-.schema .property:not(.expandable) + .property-value {
-    display: none;
-}
-.schema .property.collapsed + .property-value {
-    display: none;
 }
 .schema .property.expandable.collapsed .key:before {
     content: "\25B6";

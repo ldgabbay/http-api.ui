@@ -42,6 +42,7 @@
         vm.spec = null;
         vm.specList = null;
         vm.specUrl = null;
+        vm.specName = null;
         vm.toggleFirstParameterType = toggleFirstParameterType;
         vm.toggleFirstResponse = toggleFirstResponse;
         vm.toggleParameterType = toggleParameterType;
@@ -71,7 +72,7 @@
                         for (var i = 0, len = vm.specList.length; i < len; i++) {
                             if (vm.slugify(vm.specList[i].name) === spec) {
                                 vm.specUrl = vm.specList[i].path;
-                                
+                                vm.specName = vm.specList[i].name;
                                 break;
                             }
                         }
@@ -79,6 +80,7 @@
 
                     if (!vm.specUrl) {
                         vm.specUrl = vm.specList[0].path;
+                        vm.specName = vm.specList[0].name;
                     }
 
                     $scope.$watch('vm.specUrl', function(newVal, oldVal) {
@@ -86,9 +88,10 @@
 
                         for (var i = 0, len = vm.specList.length; i < len; i++) {
                             if (vm.specList[i].path === newVal) {
+                                vm.specName = vm.specList[i].name;
+
                                 $state.go('apiDeeplink', {
-                                    spec: vm.slugify(vm.specList[i].name),
-                                    section: $stateParams.section
+                                    spec: vm.slugify(vm.specName)
                                 }, options.stateChangeOptionsWithOverride);
 
                                 break;
@@ -140,13 +143,8 @@
         }
 
         function isExpandable(property, schema) {
-            return (property && property.description)
-                || (property && !isString(property.key) && (property.key.pattern || (property.key.criteria && property.key.criteria.length) || (property.key.examples && property.key.examples.length)))
-                || (schema.type.toLowerCase() === 'object' && schema.properties && schema.properties.length)
-                || (schema.criteria && schema.criteria.length)
-                || (schema.examples && schema.examples.length)
-                || (schema.type.toLowerCase() === 'inline' && vm.spec.schemas.json[schema.tag] && vm.spec.schemas.json[schema.tag].properties && vm.spec.schemas.json[schema.tag].properties.length)
-                || (schema.type.toLowerCase() === 'array' && schema.items && schema.items.length);
+            return (property.schema.type === 'object' && property.schema.properties && property.schema.properties.length)
+                || (property.schema.type === 'array' && property.schema.items && property.schema.items.length);
         }
         
         function isParameterList(requestType) {
@@ -186,11 +184,10 @@
             if (method) {
                 id += '-' + method.method + '-' + method.location;
                 method.__hide = false;
-
             }
             
             $state.go('apiDeeplink', {
-                spec: $stateParams.spec,
+                spec: vm.slugify(vm.specName),
                 section: vm.slugify(id)
             }, overrideState ? options.stateChangeOptionsWithOverride : options.stateChangeOptions);
 
@@ -213,7 +210,7 @@
             }
 
             $state.go('apiDeeplink', {
-                spec: $stateParams.spec,
+                spec: vm.slugify(vm.specName),
                 section: slug
             }, overrideState ? options.stateChangeOptionsWithOverride : options.stateChangeOptions);
 
@@ -263,6 +260,7 @@
 
         function transformItemsToProperties(items) {
             return items.map(function(item) {
+                item.isArrayIndex = true;
                 item.key = item.index;
                 return item;
             });
