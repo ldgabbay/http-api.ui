@@ -192,7 +192,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="property-value" ng-if="property.value.criteria || property.value.examples || property.value.type === 'array' || property.value.type === 'object' || property.value.ref || property.value.format.ref" ng-class="{'has-criteria-or-examples': (property.value.criteria || property.value.examples)}">
+                        <div class="property-value" ng-if="property.value.criteria || property.value.examples || property.value.type === 'array' || property.value.type === 'object' || property.value.ref || property.value.format.ref" ng-class="{'has-criteria-or-examples': (property.value.criteria || property.value.examples || vm.spec.schemas.string[property.value.format.ref].criteria || vm.spec.schemas.string[property.value.format.ref].examples)}">
                             <table class="criteria-and-examples" ng-if="property.value.criteria || property.value.examples || property.value.format.ref">
                                 <tbody>
                                     <td>
