@@ -30,12 +30,8 @@
         vm.isEmptyObject = isEmptyObject;
         vm.isExpandable = isExpandable;
         vm.isParameterList = isParameterList;
-        vm.isRegEx = isRegEx;
-        vm.isSet = isSet;
         vm.isString = isString;
         vm.loading = false;
-        vm.prettifyJsonObject = prettifyJsonObject;
-        vm.propertyHasDetails = propertyHasDetails;
         vm.scrollToMethod = scrollToMethod;
         vm.scrollToSchema = scrollToSchema;
         vm.slugify = slugify;
@@ -43,7 +39,6 @@
         vm.specList = null;
         vm.specUrl = null;
         vm.specName = null;
-        vm.toggleFirstParameterType = toggleFirstParameterType;
         vm.toggleFirstResponse = toggleFirstResponse;
         vm.toggleParameterType = toggleParameterType;
         vm.toggleResponse = toggleResponse;
@@ -142,39 +137,21 @@
             return angular.equals({}, obj);
         }
 
-        function isExpandable(property, schema) {
-            return (property.schema.type === 'object' && property.schema.properties && property.schema.properties.length)
-                || (property.schema.type === 'array' && property.schema.items && property.schema.items.length);
+        function isExpandable(property) {
+            return ((property.value.type === 'object' || property.value.type === 'array')
+                && ((property.value.properties && property.value.properties.length) || (property.value.items && property.value.items.length)))
+                || (property.value.criteria && property.value.criteria.length)
+                || (property.value.examples && property.value.examples.length)
+                || property.value.ref
+                || (property.value.format && property.value.format.ref);
         }
         
         function isParameterList(requestType) {
             return ['path', 'query', 'header'].indexOf(requestType.toLowerCase()) !== -1;
         }
 
-        function isRegEx(input) {
-            if (!input || typeof input !== 'string' || input.length === 0) {
-                return false;
-            }
-
-            return input[0] === '/' && input[input.length - 1] === '/';
-        }
-
-        function isSet(property) {
-            return typeof property !== 'undefined';
-        }
-
         function isString(input) {
             return typeof input === 'string';
-        }
-
-        function prettifyJsonObject(obj) {
-            return JSON.stringify(obj, null, options.jsonTabSize);
-        }
-
-        function propertyHasDetails(property) {
-            return property.description
-                || (property.schema && property.schema.criteria && property.schema.criteria.length)
-                || (property.schema && property.schema.examples && property.schema.examples.length);
         }
 
         function scrollToMethod(section, method, overrideState) {
@@ -226,12 +203,6 @@
                 .replace(/\-\-+/g, '-')     // Replace multiple - with single -
                 .replace(/^-+/, '')         // Trim - from start of text
                 .replace(/-+$/, '');        // Trim - from end of text
-        }
-
-        function toggleFirstParameterType(index, requestObj, requestType) {
-            if (index === 0) {
-                vm.toggleParameterType(requestObj, requestType);
-            }
         }
 
         function toggleFirstResponse(index, responses, response) {

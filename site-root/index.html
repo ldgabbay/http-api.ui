@@ -145,57 +145,70 @@
                         <div class="toggle-header-title">Schemas</div>
                     </div>
                     <div class="schemas-body" ng-if="vm.spec.schemas.json" ng-hide="vm.hideSchemas">
-                        <div class="schema-container" ng-if="schema.type === 'object'" ng-init="schema.key = schemaName; schema.schema.type = schema.type; schema.schema.properties = schema.properties; properties = [schema]" ng-attr-id="{{'schema-' + vm.slugify(schemaName)}}" ng-include="'schema.html'" ng-repeat-start="(schemaName, schema) in vm.spec.schemas.json"></div>
-                        <div class="schema-container" ng-if="schema.type === 'array'" ng-init="schema.key = schemaName; schema.schema.type = schema.type; schema.schema.items = vm.transformItemsToProperties(schema.items); properties = [schema]" ng-attr-id="{{'schema-' + vm.slugify(schemaName)}}" ng-include="'schema.html'" ng-repeat-end></div>
+                        <div class="schema-container"
+                             ng-init="isRootSchema = true; property.key = propertyName; property.value.type = property.type; property.value.properties = (property.type === 'array' ? vm.transformItemsToProperties(property.items) : (property.type === 'object' ? property.properties : null)); properties = [property]"
+                             ng-attr-id="{{'schema-' + vm.slugify(propertyName)}}"
+                             ng-include="'schemaJson.html'"
+                             ng-repeat="(propertyName, property) in vm.spec.schemas.json">
+                        </div>
                     </div><!-- .schemas-body -->
                 </div><!-- .schemas -->
             </div><!-- .container -->
         </div>
     </script>
 
-    <script type="text/ng-template" id="schema.html">
-        <table class="schema">
-            <tr class="property" ng-repeat-start="property in properties" ng-class="{'expandable': vm.isExpandable(property), 'collapsed': !property.__show}" ng-click="property.__show = !property.__show">
-                <td class="key" ng-class="{'is-regex': !vm.isString(property.key), 'is-array-index': property.isArrayIndex}">
-                    <span ng-bind="vm.isString(property.key) ? property.key : 'any'"></span>
-                </td>
-                <td class="frequency">
-                    <span ng-bind="property.frequency"></span>
-                </td>
-                <td class="shortened-representation">
-                    <div ng-if="property.schema.type !== 'object' && property.schema.type !== 'array'">
-                        <div class="type">
-                            <span ng-bind="property.schema.type"></span>
+    <script type="text/ng-template" id="schemaJson.html">
+        <table class="schema" ng-class="{'schema-root': isRootSchema}">
+            <tbody>
+                <tr class="property" ng-repeat-start="property in properties" ng-class="{'expandable': vm.isExpandable(property), 'collapsed': !property.__show}" ng-click="property.__show = !property.__show">
+                    <td class="key" ng-class="{'is-regex': !vm.isString(property.key), 'is-array-index': property.isArrayIndex}">
+                        <span ng-bind="vm.isString(property.key) ? property.key : 'any'"></span>
+                    </td>
+                    <td class="frequency">
+                        <span ng-bind="property.frequency"></span>
+                    </td>
+                    <td class="shortened-representation">
+                        <div class="type" ng-class="{'is-reference': property.value.ref}">
+                            <span ng-if="!isRootSchema" ng-bind="(property.value.type === 'string' && property.value.format.ref) ? ('string:' + property.value.format.ref) : (property.value.ref ? property.value.ref : property.value.type)"></span>
                         </div>
-                        <!--
-                        <div ng-if="property.schema.criteria && property.schema.criteria.length" ng-init="criteria = property.schema.criteria" ng-include="'criteria.html'" include-replace></div>
-                        <div ng-if="property.schema.examples && property.schema.examples.length" ng-init="examples = property.schema.examples" ng-include="'examples.html'" include-replace></div>
-                        -->
-                    </div>
-                </td>
-                <td class="description">
-                    <div ng-if="property.schema.type !== 'object' && property.schema.type !== 'array' && property.description" ng-bind-html="property.description | addTargetBlank | unsafeHTML"></div>
-                </td>
-            </tr>
-            <tr class="property-properties" ng-if="property.__show && vm.isExpandable(property)" ng-repeat-end>
-                <td colspan="4">
-                    <table>
-                        <tr>
-                            <td class="shortened-representation">
-                                <div class="type">
-                                    <span ng-bind="property.schema.type"></span>
-                                </div>
-                                <!--
-                                <div ng-if="property.schema.criteria && property.schema.criteria.length" ng-init="criteria = property.schema.criteria" ng-include="'criteria.html'" include-replace></div>
-                                <div ng-if="property.schema.examples && property.schema.examples.length" ng-init="examples = property.schema.examples" ng-include="'examples.html'" include-replace></div>
-                                -->
-                            </td>
-                        </tr>
-                    </table>
-                    <div ng-if="property.schema.type === 'object'" ng-init="properties = property.schema.properties" ng-include="'schema.html'"></div>
-                    <div ng-if="property.schema.type === 'array'" ng-init="properties = vm.transformItemsToProperties(property.schema.items)" ng-include="'schema.html'"></div>
-                </td>
-            </tr>
+                    </td>
+                    <td class="description">
+                        <div ng-if="property.description" ng-bind-html="property.description | addTargetBlank | unsafeHTML"></div>
+                    </td>
+                </tr>
+                <tr class="extended-representation" ng-if="vm.isExpandable(property) && property.__show" ng-repeat-end>
+                    <td colspan="4">
+                        <div class="property-key" ng-if="property.key.criteria || property.key.examples">
+                            <table class="criteria-and-examples">
+                                <tbody>
+                                    <tr class="key-pattern">
+                                        <td>
+                                            <div ng-init="criteria = property.key.criteria" ng-include="'criteria.html'" include-replace></div>
+                                        </td>
+                                        <td ng-class="{'string-examples': property.value.type === 'string'}">
+                                            <div ng-init="examples = property.key.examples" ng-include="'examples.html'" include-replace></div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="property-value" ng-if="property.value.criteria || property.value.examples || property.value.type === 'array' || property.value.type === 'object' || property.value.ref || property.value.format.ref" ng-class="{'has-criteria-or-examples': (property.value.criteria || property.value.examples)}">
+                            <table class="criteria-and-examples" ng-if="property.value.criteria || property.value.examples || property.value.format.ref">
+                                <tbody>
+                                    <td>
+                                        <div ng-init="criteria = property.value.format.ref ? vm.spec.schemas.string[property.value.format.ref].criteria : property.value.criteria" ng-include="'criteria.html'" include-replace></div>
+                                    </td>
+                                    <td ng-class="{'string-examples': property.value.type === 'string'}">
+                                        <div ng-init="examples = property.value.format.ref ? vm.spec.schemas.string[property.value.format.ref].examples : property.value.examples" ng-include="'examples.html'" include-replace></div>
+                                    </td>
+                                </tbody>
+                            </table>
+                            <div ng-if="!property.value.ref" ng-init="isRootSchema = false; properties = (property.value.type === 'array' ? vm.transformItemsToProperties(property.value.items) : (property.value.type === 'object' ? property.value.properties : null))" ng-include="'schemaJson.html'"></div>
+                            <div ng-if="property.value.ref" ng-init="isRootSchema = false; properties = vm.spec.schemas.json[property.value.ref].properties" ng-include="'schemaJson.html'"></div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
         </table>
     </script>
 
@@ -242,8 +255,10 @@
             <span class="body-reference-label">Reference:</span>
             <span class="monospace-text body-reference-value" ng-click="vm.scrollToSchema(body.schema.tag)" ng-bind="body.schema.tag"></span>
         </p>
-        <div class="schema-container" ng-if="body.type.toLowerCase() === 'json' && body.schema.type.toLowerCase() === 'inline'" ng-init="schemaName = body.schema.tag; schema = vm.copyObject(vm.spec.schemas.json[body.schema.tag])">
-            <table class="schema" ng-include="'schema.html'"></table>
+        <div class="schema-container"
+             ng-if="body.type.toLowerCase() === 'json'"
+             ng-init="isRootSchema = true; property.key = body.schema.ref; property.value.type = vm.spec.schemas.json[body.schema.ref].type; property.value.properties = (property.value.type === 'array' ? vm.transformItemsToProperties(vm.spec.schemas.json[body.schema.ref].items) : (property.value.type === 'object' ? vm.spec.schemas.json[body.schema.ref].properties : null)); properties = [vm.copyObject(property)]"
+             ng-include="'schemaJson.html'">
         </div>
         <p class="description body-type" ng-if="body.type.toLowerCase() !== 'form' && body.type.toLowerCase() !== 'json'">
             <span class="body-type-label">Type:</span>

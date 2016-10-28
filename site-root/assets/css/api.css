@@ -413,22 +413,13 @@ p + .list-container,
     word-wrap: break-word;
 }
 .criteria:before {
-    content: "Criteria:";
+    content: "Criteria";
 }
 .examples:before {
-    content: "Examples:";
+    content: "Examples";
 }
 .pattern:before {
-    content: "Pattern:";
-}
-.key-pattern .criteria:before {
-    content: "Key Criteria:";
-}
-.key-pattern .examples:before {
-    content: "Key Examples:";
-}
-.key-pattern .pattern:before {
-    content: "Key Pattern:";
+    content: "Pattern";
 }
 .pattern span {
     padding-left: 0.5em;
@@ -475,71 +466,138 @@ p + .list-container,
 
 /* Schema Parser */
 .schema-container {
-    padding: 5px;
-    border-width: 1px 1px 0;
-    border-style: solid;
-    border-color: #DDD;
-    overflow: hidden;
-}
-.schema-container:last-of-type {
-    border-bottom-width: 1px;
-}
-.schema-container:nth-child(even) {
-    background-color: #F8F8F8;
+    border: 1px solid #DDD;
+    margin-bottom: 6px;
+    padding: 3px;
 }
 .schema {
     border-collapse: collapse;
     color: #888;
 }
-.schema .property td {
-    width: 1px;
+.schema td {
+    vertical-align: top;
     padding-left: 1.5em;
 }
-.schema .property td:last-of-type {
-    width: auto
+.schema .extended-representation > td {
+    padding: 0 3px;
 }
-.schema .property.expandable .key:before {
-    content: "\25BC";
-    display: inline-block;
-    width: 1em;
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-.schema .key {
-    position: relative;
-    color: #008080;
-}
-.schema .key.is-regex,
-.schema .key.is-array-index {
-    color: #2392F7;
-}
-.schema .key:before,
+.schema .key,
 .schema .frequency,
-.schema .key.is-array-index span:before,
-.schema .key.is-array-index span:after {
-    color: #434A54;
+.schema .shortened-representation {
+    width: 1px;
 }
-.schema .key.is-array-index span:before {
-    content: "[";
-}
-.schema .key.is-array-index span:after {
-    content: "]";
-}
-.schema .type {
-    color: #D14;
-}
-.schema .property-properties {
-    border: 1px solid #DDD;
-}
-.schema .property-properties > td {
-    padding: 5px;
-}
-
-/* Schema Parser Collapsed */
 .schema .property.expandable {
     cursor: pointer;
 }
+.schema .property.expandable .key:before {
+    content: "\25BC";
+    display: block;
+    width: 21px;
+    height: 16px;
+    line-height: 18px;
+    text-align: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 9px;
+}
 .schema .property.expandable.collapsed .key:before {
     content: "\25B6";
+}
+.schema .key {
+    position: relative;
+}
+.schema-root .key,
+.schema .type {
+    color: #D14;
+}
+.schema-root .schema .key {
+    color: #008080;
+}
+.schema-root .schema .key span:before,
+.schema-root .schema .key span:after {
+    content: "\"";
+}
+.schema-root .schema .key.is-array-index,
+.schema-root .schema .key.is-regex {
+    color: #2392F7;
+}
+.schema .property.expandable .key:before,
+.schema-root .schema .key span:before,
+.schema-root .schema .key span:after {
+    color: #434A54;
+}
+.schema-root .schema .key.is-array-index span:before {
+    content: "[";
+}
+.schema-root .schema .key.is-array-index span:after {
+    content: "]";
+}
+.schema-root .schema .key.is-regex span:before,
+.schema-root .schema .key.is-regex span:after {
+    content: "";
+}
+.schema-root .description {
+    text-align: right;
+    padding-right: 1.5em;
+}
+.schema-root .schema .description {
+    text-align: left;
+    padding-right: 0;
+}
+.schema-root .schema .property-key,
+.schema-root .schema .property-value {
+    position: relative;
+    background-color: #F8F8F8;
+    border: 1px solid #DDD;
+    padding: 13px 3px 3px;
+}
+.schema-root .schema .property-key,
+.schema-root .schema .has-criteria-or-examples {
+    padding-top: 0px;
+}
+.schema .list-container:before,
+.schema-root .schema .property-key:before,
+.schema-root .schema .property-value:before {
+    font-size: 9px;
+}
+.schema .list-container {
+    position: relative;
+    top: -2px;
+    margin-left: 20px;
+}
+.schema .list-container:before {
+    font-weight: 400;
+}
+.schema .list-container ul {
+    margin: 0;
+    font-size: 11px;
+    padding-left: 1.5em;
+}
+.schema .string-examples .list-container li:before,
+.schema .string-examples .list-container li:after {
+    content: "\"";
+}
+.schema-root .schema .property-key:before,
+.schema-root .schema .property-value:before {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 7px;
+}
+.schema-root .schema .property-key:before {
+    content: "K";
+}
+.schema-root .schema .property-value:before {
+    content: "V";
+}
+.schema .criteria-and-examples {
+    border-collapse: collapse;
+    width: auto;
+}
+.schema .criteria-and-examples td {
+    padding: 0;
+}
+.schema .property-key + .property-value {
+    margin-top: 3px;
 }
