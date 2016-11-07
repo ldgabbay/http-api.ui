@@ -1,6 +1,14 @@
 [
-   {
-       "name": "Main",
-       "path": "main.json"
-   }
+  {
+    "name": "Grammar",
+    "path": "spec.grammar"
+  },
+  {
+    "name": "Main",
+    "path": "main.json"
+  },
+  {
+    "name": "Example",
+    "path": "example.json"
+  }
 ]
