@@ -13,263 +13,268 @@
     <div class="ui-view" ng-app="api"></div>
 
     <script type="text/ng-template" id="apiView.html">
-        <div ng-class="{loading: vm.loading}">
-            <div class="header"></div>
-            <div class="loading-container">
-                <div class="table">
-                    <div class="table-cell">
-                        <img src="assets/img/loader.svg" alt="Loading..." />
-                    </div>
-                </div><!-- .table -->
-            </div><!-- .loading-container -->
-            <div class="api-container">
-                <div class="navigation-outer">
-                    <div class="navigation-inner">
-                        <select class="api-selector" ng-options="spec.path as spec.name for spec in vm.specList" ng-model="vm.specUrl">
-                            <option>Select an API</option>
-                        </select>
-                        <div class="navigation-menu">
-                            <ul class="navigation-sections">
-                                <li class="navigation-section" ng-repeat="section in vm.spec.sections">
-                                    <div ng-bind="section.name" ng-click="vm.scrollToMethod(section)"></div>
-                                    <ul class="navigation-methods" ng-if="section.methods && section.methods.length">
-                                        <li class="navigation-method" ng-repeat="method in section.methods">
-                                            <div ng-click="vm.scrollToMethod(section, vm.spec.methods[method])">
-                                                <span class="{{'method-' + vm.spec.methods[method].method.toLowerCase() + '-label'}}" ng-bind="vm.spec.methods[method].method"></span>
-                                                <span ng-bind="vm.spec.methods[method].location" ng-class="{'is-symbolic': vm.spec.methods[method].location_type.toLowerCase() === 'symbolic'}"></span>
-                                            </div>
-                                        </li><!-- .navigation-method -->
-                                    </ul><!-- .navigation-methods -->
-                                </li><!-- .navigation-section -->
-                            </ul><!-- .navigation-sections -->
-                            <ul ng-if="vm.spec.schemas.json">
-                                <li>
-                                    <div ng-click="vm.scrollToSchema()">Schemas</div>
-                                    <ul class="navigation-schemas">
-                                        <li class="navigation-schema" ng-repeat="(name, schema) in vm.spec.schemas.json">
-                                            <div ng-bind="name" ng-click="vm.scrollToSchema(name)"></div>
-                                        </li>
-                                    </ul><!-- .navigation-schemas -->
-                                </li>
-                            </ul>
-                        </div><!-- .navigation-menu -->
-                    </div><!-- .navigation-inner -->
-                </div><!-- .navigation-outer -->
-                <div class="sections" ng-if="vm.spec.sections">
-                    <div class="section" ng-repeat="section in vm.spec.sections">
-                        <div class="toggle-header section-header" ng-click="section.__hide = !section.__hide" ng-attr-id="{{vm.slugify(section.name)}}">
-                            <div class="toggle-header-title section-name" ng-bind="section.name"></div>
-                            <div class="toggle-header-subtitle section-summary" ng-if="section.summary" ng-bind="section.summary"></div>
+      <div ng-class="{loading: vm.loading}">
+        <div class="header"></div>
+        <div class="loading-container">
+          <div class="table">
+            <div class="table-cell">
+              <img src="assets/img/loader.svg" alt="Loading..." />
+            </div>
+          </div><!-- .table -->
+        </div><!-- .loading-container -->
+        <div class="api-container">
+          <div class="navigation-outer">
+            <div class="navigation-inner">
+              <select class="api-selector" ng-options="spec.path as spec.name for spec in vm.specList" ng-model="vm.specUrl">
+                <option>Select an API</option>
+              </select>
+              <div class="navigation-menu">
+                <ul class="navigation-sections">
+                  <li class="navigation-section" ng-repeat="section in vm.spec.sections">
+                    <div ng-bind="section.name" ng-click="vm.scrollToMethod(section)"></div>
+                    <ul class="navigation-methods" ng-if="section.methods && section.methods.length">
+                      <li class="navigation-method" ng-repeat="method in section.methods">
+                        <div ng-click="vm.scrollToMethod(section, vm.spec.methods[method])">
+                          <span class="{{'method-' + vm.spec.methods[method].method.toLowerCase() + '-label'}}" ng-bind="vm.spec.methods[method].method"></span>
+                          <span ng-bind="vm.spec.methods[method].location" ng-class="{'is-symbolic': vm.spec.methods[method].location_type.toLowerCase() === 'symbolic'}"></span>
                         </div>
-                        <div class="toggle-content section-body" ng-hide="section.__hide">
-                            <div ng-if="section.description">
-                                <div class="label">Description</div>
-                                <p class="description section-description" ng-bind-html="section.description | addTargetBlank | unsafeHTML"></p>
+                      </li><!-- .navigation-method -->
+                    </ul><!-- .navigation-methods -->
+                  </li><!-- .navigation-section -->
+                </ul><!-- .navigation-sections -->
+                <ul ng-if="vm.spec.schemas.hasSchemas()">
+                  <li>
+                    <div ng-click="vm.scrollToSchema()">Schemas</div>
+                    <ul class="navigation-schemas">
+                      <li class="navigation-schema" ng-repeat="(name, schema) in vm.spec.schemas.all()">
+                        <div ng-bind="name" ng-click="vm.scrollToSchema(name)"></div>
+                      </li>
+                    </ul><!-- .navigation-schemas -->
+                  </li>
+                </ul>
+              </div><!-- .navigation-menu -->
+            </div><!-- .navigation-inner -->
+          </div><!-- .navigation-outer -->
+          <div class="sections" ng-if="vm.spec.sections">
+            <div class="section" ng-repeat="section in vm.spec.sections">
+              <div class="toggle-header section-header" ng-click="section.__hide = !section.__hide" ng-attr-id="{{vm.slugify(section.name)}}">
+                <div class="toggle-header-title section-name" ng-bind="section.name"></div>
+                <div class="toggle-header-subtitle section-summary" ng-if="section.summary" ng-bind="section.summary"></div>
+              </div>
+              <div class="toggle-content section-body" ng-hide="section.__hide">
+                <div ng-if="section.description">
+                  <div class="label">Description</div>
+                  <p class="description section-description" ng-bind-html="section.description | addTargetBlank | unsafeHTML"></p>
+                </div>
+                <div class="methods">
+                  <div class="method {{'method-' + vm.spec.methods[method].method.toLowerCase()}}" ng-repeat="method in section.methods" ng-attr-id="{{vm.slugify(section.name + '-' + vm.spec.methods[method].method + ' ' + vm.spec.methods[method].location)}}">
+                    <div class="toggle-header method-header" ng-click="vm.spec.methods[method].__hide = !vm.spec.methods[method].__hide">
+                      <div class="toggle-header-title">
+                        <div class="monospace-text method-method-location">
+                          <span class="method-method" ng-bind="vm.spec.methods[method].method"></span>
+                          <span class="method-location" ng-bind="vm.spec.methods[method].location" ng-class="{'is-symbolic': vm.spec.methods[method].location_type.toLowerCase() === 'symbolic'}"></span>
+                        </div>
+                      </div><!-- .toggle-header-title -->
+                      <div class="toggle-header-subtitle method-summary" ng-if="vm.spec.methods[method].summary" ng-bind="vm.spec.methods[method].summary"></div>
+                    </div><!-- .method-header -->
+                    <div class="toggle-content method-body" ng-hide="vm.spec.methods[method].__hide">
+                      <div ng-if="vm.spec.methods[method].description">
+                        <div class="label">Description</div>
+                        <p class="description method-description" ng-bind-html="vm.spec.methods[method].description | addTargetBlank | unsafeHTML"></p>
+                      </div>
+                      <div class="requests">
+                        <div class="label">Request</div>
+                        <div class="request no-request-params" ng-if="vm.isEmptyObject(vm.spec.methods[method].request)">None</div>
+                        <div class="requests-content" ng-if="!vm.isEmptyObject(vm.spec.methods[method].request)">
+                          <div class="request" ng-repeat="(requestType, requestParameterList) in vm.spec.methods[method].request" ng-hide="vm.spec.methods[method].request[requestType].__hide">
+                            <div class="label method-sub-label" ng-bind="requestType"></div>
+                            <table class="parameter-list" ng-if="vm.isParameterList(requestType)">
+                              <thead ng-include="'parameterTableHead.html'"></thead>
+                              <tbody ng-init="parameters = vm.spec.methods[method].request[requestType]" ng-include="'parameters.html'">
+                              </tbody>
+                            </table><!-- .parameter-list -->
+                            <div class="body-list" ng-if="vm.isBodyList(requestType)">
+                              <div class="body" ng-repeat="body in vm.spec.methods[method].request[requestType] track by $index" ng-include="'body.html'"></div>
                             </div>
-                            <div class="methods">
-                                <div class="method {{'method-' + vm.spec.methods[method].method.toLowerCase()}}" ng-repeat="method in section.methods" ng-attr-id="{{vm.slugify(section.name + '-' + vm.spec.methods[method].method + ' ' + vm.spec.methods[method].location)}}">
-                                    <div class="toggle-header method-header" ng-click="vm.spec.methods[method].__hide = !vm.spec.methods[method].__hide">
-                                        <div class="toggle-header-title">
-                                            <div class="monospace-text method-method-location">
-                                                <span class="method-method" ng-bind="vm.spec.methods[method].method"></span>
-                                                <span class="method-location" ng-bind="vm.spec.methods[method].location" ng-class="{'is-symbolic': vm.spec.methods[method].location_type.toLowerCase() === 'symbolic'}"></span>
-                                            </div>
-                                        </div><!-- .toggle-header-title -->
-                                        <div class="toggle-header-subtitle method-summary" ng-if="vm.spec.methods[method].summary" ng-bind="vm.spec.methods[method].summary"></div>
-                                    </div><!-- .method-header -->
-                                    <div class="toggle-content method-body" ng-hide="vm.spec.methods[method].__hide">
-                                        <div ng-if="vm.spec.methods[method].description">
-                                            <div class="label">Description</div>
-                                            <p class="description method-description" ng-bind-html="vm.spec.methods[method].description | addTargetBlank | unsafeHTML"></p>
-                                        </div>
-                                        <div class="requests">
-                                            <div class="label">Request</div>
-                                            <div class="request no-request-params" ng-if="vm.isEmptyObject(vm.spec.methods[method].request)">None</div>
-                                            <div class="requests-content" ng-if="!vm.isEmptyObject(vm.spec.methods[method].request)">
-                                                <div class="request" ng-repeat="(requestType, requestParameterList) in vm.spec.methods[method].request" ng-hide="vm.spec.methods[method].request[requestType].__hide">
-                                                    <div class="label method-sub-label" ng-bind="requestType"></div>
-                                                    <table class="parameter-list" ng-if="vm.isParameterList(requestType)">
-                                                        <thead ng-include="'parameterTableHead.html'"></thead>
-                                                        <tbody>
-                                                            <tr class="parameter" ng-repeat="parameter in vm.spec.methods[method].request[requestType]" ng-include="'parameter.html'"></tr>
-                                                        </tbody>
-                                                    </table><!-- .parameter-list -->
-                                                    <div class="body-list" ng-if="vm.isBodyList(requestType)">
-                                                        <div class="body" ng-repeat="body in vm.spec.methods[method].request[requestType]  track by $index" ng-include="'body.html'"></div>
-                                                    </div>
-                                                </div><!-- .request -->
-                                            </div><!-- .requests-content -->
-                                        </div><!-- .requests -->
-                                        <div class="responses">
-                                            <div class="label">Responses</div>
-                                            <ul class="toggle-tabs" ng-if="vm.spec.methods[method].response && vm.spec.methods[method].response.length">
-                                                <li class="toggle-tab" ng-repeat="response in vm.spec.methods[method].response" ng-click="vm.toggleResponse(vm.spec.methods[method].response, response)" ng-class="{'selected': !response.__hide}" ng-init="vm.toggleFirstResponse($index, vm.spec.methods[method].response, response)" ng-bind="response.name || response.statusMessage || response.statusCode"></li>
-                                            </ul>
-                                            <div class="response" ng-repeat="response in vm.spec.methods[method].response" ng-hide="response.__hide">
-                                                <div ng-if="response.description">
-                                                    <div class="label method-sub-label">Description</div>
-                                                    <p class="description response-description" ng-bind-html="response.description | addTargetBlank | unsafeHTML"></p>
-                                                </div>
-                                                <div>
-                                                    <div class="label method-sub-label">Status</div>
-                                                    <p class="description response-status">
-                                                        <span ng-bind="response.statusCode"></span>
-                                                        <span ng-bind="response.statusMessage"></span>
-                                                    </p>
-                                                </div>
-                                                <div ng-if="response.header">
-                                                    <div class="label method-sub-label">Header</div>
-                                                    <table class="parameter-list" ng-if="response.header">
-                                                        <thead ng-include="'parameterTableHead.html'"></thead>
-                                                        <tbody>
-                                                            <tr class="parameter" ng-repeat="parameter in response.header" ng-include="'parameter.html'"></tr>
-                                                        </tbody>
-                                                    </table><!-- .parameter-list -->
-                                                </div>
-                                                <div ng-if="response.body">
-                                                    <div class="label method-sub-label">Body</div>
-                                                    <div class="body-list">
-                                                        <div class="body" ng-repeat="body in response.body track by $index" ng-include="'body.html'"></div>
-                                                    </div><!-- .body-list -->
-                                                </div>
-                                            </div><!-- .response -->
-                                        </div><!-- .responses -->
-                                    </div><!-- .method-body -->
-                                </div><!-- .method -->
-                            </div><!-- .methods -->
-                        </div><!-- .section-body -->
-                    </div><!-- .section -->
-                </div><!-- .sections -->
-                <div class="schemas" ng-if="vm.spec.schemas.json">
-                    <div class="toggle-header schemas-header" id="schemas" ng-click="vm.hideSchemas = !vm.hideSchemas">
-                        <div class="toggle-header-title">Schemas</div>
+                          </div><!-- .request -->
+                        </div><!-- .requests-content -->
+                      </div><!-- .requests -->
+                      <div class="responses">
+                        <div class="label">Responses</div>
+                        <ul class="toggle-tabs" ng-if="vm.spec.methods[method].response && vm.spec.methods[method].response.length">
+                          <li class="toggle-tab" ng-repeat="response in vm.spec.methods[method].response" ng-click="vm.toggleResponse(vm.spec.methods[method].response, response)" ng-class="{'selected': !response.__hide}" ng-init="vm.toggleFirstResponse($index, vm.spec.methods[method].response, response)" ng-bind="response.name || response.statusMessage || response.statusCode"></li>
+                        </ul>
+                        <div class="response" ng-repeat="response in vm.spec.methods[method].response" ng-hide="response.__hide">
+                          <div ng-if="response.description">
+                            <div class="label method-sub-label">Description</div>
+                            <p class="description response-description" ng-bind-html="response.description | addTargetBlank | unsafeHTML"></p>
+                          </div>
+                          <div>
+                            <div class="label method-sub-label">Status</div>
+                            <p class="description response-status">
+                              <span ng-bind="response.statusCode"></span>
+                              <span ng-bind="response.statusMessage"></span>
+                            </p>
+                          </div>
+                          <div ng-if="response.header">
+                            <div class="label method-sub-label">Header</div>
+                            <table class="parameter-list" ng-if="response.header">
+                              <thead ng-include="'parameterTableHead.html'"></thead>
+                              <tbody>
+                                <tr class="parameter" ng-repeat="parameter in response.header" ng-include="'parameter.html'"></tr>
+                              </tbody>
+                            </table><!-- .parameter-list -->
+                          </div>
+                          <div ng-if="response.body">
+                            <div class="label method-sub-label">Body</div>
+                            <div class="body-list">
+                              <div class="body" ng-repeat="body in response.body track by $index" ng-include="'body.html'"></div>
+                            </div><!-- .body-list -->
+                          </div>
+                        </div><!-- .response -->
+                      </div><!-- .responses -->
+                    </div><!-- .method-body -->
+                  </div><!-- .method -->
+                </div><!-- .methods -->
+              </div><!-- .section-body -->
+            </div><!-- .section -->
+          </div><!-- .sections -->
+          <div class="schemas" ng-if="vm.spec.schemas.hasSchemas()">
+            <div class="toggle-header schemas-header" id="schemas" ng-click="vm.hideSchemas = !vm.hideSchemas">
+              <div class="toggle-header-title">Schemas</div>
+            </div>
+            <div class="schemas-body" ng-if="vm.spec.schemas.hasSchemas()" ng-hide="vm.hideSchemas">
+              <div class="method"
+                   ng-repeat="schema in vm.spec.schemas.all()"
+                   ng-attr-id="{{'schema-' + vm.slugify(schema.ref)}}">
+                <div>
+                  <div class="monospace-text parameter-name">
+                    <div class="expandable key"  ng-class="{'collapsed': !schema.__show}" ng-click="schema.__show = !schema.__show">
+                      <span ng-bind="schema.ref"></span>
                     </div>
-                    <div class="schemas-body" ng-if="vm.spec.schemas.json" ng-hide="vm.hideSchemas">
-                        <div class="schema-container"
-                             ng-init="isRootSchema = true; property.key = propertyName; property.value.type = property.type; property.value.properties = (property.type === 'array' ? vm.transformItemsToProperties(property.items) : (property.type === 'object' ? property.properties : null)); properties = [property]"
-                             ng-attr-id="{{'schema-' + vm.slugify(propertyName)}}"
-                             ng-include="'schemaJson.html'"
-                             ng-repeat="(propertyName, property) in vm.spec.schemas.json">
-                        </div>
-                    </div><!-- .schemas-body -->
-                </div><!-- .schemas -->
-            </div><!-- .container -->
-        </div>
+                  </div>
+                </div>
+                <div ng-show="schema.__show">
+                  <div class="property-key extended-representation" ng-init="properties = schema.definition" ng-include="'properties.html'"></div>
+                </div>
+              </div>
+            </div><!-- .schemas-body -->
+          </div><!-- .schemas -->
+        </div><!-- .container -->
+      </div>
     </script>
 
-    <script type="text/ng-template" id="schemaJson.html">
-        <table class="schema" ng-class="{'schema-root': isRootSchema}">
-            <tbody>
-                <tr class="property" ng-repeat-start="property in properties" ng-class="{'expandable': vm.isExpandable(property), 'collapsed': !property.__show}" ng-click="property.__show = !property.__show">
-                    <td class="key" ng-class="{'is-regex': !vm.isString(property.key), 'is-array-index': property.isArrayIndex}">
-                        <span ng-bind="vm.isString(property.key) ? property.key : 'any'"></span>
-                    </td>
-                    <td class="frequency">
-                        <span ng-bind="property.frequency"></span>
-                    </td>
-                    <td class="shortened-representation">
-                        <div class="type" ng-class="{'is-reference': property.value.ref}">
-                            <span ng-if="!isRootSchema" ng-bind="(property.value.type === 'string' && property.value.format.ref) ? ('string:' + property.value.format.ref) : (property.value.ref ? property.value.ref : property.value.type)"></span>
-                        </div>
-                    </td>
-                    <td class="description">
-                        <div ng-if="property.description" ng-bind-html="property.description | addTargetBlank | unsafeHTML"></div>
-                    </td>
-                </tr>
-                <tr class="extended-representation" ng-if="vm.isExpandable(property) && property.__show" ng-repeat-end>
-                    <td colspan="4">
-                        <div class="property-key" ng-if="property.key.criteria || property.key.examples">
-                            <table class="criteria-and-examples">
-                                <tbody>
-                                    <tr class="key-pattern">
-                                        <td>
-                                            <div ng-init="criteria = property.key.criteria" ng-include="'criteria.html'" include-replace></div>
-                                        </td>
-                                        <td ng-class="{'string-examples': property.value.type === 'string'}">
-                                            <div ng-init="examples = property.key.examples" ng-include="'examples.html'" include-replace></div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="property-value" ng-if="property.value.criteria || property.value.examples || property.value.type === 'array' || property.value.type === 'object' || property.value.ref || property.value.format.ref" ng-class="{'has-criteria-or-examples': (property.value.criteria || property.value.examples || vm.spec.schemas.string[property.value.format.ref].criteria || vm.spec.schemas.string[property.value.format.ref].examples)}">
-                            <table class="criteria-and-examples" ng-if="property.value.criteria || property.value.examples || property.value.format.ref">
-                                <tbody>
-                                    <td>
-                                        <div ng-init="criteria = property.value.format.ref ? vm.spec.schemas.string[property.value.format.ref].criteria : property.value.criteria" ng-include="'criteria.html'" include-replace></div>
-                                    </td>
-                                    <td ng-class="{'string-examples': property.value.type === 'string'}">
-                                        <div ng-init="examples = property.value.format.ref ? vm.spec.schemas.string[property.value.format.ref].examples : property.value.examples" ng-include="'examples.html'" include-replace></div>
-                                    </td>
-                                </tbody>
-                            </table>
-                            <div ng-if="!property.value.ref" ng-init="isRootSchema = false; properties = (property.value.type === 'array' ? vm.transformItemsToProperties(property.value.items) : (property.value.type === 'object' ? property.value.properties : null))" ng-include="'schemaJson.html'"></div>
-                            <div ng-if="property.value.ref" ng-init="isRootSchema = false; properties = vm.spec.schemas.json[property.value.ref].properties" ng-include="'schemaJson.html'"></div>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <script type="text/ng-template" id="properties.html">
+      <div class="property" ng-if="vm.isString(properties)" ng-class="key" ng-bind="properties"></div>
+      <div class="property" ng-if="!vm.isString(properties)" ng-repeat="(key, value) in properties track by $index" ng-class="key" ng-click="property.__show = !property.__show">
+        <div ng-if="key === 'criteria'" ng-init="criteria = value" ng-include="'criteria.html'" include-replace></div>
+        <div ng-if="key === 'examples'" ng-init="examples = value" ng-include="'examples.html'" include-replace></div>
+
+        <div ng-if="key !== 'criteria' && key !== 'examples' && !vm.isSchema(value)">
+          <div class="key">
+            <span ng-bind="key"></span>
+          </div>
+          <div class="value" ng-class="{'properties': vm.isExpandable(value)}">
+            <div ng-if="vm.isExpandable(value)" ng-init="properties = value" ng-include="'properties.html'"></div>
+            <span ng-if="!vm.isExpandable(value)" ng-bind="value"></span>
+          </div>
+        </div>
+
+        <div ng-if="vm.isSchema(value)">
+          <div class="expandable key" ng-class="{'collapsed': !value.__show}" ng-click="value.__show = !value.__show">
+            <span ng-bind="value.ref"></span>
+          </div>
+
+          <div class="property-key extended-representation" ng-show="value.__show">
+            <div ng-init="properties = value.definition" ng-include="'properties.html'"></div>
+          </div>
+        </div>
+      </div>
     </script>
 
     <script type="text/ng-template" id="parameterTableHead.html">
-        <tr>
-            <th class="parameter-name">Name</th>
-            <th class="parameter-frequency">Frequency</th>
-            <th class="parameter-description">Description</th>
-        </tr>
+      <tr>
+        <th class="parameter-name">Name</th>
+        <th class="parameter-frequency">Frequency</th>
+        <th class="parameter-description">Description</th>
+        <th class="parameter-value">Value</th>
+      </tr>
     </script>
 
-    <script type="text/ng-template" id="parameter.html">
-        <td class="monospace-text parameter-name" ng-bind="parameter.name"></td>
+    <script type="text/ng-template" id="parameters.html">
+      <tr class="parameter" ng-repeat-start="parameter in parameters">
+        <td class="monospace-text parameter-name">
+          <div ng-class="{'expandable key': vm.isExpandable(parameter.name), 'collapsed': !parameter.__show}" ng-click="parameter.__show = !parameter.__show">
+            <span ng-bind="vm.propertyTitle(parameter.name)"></span>
+          </div>
+        </td>
         <td class="parameter-frequency" ng-bind="parameter.frequency"></td>
         <td class="parameter-description">
-            <p ng-if="parameter.description" ng-bind-html="parameter.description | addTargetBlank | unsafeHTML"></p>
-            <div ng-if="parameter.criteria && parameter.criteria.length" ng-init="criteria = parameter.criteria" ng-include="'criteria.html'" include-replace></div>
-            <div ng-if="parameter.examples && parameter.examples.length" ng-init="examples = parameter.examples" ng-include="'examples.html'" include-replace></div>
-        </td><!-- .paremeter-description -->
+          <p ng-if="parameter.description" ng-bind-html="parameter.description | addTargetBlank | unsafeHTML"></p>
+        </td>
+        <td class="monospace-text parameter-value">
+          <div ng-class="{'expandable key': vm.isExpandable(parameter.value), 'collapsed': !parameter.__show}" ng-click="parameter.__show = !parameter.__show">
+            <span ng-bind="vm.propertyTitle(parameter.value)"></span>
+          </div>
+        </td>
+      </tr>
+      <tr ng-if="vm.isSchema(parameter.name)" ng-show="parameter.__show">
+        <td colspan="999">
+          <div class="property-key extended-representation">
+            <div ng-init="properties = parameter.name.ref.definition" ng-include="'properties.html'"></div>
+          </div>
+        </td>
+      </tr>
+      <tr ng-repeat-end ng-if="vm.isSchema(parameter.value)" ng-show="parameter.__show">
+        <td colspan="999">
+          <div class="property-value extended-representation">
+            <div ng-init="properties = parameter.value.ref.definition" ng-include="'properties.html'"></div>
+          </div>
+        </td>
+    </script>
+
+    <script type="text/ng-template" id="criteria-and-examples.html">
     </script>
 
     <script type="text/ng-template" id="criteria.html">
-        <div class="list-container criteria">
-            <ul>
-                <li class="criterion" ng-repeat="criterion in criteria" ng-bind-html="criterion | addTargetBlank | unsafeHTML"></li>
-            </ul>
-        </div><!-- .list-container.criteria -->
+      <div class="list-container criteria">
+        <ul>
+          <li class="criterion" ng-repeat="criterion in criteria" ng-bind-html="criterion | addTargetBlank | unsafeHTML"></li>
+        </ul>
+      </div><!-- .list-container.criteria -->
     </script>
 
     <script type="text/ng-template" id="examples.html">
-        <div class="list-container examples">
-            <ul class="monospace-text">
-                <li class="example" ng-repeat="example in examples" ng-bind="example"></li>
-            </ul>
-        </div><!-- .list-container.examples -->
+      <div class="list-container examples">
+        <ul class="monospace-text">
+          <li class="example" ng-repeat="example in examples" ng-bind="example"></li>
+        </ul>
+      </div><!-- .list-container.examples -->
     </script>
 
     <script type="text/ng-template" id="body.html">
-        <p class="description body-content-type" ng-if="body.contentType">
-            <span class="body-content-type-label">Content Type:</span>
-            <span class="body-content-type-value" ng-bind="body.contentType"></span>
-        </p>
-        <p class="description body-reference" ng-if="body.type.toLowerCase() === 'json' && body.schema.type.toLowerCase() === 'reference'">
-            <span class="body-reference-label">Reference:</span>
-            <span class="monospace-text body-reference-value" ng-click="vm.scrollToSchema(body.schema.tag)" ng-bind="body.schema.tag"></span>
-        </p>
-        <div class="schema-container"
-             ng-if="body.type.toLowerCase() === 'json'"
-             ng-init="isRootSchema = true; property.key = body.schema.ref; property.value.type = vm.spec.schemas.json[body.schema.ref].type; property.value.properties = (property.value.type === 'array' ? vm.transformItemsToProperties(vm.spec.schemas.json[body.schema.ref].items) : (property.value.type === 'object' ? vm.spec.schemas.json[body.schema.ref].properties : null)); properties = [vm.copyObject(property)]"
-             ng-include="'schemaJson.html'">
-        </div>
-        <p class="description body-type" ng-if="body.type.toLowerCase() !== 'form' && body.type.toLowerCase() !== 'json'">
-            <span class="body-type-label">Type:</span>
-            <span class="body-type-value" ng-bind="body.type"></span>
-        </p>
-        <table class="parameter-list" ng-if="body.type.toLowerCase() === 'form'">
-            <thead ng-include="'parameterTableHead.html'"></thead>
-            <tbody>
-                <tr class="parameter" ng-repeat="parameter in body.parameters" ng-include="'parameter.html'"></tr>
-            </tbody>
-        </table><!-- .parameter-list -->
+      <p class="description body-content-type" ng-if="body.contentType">
+        <span class="body-content-type-label">Content Type:</span>
+        <span class="body-content-type-value" ng-bind="body.contentType"></span>
+      </p>
+      <p class="description body-reference" ng-if="body.type.toLowerCase() === 'json' && body.schema.type.toLowerCase() === 'reference'">
+        <span class="body-reference-label">Reference:</span>
+        <span class="monospace-text body-reference-value" ng-click="vm.scrollToSchema(body.schema.tag)" ng-bind="body.schema.tag"></span>
+      </p>
+      <div class="method"
+           ng-if="body.type.toLowerCase() === 'json'"
+           ng-init="isRootSchema = true; property.key = body.schema.ref; property.value.type = vm.spec.schemas.json[body.schema.ref].type; property.value.properties = (property.value.type === 'array' ? vm.transformItemsToProperties(vm.spec.schemas.json[body.schema.ref].items) : (property.value.type === 'object' ? vm.spec.schemas.json[body.schema.ref].properties : null)); properties = [vm.copyObject(property)]"
+           ng-include="'properties.html'">
+      </div>
+      <p class="description body-type" ng-if="body.type.toLowerCase() !== 'form' && body.type.toLowerCase() !== 'json'">
+        <span class="body-type-label">Type:</span>
+        <span class="body-type-value" ng-bind="body.type"></span>
+      </p>
+      <table class="parameter-list" ng-if="body.type.toLowerCase() === 'form'">
+        <thead ng-include="'parameterTableHead.html'"></thead>
+        <tbody ng-init="parameters = body.parameters" ng-include="'parameters.html'">
+        </tbody>
+      </table><!-- .parameter-list -->
     </script>
 
     <script src="assets/lib/jquery-3.1.0.min.js"></script>

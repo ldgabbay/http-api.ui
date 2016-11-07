@@ -5,9 +5,9 @@
         .module('api')
         .controller('apiController', apiController);
 
-    apiController.$inject = ['$anchorScroll', '$scope', '$state', '$stateParams', '$timeout', 'api'];
-    
-    function apiController($anchorScroll, $scope, $state, $stateParams, $timeout, api) {
+    apiController.$inject = ['$anchorScroll', '$scope', '$state', '$stateParams', '$timeout', 'api', 'Property', 'SchemaRegistry', 'Schema'];
+
+    function apiController($anchorScroll, $scope, $state, $stateParams, $timeout, api, Property, SchemaRegistry, Schema) {
         var vm = this;
         var options = {
             specListUrl: 'specs.json',
@@ -24,10 +24,12 @@
             }
         };
 
+        vm.propertyTitle = propertyTitle;
         vm.copyObject = copyObject;
         vm.hideSchemas = false;
         vm.isBodyList = isBodyList;
         vm.isEmptyObject = isEmptyObject;
+        vm.isSchema = isSchema;
         vm.isExpandable = isExpandable;
         vm.isParameterList = isParameterList;
         vm.isString = isString;
@@ -58,7 +60,7 @@
 
             api.get(options.specListUrl)
             .then(function(response) {
-                vm.specList = response;
+              vm.specList = response;
 
                 if (vm.specList.length) {
                     if (!!$stateParams.spec) {
@@ -114,6 +116,24 @@
                 .then(function(response) {
                     vm.spec = response;
 
+                    for (var type in vm.spec.schemas) {
+                        if (vm.spec.schemas.hasOwnProperty(type)) {
+                            for (var key in vm.spec.schemas[type]) {
+                                if (vm.spec.schemas[type].hasOwnProperty(key)) {
+                                    SchemaRegistry.add(key, new Schema(type, key, vm.spec.schemas[type][key]));
+                                }
+                            }
+                        }
+                    }
+
+                    vm.spec.schemas = SchemaRegistry;
+
+                    for (var key in vm.spec.methods) {
+                        if (Object.prototype.hasOwnProperty.call(vm.spec.methods, key)) {
+                            vm.spec.methods[key] = new Property(vm.spec.methods[key]);
+                        }
+                    }
+
                     if (!!$stateParams.section) {
                         _scrollToSection($stateParams.section);
                     }
@@ -123,6 +143,18 @@
                     vm.loading = false;
                 });
             });
+        }
+
+        function propertyTitle(property) {
+            var title;
+
+            if (typeof(property) === 'object' && property.hasOwnProperty('ref')) {
+                title = property.ref.ref;
+            } else {
+                title = property;
+            }
+
+            return title;
         }
 
         function isBodyList(requestType) {
@@ -137,15 +169,14 @@
             return angular.equals({}, obj);
         }
 
-        function isExpandable(property) {
-            return ((property.value.type === 'object' || property.value.type === 'array')
-                && ((property.value.properties && property.value.properties.length) || (property.value.items && property.value.items.length)))
-                || (property.value.criteria && property.value.criteria.length)
-                || (property.value.examples && property.value.examples.length)
-                || property.value.ref
-                || (property.value.format && property.value.format.ref);
+        function isSchema(property) {
+            return (isExpandable(property) && property.hasOwnProperty('ref'));
         }
-        
+
+        function isExpandable(property) {
+            return (typeof(property) === 'object');
+        }
+
         function isParameterList(requestType) {
             return ['path', 'query', 'header'].indexOf(requestType.toLowerCase()) !== -1;
         }
@@ -157,12 +188,12 @@
         function scrollToMethod(section, method, overrideState) {
             var id = section.name;
             section.__hide = false;
-            
+
             if (method) {
                 id += '-' + method.method + '-' + method.location;
                 method.__hide = false;
             }
-            
+
             $state.go('apiDeeplink', {
                 spec: vm.slugify(vm.specName),
                 section: vm.slugify(id)
@@ -182,7 +213,7 @@
             vm.hideSchemas = false;
 
             if (name && vm.spec.schemas.json[name]) {
-                vm.spec.schemas.json[name].__show = true;
+                vm.spec.schemas.find(name).__show = true;
                 slug = 'schema-' + vm.slugify(name);
             }
 

@@ -259,7 +259,6 @@ table {
     border-bottom: 1px solid #F8F8F8;
 }
 .method .parameter-list {
-    table-layout: fixed;
     border-collapse: collapse;
     font-size: 13px;
     text-align: left;
@@ -279,7 +278,7 @@ table {
     padding: 10px;
     vertical-align: top;
 }
-.method .parameter-list tbody tr:nth-child(even) {
+.method .parameter-list > tbody > tr:nth-child(even) {
     background-color: #F9F9F9;
 }
 .method .schema-container {
@@ -388,34 +387,24 @@ div + div > .method-sub-label,
 .examples {
     font-size: 14px;
 }
-.parameter-name {
-    width: 185px;
-}
-.parameter-frequency {
-    width: 100px;
-}
 .parameter-description p {
     margin: 0;
-}
-p + .list-container,
-.list-container + .list-container,
-.value-description + .list-container {
-    margin-top: 10px;
 }
 .list-container:before,
 .pattern:before {
     font-weight: 600;
 }
-.list-container ul {
-    margin: 0.5em 0;
-}
 .list-container li {
     word-wrap: break-word;
 }
-.criteria:before {
+.property.criteria, .property.examples {
+    display: inline-block;
+    width: 50%;
+}
+.list-container.criteria:before {
     content: "Criteria";
 }
-.examples:before {
+.list-container.examples:before {
     content: "Examples";
 }
 .pattern:before {
@@ -481,33 +470,10 @@ p + .list-container,
 .schema .extended-representation > td {
     padding: 0 3px;
 }
-.schema .key,
 .schema .frequency,
 .schema .shortened-representation {
     width: 1px;
 }
-.schema .property.expandable {
-    cursor: pointer;
-}
-.schema .property.expandable .key:before {
-    content: "\25BC";
-    display: block;
-    width: 21px;
-    height: 16px;
-    line-height: 18px;
-    text-align: center;
-    position: absolute;
-    top: 0;
-    left: 0;
-    font-size: 9px;
-}
-.schema .property.expandable.collapsed .key:before {
-    content: "\25B6";
-}
-.schema .key {
-    position: relative;
-}
-.schema-root .key,
 .schema .type {
     color: #D14;
 }
@@ -522,9 +488,8 @@ p + .list-container,
 .schema-root .schema .key.is-regex {
     color: #2392F7;
 }
-.schema .property.expandable .key:before,
-.schema-root .schema .key span:before,
-.schema-root .schema .key span:after {
+.key span:before,
+.key span:after {
     color: #434A54;
 }
 .schema-root .schema .key.is-array-index span:before {
@@ -545,59 +510,77 @@ p + .list-container,
     text-align: left;
     padding-right: 0;
 }
-.schema-root .schema .property-key,
-.schema-root .schema .property-value {
+.property-key,
+.property-value {
     position: relative;
     background-color: #F8F8F8;
     border: 1px solid #DDD;
-    padding: 13px 3px 3px;
+    padding: 0 3px 3px 20px;
 }
-.schema-root .schema .property-key,
-.schema-root .schema .has-criteria-or-examples {
-    padding-top: 0px;
-}
-.schema .list-container:before,
-.schema-root .schema .property-key:before,
-.schema-root .schema .property-value:before {
+.list-container:before,
+.property-key:before,
+.property-value:before {
     font-size: 9px;
 }
-.schema .list-container {
-    position: relative;
-    top: -2px;
-    margin-left: 20px;
+.list-container {
+    display: inline-block;
 }
-.schema .list-container:before {
+.list-container:before {
     font-weight: 400;
 }
-.schema .list-container ul {
+.list-container ul {
     margin: 0;
     font-size: 11px;
     padding-left: 1.5em;
 }
-.schema .string-examples .list-container li:before,
-.schema .string-examples .list-container li:after {
+.string-examples .list-container li:before,
+.string-examples .list-container li:after {
     content: "\"";
 }
-.schema-root .schema .property-key:before,
-.schema-root .schema .property-value:before {
+.property-key:before,
+.property-value:before {
     position: absolute;
     top: 3px;
     left: 3px;
     width: 7px;
 }
-.schema-root .schema .property-key:before {
+.property-key:before {
     content: "K";
 }
-.schema-root .schema .property-value:before {
+.property-value:before {
     content: "V";
 }
-.schema .criteria-and-examples {
-    border-collapse: collapse;
-    width: auto;
+
+
+/* KVs */
+
+.key {
+    display: inline-block;
+    position: relative;
+    padding-left: 12px;
+    color: #D14;
 }
-.schema .criteria-and-examples td {
-    padding: 0;
+.value {
+    display: inline-block;
 }
-.schema .property-key + .property-value {
-    margin-top: 3px;
+.value.properties {
+    display: block;
+}
+
+.expandable {
+    cursor: pointer;
+}
+.expandable.key:before {
+    content: "\25BC";
+    display: block;
+    height: 16px;
+    line-height: 18px;
+    text-align: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 9px;
+}
+.expandable.collapsed.key:before {
+    content: "\25B6";
 }
