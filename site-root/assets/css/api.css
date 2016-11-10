@@ -477,38 +477,9 @@ div + div > .method-sub-label,
 .schema .type {
     color: #D14;
 }
-.schema-root .schema .key {
-    color: #008080;
-}
-.schema-root .schema .key span:before,
-.schema-root .schema .key span:after {
-    content: "\"";
-}
-.schema-root .schema .key.is-array-index,
-.schema-root .schema .key.is-regex {
-    color: #2392F7;
-}
 .key span:before,
 .key span:after {
     color: #434A54;
-}
-.schema-root .schema .key.is-array-index span:before {
-    content: "[";
-}
-.schema-root .schema .key.is-array-index span:after {
-    content: "]";
-}
-.schema-root .schema .key.is-regex span:before,
-.schema-root .schema .key.is-regex span:after {
-    content: "";
-}
-.schema-root .description {
-    text-align: right;
-    padding-right: 1.5em;
-}
-.schema-root .schema .description {
-    text-align: left;
-    padding-right: 0;
 }
 .property-key,
 .property-value {
