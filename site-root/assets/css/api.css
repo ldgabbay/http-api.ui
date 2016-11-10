@@ -526,10 +526,7 @@ div + div > .method-sub-label,
 /* KVs */
 
 .key {
-    display: inline-block;
-    position: relative;
-    padding-left: 12px;
-    color: #D14;
+    color: #008080;
 }
 .value {
     display: inline-block;
@@ -539,9 +536,12 @@ div + div > .method-sub-label,
 }
 
 .expandable {
+    display: inline-block;
+    position: relative;
+    padding-left: 12px;
     cursor: pointer;
 }
-.expandable.key:before {
+.expandable:before {
     content: "\25BC";
     display: block;
     height: 16px;
@@ -552,6 +552,6 @@ div + div > .method-sub-label,
     left: 0;
     font-size: 9px;
 }
-.expandable.collapsed.key:before {
+.expandable.collapsed:before {
     content: "\25B6";
 }

@@ -204,13 +204,13 @@
     <script type="text/ng-template" id="parameters.html">
       <tr class="parameter" ng-repeat-start="parameter in parameters">
         <td class="monospace-text parameter-name">
-          <div ng-class="{'expandable key': vm.isExpandable(parameter.name), 'collapsed': !parameter.__show}" ng-click="parameter.__show = !parameter.__show">
+          <div ng-class="{'key': vm.isSchema(parameter.name), 'expandable': vm.isExpandable(parameter.name) || vm.isExpandable(parameter.value), 'collapsed': !parameter.__show}" ng-click="parameter.__show = !parameter.__show">
             <span ng-bind="vm.propertyTitle(parameter.name)"></span>
           </div>
         </td>
         <td class="parameter-frequency" ng-bind="parameter.frequency"></td>
         <td class="monospace-text parameter-value">
-          <div ng-class="{'expandable key': vm.isExpandable(parameter.value), 'collapsed': !parameter.__show}" ng-click="parameter.__show = !parameter.__show">
+          <div ng-class="{'key': vm.isExpandable(parameter.value)}">
             <span ng-bind="vm.propertyTitle(parameter.value)"></span>
           </div>
         </td>
