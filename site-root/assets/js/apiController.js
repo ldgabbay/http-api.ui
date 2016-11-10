@@ -209,22 +209,24 @@
                 return;
             }
 
-            var slug = 'schemas';
+            var slug = 'schemas',
+                schema = vm.spec.schemas.find(name);
             vm.hideSchemas = false;
 
-            if (name && vm.spec.schemas.json[name]) {
-                vm.spec.schemas.find(name).__show = true;
-                slug = 'schema-' + vm.slugify(name);
+
+            if (typeof(schema) !== 'undefined') {
+                schema.__show = true;
+                slug = 'schema-' + vm.slugify(schema.ref);
+
+                $state.go('apiDeeplink', {
+                    spec: vm.slugify(vm.specName),
+                    section: slug
+                }, overrideState ? options.stateChangeOptionsWithOverride : options.stateChangeOptions);
+
+                $timeout(function() {
+                    $anchorScroll(slug);
+                });
             }
-
-            $state.go('apiDeeplink', {
-                spec: vm.slugify(vm.specName),
-                section: slug
-            }, overrideState ? options.stateChangeOptionsWithOverride : options.stateChangeOptions);
-
-            $timeout(function() {
-                $anchorScroll(slug);
-            });
         }
 
         function slugify(str) {
