@@ -166,7 +166,7 @@
 
     <script type="text/ng-template" id="properties.html">
       <div class="property" ng-if="vm.isString(properties)" ng-class="key" ng-bind="properties"></div>
-      <div class="property" ng-if="!vm.isString(properties)" ng-repeat="(key, value) in properties track by $index" ng-class="key" ng-click="property.__show = !property.__show">
+      <div class="property" ng-if="!vm.isString(properties) && !vm.isEmptyObject(properties)" ng-repeat="(key, value) in properties track by $index" ng-class="key" ng-click="property.__show = !property.__show">
         <div ng-if="key === 'criteria'" ng-init="criteria = value" ng-include="'criteria.html'" include-replace></div>
         <div ng-if="key === 'examples'" ng-init="examples = value" ng-include="'examples.html'" include-replace></div>
 
@@ -189,6 +189,9 @@
             <div ng-init="properties = value.definition" ng-include="'properties.html'"></div>
           </div>
         </div>
+      </div>
+      <div class="property" ng-if="!vm.isString(properties) && vm.isEmptyObject(properties)" ng-class="key">
+        <span style="font-style: italic;">Empty object</span>
       </div>
     </script>
 
