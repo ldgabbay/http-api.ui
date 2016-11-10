@@ -19,6 +19,20 @@ angular.module('api').factory('SchemaRegistry', function() {
         },
 
         // We can do better.
+        types: function() {
+            var types = [];
+
+            for (property in registry) {
+                if (registry.hasOwnProperty(property)) {
+                    if (types.indexOf(registry[property].type) === -1) {
+                        types.push(registry[property].type);
+                    }
+                }
+            }
+
+            return types;
+        },
+
         hasType: function(type) {
             for (property in registry) {
                 if (registry.hasOwnProperty(property)) {
