@@ -45,11 +45,14 @@
                 <ul ng-if="vm.spec.schemas.hasSchemas()">
                   <li>
                     <div ng-click="vm.scrollToSchema()">Schemas</div>
-                    <ul class="navigation-schemas">
-                      <li class="navigation-schema" ng-repeat="(name, schema) in vm.spec.schemas.all()">
-                        <div ng-bind="name" ng-click="vm.scrollToSchema(name)"></div>
-                      </li>
-                    </ul><!-- .navigation-schemas -->
+                    <div ng-repeat="type in vm.spec.schemas.types()">
+                      <div class="label" ng-bind="type"></div>
+                      <ul class="navigation-schemas">
+                        <li class="navigation-schema" ng-repeat="(name, schema) in vm.spec.schemas.byType(type)">
+                          <div ng-bind="name" ng-click="vm.scrollToSchema(name)"></div>
+                        </li>
+                      </ul><!-- .navigation-schemas -->
+                    </div>
                   </li>
                 </ul>
               </div><!-- .navigation-menu -->
@@ -144,18 +147,21 @@
               <div class="toggle-header-title">Schemas</div>
             </div>
             <div class="schemas-body" ng-if="vm.spec.schemas.hasSchemas()" ng-hide="vm.hideSchemas">
-              <div class="method"
-                   ng-repeat="schema in vm.spec.schemas.all()"
-                   ng-attr-id="{{'schema-' + vm.slugify(schema.ref)}}">
-                <div>
-                  <div class="monospace-text parameter-name">
-                    <div class="expandable key"  ng-class="{'collapsed': !schema.__show}" ng-click="schema.__show = !schema.__show">
-                      <span ng-bind="schema.ref"></span>
+              <div ng-repeat="type in vm.spec.schemas.types()">
+                <div class="label" ng-bind="type"></div>
+                <div class="method"
+                     ng-repeat="schema in vm.spec.schemas.byType(type)"
+                     ng-attr-id="{{'schema-' + vm.slugify(schema.ref)}}">
+                  <div>
+                    <div class="monospace-text parameter-name">
+                      <div class="expandable key"  ng-class="{'collapsed': !schema.__show}" ng-click="schema.__show = !schema.__show">
+                        <span ng-bind="schema.ref"></span>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div ng-show="schema.__show">
-                  <div class="property-key extended-representation" ng-init="properties = schema.definition" ng-include="'properties.html'"></div>
+                  <div ng-show="schema.__show">
+                    <div class="property-key extended-representation" ng-init="properties = schema.definition" ng-include="'properties.html'"></div>
+                  </div>
                 </div>
               </div>
             </div><!-- .schemas-body -->
