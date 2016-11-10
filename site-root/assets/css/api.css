@@ -424,6 +424,9 @@ div + div > .method-sub-label,
     margin-left: 280px;
     margin-bottom: 30px;
 }
+.schemas .parameter-name {
+    padding: 3px;
+}
 .schemas-header {
     padding: 10px 0;
 }
