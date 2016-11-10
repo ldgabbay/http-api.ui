@@ -196,8 +196,8 @@
       <tr>
         <th class="parameter-name">Name</th>
         <th class="parameter-frequency">Frequency</th>
-        <th class="parameter-description">Description</th>
         <th class="parameter-value">Value</th>
+        <th class="parameter-description">Description</th>
       </tr>
     </script>
 
@@ -209,13 +209,13 @@
           </div>
         </td>
         <td class="parameter-frequency" ng-bind="parameter.frequency"></td>
-        <td class="parameter-description">
-          <p ng-if="parameter.description" ng-bind-html="parameter.description | addTargetBlank | unsafeHTML"></p>
-        </td>
         <td class="monospace-text parameter-value">
           <div ng-class="{'expandable key': vm.isExpandable(parameter.value), 'collapsed': !parameter.__show}" ng-click="parameter.__show = !parameter.__show">
             <span ng-bind="vm.propertyTitle(parameter.value)"></span>
           </div>
+        </td>
+        <td class="parameter-description">
+          <p ng-if="parameter.description" ng-bind-html="parameter.description | addTargetBlank | unsafeHTML"></p>
         </td>
       </tr>
       <tr ng-if="vm.isSchema(parameter.name)" ng-show="parameter.__show">
