@@ -383,6 +383,9 @@ div + div > .method-sub-label,
 }
 
 /* Parameter Table */
+.parameter-list > thead > tr > th {
+  text-transform: uppercase;
+}
 .parameter-name,
 .examples {
     font-size: 14px;
