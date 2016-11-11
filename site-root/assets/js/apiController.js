@@ -30,6 +30,7 @@
         vm.isBodyList = isBodyList;
         vm.isEmptyObject = isEmptyObject;
         vm.isSchema = isSchema;
+        vm.isSchemaRef = isSchemaRef;
         vm.isExpandable = isExpandable;
         vm.isParameterList = isParameterList;
         vm.isString = isString;
@@ -170,7 +171,11 @@
         }
 
         function isSchema(property) {
-            return (isExpandable(property) && property.hasOwnProperty('ref'));
+            return (property instanceof(Schema));
+        }
+
+        function isSchemaRef(property) {
+            return (typeof(property) === 'object' && property.hasOwnProperty('ref'));
         }
 
         function isExpandable(property) {
