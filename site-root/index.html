@@ -124,7 +124,7 @@
                             <table class="parameter-list" ng-if="response.header">
                               <thead ng-include="'parameterTableHead.html'" onload="headers = ['Name', 'Frequency', 'Value','Description']"></thead>
                               <tbody>
-                                <tr class="parameter" ng-repeat="parameter in response.header" ng-include="'parameter.html'"></tr>
+                                <tr class="parameter" ng-repeat="parameter in response.header" ng-include="'parameters.html'"></tr>
                               </tbody>
                             </table><!-- .parameter-list -->
                           </div>
