@@ -1,17 +1,19 @@
 angular.module('api').factory('Property', ['SchemaRegistry', function(SchemaRegistry) {
+    // Property is now essentially a "helper" rather than a type. TODO: Refactor.
     var Property = function(attributes) {
+        var data = angular.isArray(attributes) ? [] : {};
 
         for (var property in attributes) {
             if (attributes.hasOwnProperty(property)) {
-                if (property === 'ref') {
-                    this[property] = SchemaRegistry.find(attributes[property]);
-                } else if (typeof(attributes[property]) === 'object') {
-                    this[property] = new Property(attributes[property]);
+                if (typeof(attributes[property]) === 'object') {
+                    data[property] = new Property(attributes[property]);
                 } else {
-                    this[property] = attributes[property];
+                    data[property] = attributes[property];
                 }
             }
         }
+
+        return data;
     };
 
     return Property;
