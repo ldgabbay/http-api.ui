@@ -91,9 +91,9 @@
                         <div class="requests-content" ng-if="!vm.isEmptyObject(vm.spec.methods[method].request)">
                           <div class="request" ng-repeat="(requestType, requestParameterList) in vm.spec.methods[method].request" ng-hide="vm.spec.methods[method].request[requestType].__hide">
                             <div class="label method-sub-label" ng-bind="requestType"></div>
-                            <table class="parameter-list" ng-if="vm.isParameterList(requestType)">
-                              <thead ng-include="'parameterTableHead.html'"></thead>
-                              <tbody ng-init="parameters = vm.spec.methods[method].request[requestType]" ng-include="'parameters.html'">
+                            <table class="parameter-list" ng-if="vm.isParameterList(requestType)" ng-init="properties = ['name', 'frequency', 'value', 'description']">
+                              <thead ng-include="'parameterTableHead.html'" onload="headers = properties"></thead>
+                              <tbody ng-include="'parameters.html'" onload="parameters = vm.spec.methods[method].request[requestType]">
                               </tbody>
                             </table><!-- .parameter-list -->
                             <div class="body-list" ng-if="vm.isBodyList(requestType)">
@@ -122,7 +122,7 @@
                           <div ng-if="response.header">
                             <div class="label method-sub-label">Header</div>
                             <table class="parameter-list" ng-if="response.header">
-                              <thead ng-include="'parameterTableHead.html'"></thead>
+                              <thead ng-include="'parameterTableHead.html'" onload="headers = ['Name', 'Frequency', 'Value','Description']"></thead>
                               <tbody>
                                 <tr class="parameter" ng-repeat="parameter in response.header" ng-include="'parameter.html'"></tr>
                               </tbody>
@@ -160,7 +160,7 @@
                     </div>
                   </div>
                   <div ng-show="schema.__show">
-                    <div class="property-key extended-representation" ng-init="properties = schema.definition" ng-include="'properties.html'"></div>
+                    <div class="property-key extended-representation" ng-include="'properties.html'" onload="properties = schema.definition"></div>
                   </div>
                 </div>
               </div>
@@ -203,43 +203,25 @@
 
     <script type="text/ng-template" id="parameterTableHead.html">
       <tr>
-        <th class="parameter-name">Name</th>
-        <th class="parameter-frequency">Frequency</th>
-        <th class="parameter-value">Value</th>
-        <th class="parameter-description">Description</th>
+        <th ng-repeat="header in headers track by $index" ng-bind="header"></th>
       </tr>
     </script>
 
     <script type="text/ng-template" id="parameters.html">
-      <tr class="parameter" ng-repeat-start="parameter in parameters">
-        <td class="monospace-text parameter-name">
-          <div ng-class="{'key': vm.isSchema(parameter.name), 'expandable': vm.isExpandable(parameter.name) || vm.isExpandable(parameter.value), 'collapsed': !parameter.__show}" ng-click="parameter.__show = !parameter.__show">
-            <span ng-bind="vm.propertyTitle(parameter.name)"></span>
+      <tr ng-repeat-start="parameter in parameters" class="parameter">
+        <td class="monospace-text parameter-property" ng-repeat="property in properties">
+          <div ng-class="{'key': vm.isSchemaRef(parameter[property]), 'expandable': vm.hasExpandable(parameter) && property === properties[0], 'collapsed': !parameter.__show}" ng-click="vm.toggle(parameter)">
+            <span ng-bind="vm.propertyText(parameter[property])"></span>
           </div>
-        </td>
-        <td class="parameter-frequency" ng-bind="parameter.frequency"></td>
-        <td class="monospace-text parameter-value">
-          <div ng-class="{'key': vm.isExpandable(parameter.value)}">
-            <span ng-bind="vm.propertyTitle(parameter.value)"></span>
-          </div>
-        </td>
-        <td class="parameter-description">
-          <p ng-if="parameter.description" ng-bind-html="parameter.description | addTargetBlank | unsafeHTML"></p>
         </td>
       </tr>
-      <tr ng-if="vm.isSchema(parameter.name)" ng-show="parameter.__show">
+      <tr ng-repeat-end ng-repeat="property in properties" ng-if="vm.isSchemaRef(parameter[property])" ng-show="parameter.__show">
         <td colspan="999">
           <div class="property-key extended-representation">
-            <div ng-init="properties = parameter.name.ref.definition" ng-include="'properties.html'"></div>
+            <div ng-include="'properties.html'" ng-if="parameter.__show" onload="properties = vm.spec.schemas.find(parameter[property].ref).definition"></div>
           </div>
         </td>
       </tr>
-      <tr ng-repeat-end ng-if="vm.isSchema(parameter.value)" ng-show="parameter.__show">
-        <td colspan="999">
-          <div class="property-value extended-representation">
-            <div ng-init="properties = parameter.value.ref.definition" ng-include="'properties.html'"></div>
-          </div>
-        </td>
     </script>
 
     <script type="text/ng-template" id="criteria-and-examples.html">

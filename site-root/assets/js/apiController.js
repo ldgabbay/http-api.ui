@@ -5,9 +5,9 @@
         .module('api')
         .controller('apiController', apiController);
 
-    apiController.$inject = ['$anchorScroll', '$scope', '$state', '$stateParams', '$timeout', 'api', 'Property', 'SchemaRegistry', 'Schema'];
+    apiController.$inject = ['$anchorScroll', '$scope', '$state', '$stateParams', '$timeout', '$filter', 'api', 'Property', 'SchemaRegistry', 'Schema'];
 
-    function apiController($anchorScroll, $scope, $state, $stateParams, $timeout, api, Property, SchemaRegistry, Schema) {
+    function apiController($anchorScroll, $scope, $state, $stateParams, $timeout, $filter, api, Property, SchemaRegistry, Schema) {
         var vm = this;
         var options = {
             specListUrl: 'specs.json',
@@ -24,7 +24,7 @@
             }
         };
 
-        vm.propertyTitle = propertyTitle;
+        vm.propertyText = propertyText;
         vm.copyObject = copyObject;
         vm.hideSchemas = false;
         vm.isBodyList = isBodyList;
@@ -149,16 +149,19 @@
             });
         }
 
-        function propertyTitle(property) {
-            var title;
+        function propertyText(property) {
+            var text;
 
-            if (typeof(property) === 'object' && property.hasOwnProperty('ref')) {
-                title = property.ref.ref;
+            if (isSchemaRef(property)) {
+                text = property.ref;
+            } else if (property === 'description') {
+                text = $filter('addTargetBlank')(property);
+                text = $filter('unsafeHTML')(text);
             } else {
-                title = property;
+                text = property;
             }
 
-            return title;
+            return text;
         }
 
         function isBodyList(requestType) {
