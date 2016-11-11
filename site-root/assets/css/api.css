@@ -540,6 +540,10 @@ div + div > .method-sub-label,
 .value.properties {
     display: block;
 }
+.type {
+    color: #7F0063;
+    font-weight: bold;
+}
 
 .expandable {
     display: inline-block;

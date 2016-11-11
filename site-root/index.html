@@ -182,7 +182,7 @@
           </div>
           <div class="value" ng-class="{'properties': vm.isExpandable(value)}">
             <div ng-if="vm.isExpandable(value)" ng-init="properties = value" ng-include="'properties.html'"></div>
-            <span ng-if="!vm.isExpandable(value)" ng-bind="value"></span>
+            <span ng-if="!vm.isExpandable(value)" ng-class="{'type': key === 'type'}" ng-bind="value"></span>
           </div>
         </div>
 
