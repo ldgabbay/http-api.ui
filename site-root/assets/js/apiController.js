@@ -32,8 +32,11 @@
         vm.isSchema = isSchema;
         vm.isSchemaRef = isSchemaRef;
         vm.isExpandable = isExpandable;
+        vm.hasExpandable = hasExpandable;
         vm.isParameterList = isParameterList;
         vm.isString = isString;
+        vm.isArray = isArray;
+        vm.toggle = toggle;
         vm.loading = false;
         vm.scrollToMethod = scrollToMethod;
         vm.scrollToSchema = scrollToSchema;
@@ -182,12 +185,49 @@
             return (typeof(property) === 'object');
         }
 
+        function hasExpandable(parameter) {
+            for (var key in parameter) {
+                if (parameter.hasOwnProperty(key) && typeof(parameter[key]) === 'object') {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         function isParameterList(requestType) {
             return ['path', 'query', 'header'].indexOf(requestType.toLowerCase()) !== -1;
         }
 
         function isString(input) {
             return typeof input === 'string';
+        }
+
+        function isArray(input) {
+            return angular.isArray(input);
+        }
+
+        function initSchemaRef(property) {
+            if (!property.schema) {
+                property.schema = angular.copy(SchemaRegistry.find(property.ref));
+                console.log(property.schema);
+            }
+        }
+
+        function toggle(property) {
+            if (isSchemaRef(property)) {
+                // initSchemaRef(property);
+            } else if (typeof(property) === 'object') {
+                for (var key in property) {
+                    if (property.hasOwnProperty(key)) {
+                        if (isSchemaRef(property[key])) {
+                            // initSchemaRef(property[key]);
+                        }
+                    }
+                }
+            }
+
+            property.__show = !property.__show;
         }
 
         function scrollToMethod(section, method, overrideState) {
