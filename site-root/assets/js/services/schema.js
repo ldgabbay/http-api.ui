@@ -1,7 +1,7 @@
 angular.module('api').factory('Schema', ['Property', function(Property) {
-    var Schema = function(type, ref, attributes) {
+    var Schema = function(type, name, attributes) {
         this.type           = type;
-        this.ref            = ref;
+        this.name           = name;
         this.definition     = attributes;
 
         if (typeof(this.definition) === 'object') {

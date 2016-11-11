@@ -264,7 +264,7 @@
 
             if (typeof(schema) !== 'undefined') {
                 schema.__show = true;
-                slug = 'schema-' + vm.slugify(schema.ref);
+                slug = 'schema-' + vm.slugify(schema.name);
 
                 $state.go('apiDeeplink', {
                     spec: vm.slugify(vm.specName),
