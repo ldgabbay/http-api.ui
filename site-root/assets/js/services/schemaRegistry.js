@@ -11,7 +11,7 @@ angular.module('api').factory('SchemaRegistry', function() {
         },
 
         find: function(ref) {
-            return registry[ref];
+            return angular.copy(registry[ref]);
         },
 
         hasSchemas: function() {
