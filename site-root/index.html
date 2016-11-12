@@ -271,13 +271,13 @@
         <span class="body-content-type-label">Content Type:</span>
         <span class="body-content-type-value" ng-bind="body.contentType"></span>
       </p>
-      <p class="description body-reference" ng-if="body.type.toLowerCase() === 'json' && body.schema.type.toLowerCase() === 'reference'">
+      <p class="description body-reference" ng-if="body.type.toLowerCase() === 'json' && vm.isSchemaRef(body.schema)">
         <span class="body-reference-label">Reference:</span>
         <span class="monospace-text body-reference-value" ng-click="vm.scrollToSchema(body.schema.tag)" ng-bind="body.schema.tag"></span>
       </p>
       <div class="method"
            ng-if="body.type.toLowerCase() === 'json'"
-           ng-init="isRootSchema = true; property.key = body.schema.ref; property.value.type = vm.spec.schemas.json[body.schema.ref].type; property.value.properties = (property.value.type === 'array' ? vm.transformItemsToProperties(vm.spec.schemas.json[body.schema.ref].items) : (property.value.type === 'object' ? vm.spec.schemas.json[body.schema.ref].properties : null)); properties = [vm.copyObject(property)]"
+           onload="properties = vm.spec.schemas.find(body.schema.ref).definition"
            ng-include="'properties.html'">
       </div>
       <p class="description body-type" ng-if="body.type.toLowerCase() !== 'form' && body.type.toLowerCase() !== 'json'">
