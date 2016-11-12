@@ -181,7 +181,7 @@
         }
 
         function isSchemaRef(property) {
-            return (typeof(property) === 'object' && property.hasOwnProperty('ref'));
+            return (property !== null && typeof(property) === 'object' && property.hasOwnProperty('ref'));
         }
 
         function isExpandable(property) {
