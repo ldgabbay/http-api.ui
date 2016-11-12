@@ -154,6 +154,8 @@
 
             if (isSchemaRef(property)) {
                 text = property.ref;
+            } else if (typeof(property) === 'object' && property.hasOwnProperty('type')) {
+                text = property.type;
             } else if (property === 'description') {
                 text = $filter('addTargetBlank')(property);
             } else {
@@ -189,7 +191,7 @@
 
         function hasExpandable(parameter) {
             for (var key in parameter) {
-                if (parameter.hasOwnProperty(key) && typeof(parameter[key]) === 'object') {
+                if (parameter.hasOwnProperty(key) && isExpandable(parameter[key])) {
                     return true;
                 }
             }

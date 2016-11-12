@@ -91,8 +91,8 @@
                         <div class="requests-content" ng-if="!vm.isEmptyObject(vm.spec.methods[method].request)">
                           <div class="request" ng-repeat="(requestType, requestParameterList) in vm.spec.methods[method].request" ng-hide="vm.spec.methods[method].request[requestType].__hide">
                             <div class="label method-sub-label" ng-bind="requestType"></div>
-                            <table class="parameter-list" ng-if="vm.isParameterList(requestType)" ng-init="properties = ['name', 'frequency', 'value', 'description']">
-                              <thead ng-include="'parameterTableHead.html'" onload="headers = properties"></thead>
+                            <table class="parameter-list" ng-if="vm.isParameterList(requestType)" ng-init="fields = ['name', 'frequency', 'value', 'description']">
+                              <thead ng-include="'parameterTableHead.html'" onload="headers = fields"></thead>
                               <tbody ng-include="'parameters.html'" onload="parameters = vm.spec.methods[method].request[requestType]">
                               </tbody>
                             </table><!-- .parameter-list -->
@@ -196,14 +196,14 @@
           </div>
         </div>
 
-        <table class="parameter-list" ng-if="key === 'items'" ng-init="properties = ['index', 'value', 'description']">
-          <thead ng-include="'parameterTableHead.html'" onload="headers = properties"></thead>
+        <table class="parameter-list" ng-if="key === 'items'" ng-init="fields = ['index', 'value', 'description']">
+          <thead ng-include="'parameterTableHead.html'" onload="headers = fields"></thead>
           <tbody ng-include="'parameters.html'" onload="parameters = value">
           </tbody>
         </table>
 
-        <table class="parameter-list" ng-if="key === 'properties'" ng-init="properties = ['key', 'frequency', 'value', 'description']">
-          <thead ng-include="'parameterTableHead.html'" ng-init="headers = properties"></thead>
+        <table class="parameter-list" ng-if="key === 'properties'" ng-init="fields = ['key', 'frequency', 'value', 'description']">
+          <thead ng-include="'parameterTableHead.html'" ng-init="headers = fields"></thead>
           <tbody ng-include="'parameters.html'" ng-init="parameters = value">
           </tbody>
         </table><!-- .parameter-list -->
@@ -232,16 +232,17 @@
 
     <script type="text/ng-template" id="parameters.html">
       <tr ng-repeat-start="parameter in parameters" class="parameter">
-        <td class="monospace-text parameter-property" ng-repeat="property in properties">
-          <div ng-class="{'key': vm.isSchemaRef(parameter[property]), 'expandable': vm.hasExpandable(parameter) && property === properties[0], 'collapsed': !parameter.__show}" ng-click="vm.toggle(parameter)">
-            <span ng-bind="vm.propertyText(parameter[property])"></span>
+        <td class="monospace-text parameter-property" ng-repeat="field in fields">
+          <div ng-class="{'key': vm.isSchemaRef(parameter[field]), 'expandable': vm.hasExpandable(parameter) && field === fields[0], 'collapsed': !parameter.__show}" ng-click="vm.toggle(parameter)">
+            <span ng-class="{'type': vm.isExpandable(parameter[field]) && parameter[field].type}" ng-bind="vm.propertyText(parameter[field])"></span>
           </div>
         </td>
       </tr>
-      <tr ng-repeat-end ng-repeat="property in properties" ng-if="vm.isSchemaRef(parameter[property])" ng-show="parameter.__show">
+      <tr ng-repeat-end ng-repeat="field in fields" ng-if="vm.isExpandable(parameter[field])" ng-show="parameter.__show">
         <td colspan="999">
           <div class="property-key extended-representation">
-            <div ng-include="'properties.html'" ng-if="parameter.__show" onload="properties = vm.spec.schemas.find(parameter[property].ref).definition"></div>
+            <div ng-if="parameter.__show && vm.isSchemaRef(parameter[field])" ng-include="'properties.html'" onload="properties = vm.spec.schemas.find(parameter[field].ref).definition"></div>
+            <div ng-if="parameter.__show && !vm.isSchemaRef(parameter[field])" ng-include="'properties.html'" onload="properties = parameter[field]"></div>
           </div>
         </td>
       </tr>
