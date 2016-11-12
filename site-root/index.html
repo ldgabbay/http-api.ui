@@ -240,7 +240,7 @@
       </tr>
       <tr ng-repeat-end ng-repeat="field in fields" ng-if="vm.isExpandable(parameter[field])" ng-show="parameter.__show">
         <td colspan="999">
-          <div class="property-key extended-representation">
+          <div class="property-{{ field }} extended-representation">
             <div ng-if="parameter.__show && vm.isSchemaRef(parameter[field])" ng-include="'properties.html'" onload="properties = vm.spec.schemas.find(parameter[field].ref).definition"></div>
             <div ng-if="parameter.__show && !vm.isSchemaRef(parameter[field])" ng-include="'properties.html'" onload="properties = parameter[field]"></div>
           </div>
