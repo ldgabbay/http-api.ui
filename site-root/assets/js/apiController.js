@@ -156,7 +156,6 @@
                 text = property.ref;
             } else if (property === 'description') {
                 text = $filter('addTargetBlank')(property);
-                text = $filter('unsafeHTML')(text);
             } else {
                 text = property;
             }
