@@ -487,6 +487,7 @@ div + div > .method-sub-label,
 .key span:after {
     color: #434A54;
 }
+.property-name,
 .property-key,
 .property-value {
     position: relative;
@@ -495,6 +496,7 @@ div + div > .method-sub-label,
     padding: 0 3px 3px 20px;
 }
 .list-container:before,
+.property-name:before,
 .property-key:before,
 .property-value:before {
     font-size: 9px;
@@ -514,12 +516,16 @@ div + div > .method-sub-label,
 .string-examples .list-container li:after {
     content: "\"";
 }
+.property-name:before,
 .property-key:before,
 .property-value:before {
     position: absolute;
     top: 3px;
     left: 3px;
     width: 7px;
+}
+.property-name:before {
+    content: "N";
 }
 .property-key:before {
     content: "K";
