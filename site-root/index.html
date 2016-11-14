@@ -232,7 +232,7 @@
 
     <script type="text/ng-template" id="parameters.html">
       <tr ng-repeat-start="parameter in parameters" class="parameter">
-        <td class="monospace-text parameter-property" ng-repeat="field in fields">
+        <td class="parameter-property" ng-repeat="field in fields">
           <div ng-class="{'key': vm.isSchemaRef(parameter[field]), 'expandable': vm.hasExpandable(parameter) && field === fields[0], 'collapsed': !parameter.__show}" ng-click="vm.toggle(parameter)">
             <span ng-class="{'type': vm.isExpandable(parameter[field]) && parameter[field].type}" ng-bind="vm.propertyText(parameter[field])"></span>
           </div>
