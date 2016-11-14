@@ -210,7 +210,7 @@
       </div>
 
       <div ng-if="vm.isSchemaRef(properties)">
-        <div class="expandable key" ng-class="{'collapsed': !value.__show}" ng-click="vm.toggle(properties)">
+        <div class="expandable key" ng-class="{'collapsed': !properties.__show}" ng-click="vm.toggle(properties)">
           <span ng-bind="properties.ref"></span>
         </div>
 
