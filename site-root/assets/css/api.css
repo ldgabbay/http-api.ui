@@ -566,8 +566,9 @@ div + div > .method-sub-label,
     position: absolute;
     top: 0;
     left: 0;
-    font-size: 9px;
+    font-size: 12px;
 }
 .expandable.collapsed:before {
     content: "\25B6";
+    font-size: 9px;
 }
