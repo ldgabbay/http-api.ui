@@ -566,7 +566,8 @@ div + div > .method-sub-label,
     position: absolute;
     top: 0;
     left: 0;
-    font-size: 12px;
+    font-family: "Ubuntu", "Open Sans", sans-serif, arial;
+    font-size: 10px;
 }
 .expandable.collapsed:before {
     content: "\25B6";
