@@ -160,12 +160,30 @@
                 return false;
             } else if (env === 'arrayItem') {
                 if (field === 'value') {
-                    return value.hasOwnProperty('type');
+                    if (value.hasOwnProperty('type')) {
+                        if (value.type === 'string' && value.hasOwnProperty('format')) {
+                            if (typeof value.format === 'string')
+                                return false;
+                            if (typeof value.format === 'object' && value.format.hasOwnProperty('ref'))
+                                return false;
+                        }
+                        return true;
+                    }
+                    return false;
                 } else
                     return false;
             } else if (env === 'objectProperty') {
                 if (field === 'value') {
-                    return value.hasOwnProperty('type');
+                    if (value.hasOwnProperty('type')) {
+                        if (value.type === 'string' && value.hasOwnProperty('format')) {
+                            if (typeof value.format === 'string')
+                                return false;
+                            if (typeof value.format === 'object' && value.format.hasOwnProperty('ref'))
+                                return false;
+                        }
+                        return true;
+                    }
+                    return false;
                 } else
                     return false;
             } else {
@@ -200,11 +218,31 @@
             } else if (env === 'arrayItem') {
                 if (field === 'index') {
                     return (typeof value === 'object' && value.hasOwnProperty('ref'));
+                } else if (field === 'value') {
+                    if (value.hasOwnProperty('type')) {
+                        if (value.type === 'string' && value.hasOwnProperty('format')) {
+                            if (typeof value.format === 'string')
+                                return false;
+                            if (typeof value.format === 'object' && value.format.hasOwnProperty('ref'))
+                                return true;
+                        }
+                    }
+                    return false;
                 } else
                     return false;
             } else if (env === 'objectProperty') {
                 if (field === 'key') {
                     return (typeof value === 'object' && value.hasOwnProperty('ref'));
+                } else if (field === 'value') {
+                    if (value.hasOwnProperty('type')) {
+                        if (value.type === 'string' && value.hasOwnProperty('format')) {
+                            if (typeof value.format === 'string')
+                                return false;
+                            if (typeof value.format === 'object' && value.format.hasOwnProperty('ref'))
+                                return true;
+                        }
+                    }
+                    return false;
                 } else
                     return false;
             } else {
@@ -221,11 +259,31 @@
             } else if (env === 'arrayItem') {
                 if (field === 'index') {
                     return (typeof value === 'string');
+                } else if (field === 'value') {
+                    if (value.hasOwnProperty('type')) {
+                        if (value.type === 'string' && value.hasOwnProperty('format')) {
+                            if (typeof value.format === 'string')
+                                return true;
+                            if (typeof value.format === 'object' && value.format.hasOwnProperty('ref'))
+                                return false;
+                        }
+                    }
+                    return false;
                 } else
                     return false;
             } else if (env === 'objectProperty') {
                 if (field === 'key') {
                     return (typeof value === 'string');
+                } else if (field === 'value') {
+                    if (value.hasOwnProperty('type')) {
+                        if (value.type === 'string' && value.hasOwnProperty('format')) {
+                            if (typeof value.format === 'string')
+                                return true;
+                            if (typeof value.format === 'object' && value.format.hasOwnProperty('ref'))
+                                return false;
+                        }
+                    }
+                    return false;
                 } else
                     return false;
             } else {
@@ -236,6 +294,13 @@
         function getJSShortText(js) {
             if (js.hasOwnProperty('ref')) {
                 return js.ref;
+            }
+
+            if (js.type === 'string' && js.hasOwnProperty('format')) {
+                if (typeof js.format === 'string')
+                    return JSON.stringify(js.format);
+                if (typeof js.format === 'object' && js.format.hasOwnProperty('ref'))
+                    return js.format.ref;
             }
 
             return js.type;
