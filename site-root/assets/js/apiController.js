@@ -24,6 +24,10 @@
             }
         };
 
+        vm.isJSPrimitive = isJSPrimitive;
+        vm.isJSReference = isJSReference;
+        vm.isSSReference = isSSReference;
+        vm.isSSLiteral = isSSLiteral;
         vm.parameterText = parameterText;
         vm.arrayItemText = arrayItemText;
         vm.objectPropertyText = objectPropertyText;
@@ -149,6 +153,84 @@
                     vm.loading = false;
                 });
             });
+        }
+
+        function isJSPrimitive(env, field, value) {
+            if (env === 'parameter') {
+                return false;
+            } else if (env === 'arrayItem') {
+                if (field === 'value') {
+                    return value.hasOwnProperty('type');
+                } else
+                    return false;
+            } else if (env === 'objectProperty') {
+                if (field === 'value') {
+                    return value.hasOwnProperty('type');
+                } else
+                    return false;
+            } else {
+                throw "this should not happen";
+            }
+        }
+
+        function isJSReference(env, field, value) {
+            if (env === 'parameter') {
+                return false;
+            } else if (env === 'arrayItem') {
+                if (field === 'value') {
+                    return value.hasOwnProperty('ref');
+                } else
+                    return false;
+            } else if (env === 'objectProperty') {
+                if (field === 'value') {
+                    return value.hasOwnProperty('ref');
+                } else
+                    return false;
+            } else {
+                throw "this should not happen";
+            }
+        }
+
+        function isSSReference(env, field, value) {
+            if (env === 'parameter') {
+                if (field === 'name' || field === 'value') {
+                    return (typeof value === 'object' && value.hasOwnProperty('ref'));
+                }
+                return false;
+            } else if (env === 'arrayItem') {
+                if (field === 'index') {
+                    return (typeof value === 'object' && value.hasOwnProperty('ref'));
+                } else
+                    return false;
+            } else if (env === 'objectProperty') {
+                if (field === 'key') {
+                    return (typeof value === 'object' && value.hasOwnProperty('ref'));
+                } else
+                    return false;
+            } else {
+                throw "this should not happen";
+            }
+        }
+
+        function isSSLiteral(env, field, value) {
+            if (env === 'parameter') {
+                if (field === 'name' || field === 'value') {
+                    return (typeof value === 'string');
+                }
+                return false;
+            } else if (env === 'arrayItem') {
+                if (field === 'index') {
+                    return (typeof value === 'string');
+                } else
+                    return false;
+            } else if (env === 'objectProperty') {
+                if (field === 'key') {
+                    return (typeof value === 'string');
+                } else
+                    return false;
+            } else {
+                throw "this should not happen";
+            }
         }
 
         function getJSShortText(js) {
