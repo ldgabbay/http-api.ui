@@ -198,13 +198,13 @@
 
         <table class="parameter-list" ng-if="key === 'items'" ng-init="fields = ['index', 'value', 'description']">
           <thead ng-include="'parameterTableHead.html'" onload="headers = fields"></thead>
-          <tbody ng-include="'parameters.html'" onload="parameters = value">
+          <tbody ng-include="'array_items.html'" onload="parameters = value">
           </tbody>
         </table>
 
         <table class="parameter-list" ng-if="key === 'properties'" ng-init="fields = ['key', 'frequency', 'value', 'description']">
           <thead ng-include="'parameterTableHead.html'" ng-init="headers = fields"></thead>
-          <tbody ng-include="'parameters.html'" ng-init="parameters = value">
+          <tbody ng-include="'object_properties.html'" ng-init="parameters = value">
           </tbody>
         </table><!-- .parameter-list -->
       </div>
@@ -234,7 +234,44 @@
       <tr ng-repeat-start="parameter in parameters" class="parameter">
         <td class="parameter-property" ng-repeat="field in fields">
           <div ng-class="{'key': vm.isSchemaRef(parameter[field]), 'expandable': vm.hasExpandable(parameter) && field === fields[0], 'collapsed': !parameter.__show}" ng-click="vm.toggle(parameter)">
-            <span ng-class="{'type': vm.isExpandable(parameter[field]) && parameter[field].type}" ng-bind="vm.propertyText(parameter[field])"></span>
+            <span ng-class="{'type': vm.isExpandable(parameter[field]) && parameter[field].type}" ng-bind="vm.parameterText(parameter[field], field)"></span>
+          </div>
+        </td>
+      </tr>
+      <tr ng-repeat-end ng-repeat="field in fields" ng-if="vm.isExpandable(parameter[field])" ng-show="parameter.__show">
+        <td colspan="999">
+          <div class="property-{{ field }} extended-representation">
+            <div ng-if="parameter.__show && vm.isSchemaRef(parameter[field])" ng-include="'properties.html'" onload="properties = vm.spec.schemas.find(parameter[field].ref).definition"></div>
+            <div ng-if="parameter.__show && !vm.isSchemaRef(parameter[field])" ng-include="'properties.html'" onload="properties = parameter[field]"></div>
+          </div>
+        </td>
+      </tr>
+    </script>
+
+    <script type="text/ng-template" id="array_items.html">
+      <tr ng-repeat-start="parameter in parameters" class="parameter">
+        <td class="parameter-property" ng-repeat="field in fields">
+          <div ng-class="{'key': vm.isSchemaRef(parameter[field]), 'expandable': vm.hasExpandable(parameter) && field === fields[0], 'collapsed': !parameter.__show}" ng-click="vm.toggle(parameter)">
+            <span ng-class="{'type': vm.isExpandable(parameter[field]) && parameter[field].type}" ng-bind="vm.arrayItemText(parameter[field], field)"></span>
+          </div>
+        </td>
+      </tr>
+      <tr ng-repeat-end ng-repeat="field in fields" ng-if="vm.isExpandable(parameter[field])" ng-show="parameter.__show">
+        <td colspan="999">
+          <div class="property-{{ field }} extended-representation">
+            <div ng-if="parameter.__show && vm.isSchemaRef(parameter[field])" ng-include="'properties.html'" onload="properties = vm.spec.schemas.find(parameter[field].ref).definition"></div>
+            <div ng-if="parameter.__show && !vm.isSchemaRef(parameter[field])" ng-include="'properties.html'" onload="properties = parameter[field]"></div>
+          </div>
+        </td>
+      </tr>
+    </script>
+
+
+    <script type="text/ng-template" id="object_properties.html">
+      <tr ng-repeat-start="parameter in parameters" class="parameter">
+        <td class="parameter-property" ng-repeat="field in fields">
+          <div ng-class="{'key': vm.isSchemaRef(parameter[field]), 'expandable': vm.hasExpandable(parameter) && field === fields[0], 'collapsed': !parameter.__show}" ng-click="vm.toggle(parameter)">
+            <span ng-class="{'type': vm.isExpandable(parameter[field]) && parameter[field].type}" ng-bind="vm.objectPropertyText(parameter[field], field)"></span>
           </div>
         </td>
       </tr>

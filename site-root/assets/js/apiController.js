@@ -24,7 +24,9 @@
             }
         };
 
-        vm.propertyText = propertyText;
+        vm.parameterText = parameterText;
+        vm.arrayItemText = arrayItemText;
+        vm.objectPropertyText = objectPropertyText;
         vm.copyObject = copyObject;
         vm.hideSchemas = false;
         vm.isBodyList = isBodyList;
@@ -149,20 +151,52 @@
             });
         }
 
-        function propertyText(property) {
-            var text;
-
-            if (isSchemaRef(property)) {
-                text = property.ref;
-            } else if (typeof(property) === 'object' && property.hasOwnProperty('type')) {
-                text = property.type;
-            } else if (property === 'description') {
-                text = $filter('addTargetBlank')(property);
-            } else {
-                text = property;
+        function getJSShortText(js) {
+            if (js.hasOwnProperty('ref')) {
+                return js.ref;
             }
 
-            return text;
+            return js.type;
+        }
+
+        function getSSShortText(ss) {
+            if (typeof ss === 'string') {
+                return JSON.stringify(ss);
+            }
+
+            if (ss.hasOwnProperty('ref')) {
+                return ss.ref;
+            }
+
+            return 'string';
+        }
+
+        function parameterText(property, field) {
+            if (field === 'frequency' || field === 'description') {
+                return property;
+            }
+
+            return getSSShortText(property);
+        }
+
+        function arrayItemText(property, field) {
+            if (field === 'index' || field === 'description') {
+                return property;
+            }
+
+            return getJSShortText(property);
+        }
+
+        function objectPropertyText(property, field) {
+            if (field === 'frequency' || field === 'description') {
+                return property;
+            }
+
+            if (field === 'key') {
+                return getSSShortText(property);
+            }
+
+            return getJSShortText(property);
         }
 
         function isBodyList(requestType) {
