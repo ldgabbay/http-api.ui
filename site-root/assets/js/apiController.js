@@ -5,9 +5,9 @@
         .module('api')
         .controller('apiController', apiController);
 
-    apiController.$inject = ['$anchorScroll', '$scope', '$state', '$stateParams', '$timeout', '$filter', 'api', 'Property', 'SchemaRegistry', 'Schema'];
+    apiController.$inject = ['$anchorScroll', '$scope', '$state', '$stateParams', '$timeout', '$filter', 'api', 'Property', 'SchemaRegistry', 'Schema', 'Parser'];
 
-    function apiController($anchorScroll, $scope, $state, $stateParams, $timeout, $filter, api, Property, SchemaRegistry, Schema) {
+    function apiController($anchorScroll, $scope, $state, $stateParams, $timeout, $filter, api, Property, SchemaRegistry, Schema, Parser) {
         var vm = this;
         var options = {
             specListUrl: 'specs.json',
