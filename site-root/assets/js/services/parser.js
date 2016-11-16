@@ -319,7 +319,237 @@
             validateApiDocument(httpapiSpec, "document", httpapiSpec);
         }
 
+        // ----------------- parser -----------------
+
+        function Section(section) {
+            this.name = section.name;
+            if (section.hasOwnProperty('summary')) this.summary = section.summary;
+            if (section.hasOwnProperty('description')) this.description = section.description;
+            this.methods = section.methods.slice();
+        }
+
+        function makeSection(section) { return new Section(section); }
+
+        function Parameter(parameter) {
+            this.name = makeStringSchema(parameter.name);
+            if (parameter.hasOwnProperty('description')) this.description = parameter.description;
+            this.frequency = parameter.frequency;
+            this.value = makeStringSchema(parameter.value);
+        }
+
+        function makeParameter(parameter) { return new Parameter(parameter); }
+
+        function BinaryBody(body) {
+            this.type = body.type;
+
+            // TODO extendedHtml
+        }
+
+        function FormBody(body) {
+            this.type = body.type;
+            if (body.hasOwnProperty('contentType')) this.contentType = body.contentType;
+            this._parameters = body.parameters.map(makeParameter);
+
+            // TODO extendedHtml
+        }
+
+        function JsonBody(body) {
+            this.type = body.type;
+            if (body.hasOwnProperty('contentType')) this.contentType = body.contentType;
+            this._schema = makeJsonSchema(body.schema);
+
+            // TODO extendedHtml
+        }
+
+        function makeBody(body) {
+            if (body.type === 'binary')
+                return new BinaryBody(body);
+            if (body.type === 'form')
+                return new FormBody(body);
+            if (body.type === 'json')
+                return new JsonBody(body);
+            throw "unexpected";
+        }
+
+        function Request(request) {
+            if (request.hasOwnProperty('path')) this.path = request.path.map(makeParameter);
+            if (request.hasOwnProperty('query')) this.query = request.query.map(makeParameter);
+            if (request.hasOwnProperty('header')) this.header = request.header.map(makeParameter);
+            if (request.hasOwnProperty('body')) this.body = request.body.map(makeBody);
+        }
+
+        function makeRequest(request) { return new Request(request); }
+
+        function Response(response) {
+            if (response.hasOwnProperty('name')) this.name = response.name;
+            if (response.hasOwnProperty('description')) this.description = response.description;
+            this.statusCode = response.statusCode;
+            if (response.hasOwnProperty('statusMessage')) this.statusMessage = response.statusMessage;
+            if (response.hasOwnProperty('header')) this.header = response.header.map(makeParameter);
+            if (response.hasOwnProperty('body')) this.body = response.body.map(makeBody);
+        }
+
+        function makeResponse(response) { return new Response(response); }
+
+        function Method(method) {
+            this.method = method.method;
+            this.location = method.location;
+            this.location_type = method.location_type;
+            if (method.hasOwnProperty('summary')) this.summary = method.summary;
+            if (method.hasOwnProperty('description')) this.description = method.description;
+            this.request = makeRequest(method.request);
+            this.response = method.response.map(makeResponse);
+        }
+
+        function makeMethod(method) { return new Method(method); }
+
+        function LiteralSS(ss) {
+            this.type = 'literal';
+            this._value = ss;
+
+            this.shortTextClass = 'literalss';
+            this.shortText = JSON.stringify(this._value);
+            // TODO extendedHtml
+        }
+
+        function GeneralSS(ss) {
+            this.type = 'general';
+            if (ss.hasOwnProperty('criteria')) this._criteria = ss.criteria;
+            if (ss.hasOwnProperty('examples')) this._examples = ss.examples;
+
+            this.shortTextClass = 'generalss';
+            this.shortText = "string";
+            // TODO extendedHtml
+        }
+
+        function ReferenceSS(ss) {
+            this.type = 'reference';
+            this._ref = ss.ref;
+
+            this.shortTextClass = 'referencess';
+            this.shortText = this._ref;
+            // TODO extendedHtml
+        }
+
+        function makeStringSchema(ss) {
+            if (jsonTypeof(ss) === "string") return new LiteralSS(ss);
+            if (ss.hasOwnProperty("ref")) return new ReferenceSS(ss);
+            return new GeneralSS(ss);
+        }
+
+        function JsonItem(item) {
+            this.index = item.index;
+            if (item.hasOwnProperty('description')) this.description = item.description;
+            this.value = makeJsonSchema(item.value);
+        }
+
+        function makeJsonItem(item) { return new JsonItem(item); }
+
+        function JsonProperty(property) {
+            this.key = makeStringSchema(property.key);
+            if (property.hasOwnProperty('description')) this.description = property.description;
+            this.frequency = property.frequency;
+            this.value = makeJsonSchema(property.value);
+        }
+
+        function makeJsonProperty(property) { return new JsonProperty(property); }
+
+        function ReferenceJS(js) {
+            this.type = 'reference';
+            this._ref = js.ref;
+
+            this.shortTextClass = 'referencejs';
+            this.shortText = this._ref;
+            // TODO extendedHtml
+        }
+
+        function NullJS(js) {
+            this.type = js.type;
+
+            this.shortTextClass = 'primitivejs';
+            this.shortText = this.type;
+            // TODO extendedHtml
+        }
+
+        function BooleanJS(js) {
+            this.type = js.type;
+
+            this.shortTextClass = 'primitivejs';
+            this.shortText = this.type;
+            // TODO extendedHtml
+        }
+
+        function NumberJS(js) {
+            this.type = js.type;
+            if (js.hasOwnProperty('criteria')) this._criteria = js.criteria;
+            if (js.hasOwnProperty('examples')) this._examples = js.examples;
+
+            this.shortTextClass = 'primitivejs';
+            this.shortText = this.type;
+            // TODO extendedHtml
+        }
+
+        function StringJS(js) {
+            this.type = js.type;
+            if (js.hasOwnProperty('format')) this._format = makeStringSchema(js.format);
+
+            this.shortTextClass = 'primitivejs';
+            this.shortText = this.type;
+            // TODO extendedHtml
+        }
+
+        function ArrayJS(js) {
+            this.type = js.type;
+            if (js.hasOwnProperty('criteria')) this._criteria = js.criteria;
+            if (js.hasOwnProperty('examples')) this._examples = js.examples;
+            this._items = js.items.map(makeJsonItem);
+
+            this.shortTextClass = 'primitivejs';
+            this.shortText = this.type;
+            // TODO extendedHtml
+        }
+
+        function ObjectJS(js) {
+            this.type = js.type;
+            if (js.hasOwnProperty('criteria')) this._criteria = js.criteria;
+            if (js.hasOwnProperty('examples')) this._examples = js.examples;
+            this._properties = js.properties.map(makeJsonProperty);
+
+            this.shortTextClass = 'primitivejs';
+            this.shortText = this.type;
+            // TODO extendedHtml
+        }
+
+        function makeJsonSchema(js) {
+            if (js.hasOwnProperty("ref")) return new ReferenceJS(js);
+            if (js.type === 'null') return new NullJS(js);
+            if (js.type === 'boolean') return new BooleanJS(js);
+            if (js.type === 'number') return new NumberJS(js);
+            if (js.type === 'string') return new StringJS(js);
+            if (js.type === 'array') return new ArrayJS(js);
+            return new ObjectJS(js);
+        }
+
+        function Specification(httpapiSpec) {
+            this.sections = httpapiSpec.sections.map(makeSection);
+            this.methods = Object.getOwnPropertyNames(httpapiSpec.methods).reduce(function(methods, key) {
+                methods[key] = makeMethod(httpapiSpec.methods[key]);
+                return methods;
+            }, {});
+            this.schemas = {
+                string: Object.getOwnPropertyNames(httpapiSpec.schemas.string).reduce(function(ss, key) {
+                    ss[key] = makeStringSchema(httpapiSpec.schemas.string[key]);
+                    return ss;
+                }, {}),
+                json: Object.getOwnPropertyNames(httpapiSpec.schemas.json).reduce(function(js, key) {
+                    js[key] = makeJsonSchema(httpapiSpec.schemas.json[key]);
+                    return js;
+                }, {})
+            };
+        }
+
         function parse(httpapiSpec) {
+            return new Specification(httpapiSpec);
         }
     }
 })();
