@@ -126,6 +126,15 @@
                 .then(function(response) {
                     vm.spec = response;
 
+                    try {
+                        Parser.validate(vm.spec)
+                    }
+                    catch(e) {
+                        if (e instanceof Parser.validate.ParseError) {
+                            alert('An error occurred while parsing API specifications from ' + url + '\n' + e.message);
+                        }
+                    }
+
                     for (var type in vm.spec.schemas) {
                         if (vm.spec.schemas.hasOwnProperty(type)) {
                             for (var key in vm.spec.schemas[type]) {
