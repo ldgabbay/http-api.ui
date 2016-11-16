@@ -368,7 +368,7 @@
                 return new FormBody(body);
             if (body.type === 'json')
                 return new JsonBody(body);
-            throw "unexpected";
+            throw new ParseError();
         }
 
         function Request(request) {
@@ -527,7 +527,8 @@
             if (js.type === 'number') return new NumberJS(js);
             if (js.type === 'string') return new StringJS(js);
             if (js.type === 'array') return new ArrayJS(js);
-            return new ObjectJS(js);
+            if (js.type === 'object') return new ObjectJS(js);
+            throw new ParseError();
         }
 
         function Specification(httpapiSpec) {
