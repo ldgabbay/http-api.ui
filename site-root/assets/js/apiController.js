@@ -130,7 +130,7 @@
                         Parser.validate(vm.spec);
                     }
                     catch(e) {
-                        if (e instanceof Parser.validate.ParseError) {
+                        if (e instanceof Parser.ParseError) {
                             alert('An error occurred while parsing API specifications from ' + url + '\n' + e.message);
                         }
                     }
