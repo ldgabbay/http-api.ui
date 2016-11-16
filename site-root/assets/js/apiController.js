@@ -127,7 +127,7 @@
                     vm.spec = response;
 
                     try {
-                        Parser.validate(vm.spec)
+                        Parser.validate(vm.spec);
                     }
                     catch(e) {
                         if (e instanceof Parser.validate.ParseError) {
