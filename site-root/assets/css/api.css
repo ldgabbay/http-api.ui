@@ -576,21 +576,24 @@ div + div > .method-sub-label,
 
 
 .jsprimitive {
-    color: #ef2f2f;
+    color: #c90000;
     font-weight: 600;
 }
 
 .jsreference {
-    color: #9b1d1d;
+    color: #c90000;
     font-weight: 600;
+    font-style: italic;
 }
 
 .ssreference {
-    color: #95b1f4;
+    color: #009900;
     font-weight: 600;
+    font-style: italic;
 }
 
 .ssliteral {
+    color: #009900;
     font-family: "Ubuntu Mono", monospace;
 }
 
