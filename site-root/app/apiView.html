@@ -52,7 +52,7 @@
         <div class="toggle-content section-body" ng-hide="section.__hide">
           <div ng-if="section.description">
             <div class="label">Description</div>
-            <p class="description section-description" ng-bind-html="section.description | addTargetBlank | unsafeHTML"></p>
+            <p class="description section-description" ng-bind-html="section.description | markup | addTargetBlank | unsafeHTML"></p>
           </div>
           <div class="methods">
             <div class="method {{'method-' + vm.spec.methods[method].method.toLowerCase()}}" ng-repeat="method in section.methods" ng-attr-id="{{vm.slugify(section.name + '-' + vm.spec.methods[method].method + ' ' + vm.spec.methods[method].location)}}">
@@ -68,7 +68,7 @@
               <div class="toggle-content method-body" ng-hide="vm.spec.methods[method].__hide">
                 <div ng-if="vm.spec.methods[method].description">
                   <div class="label">Description</div>
-                  <p class="description method-description" ng-bind-html="vm.spec.methods[method].description | addTargetBlank | unsafeHTML"></p>
+                  <p class="description method-description" ng-bind-html="vm.spec.methods[method].description | markup | addTargetBlank | unsafeHTML"></p>
                 </div>
                 <div class="requests">
                   <div class="label">Request</div>
@@ -95,7 +95,7 @@
                   <div class="response" ng-repeat="response in vm.spec.methods[method].response" ng-hide="response.__hide">
                     <div ng-if="response.description">
                       <div class="label method-sub-label">Description</div>
-                      <p class="description response-description" ng-bind-html="response.description | addTargetBlank | unsafeHTML"></p>
+                      <p class="description response-description" ng-bind-html="response.description | markup | addTargetBlank | unsafeHTML"></p>
                     </div>
                     <div>
                       <div class="label method-sub-label">Status</div>
