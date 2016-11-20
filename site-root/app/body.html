@@ -1,0 +1,22 @@
+      <p class="description body-content-type" ng-if="body.contentType">
+        <span class="body-content-type-label">Content Type:</span>
+        <span class="body-content-type-value" ng-bind="body.contentType"></span>
+      </p>
+      <p class="description body-reference" ng-if="body.type.toLowerCase() === 'json' && vm.isSchemaRef(body.schema)">
+        <span class="body-reference-label">Reference:</span>
+        <span class="monospace-text body-reference-value" ng-click="vm.scrollToSchema(body.schema.tag)" ng-bind="body.schema.tag"></span>
+      </p>
+      <div class="method"
+           ng-if="body.type.toLowerCase() === 'json'"
+           onload="properties = vm.spec.schemas.find(body.schema.ref).definition"
+           ng-include="'/app/properties.html'">
+      </div>
+      <p class="description body-type" ng-if="body.type.toLowerCase() !== 'form' && body.type.toLowerCase() !== 'json'">
+        <span class="body-type-label">Type:</span>
+        <span class="body-type-value" ng-bind="body.type"></span>
+      </p>
+      <table class="parameter-list" ng-if="body.type.toLowerCase() === 'form'">
+        <thead ng-include="'/app/parameterTableHead.html'"></thead>
+        <tbody ng-init="parameters = body.parameters" ng-include="'/app/parameters.html'">
+        </tbody>
+      </table><!-- .parameter-list -->

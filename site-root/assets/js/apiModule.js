@@ -14,13 +14,13 @@
         $stateProvider
             .state('apiDeeplink', {
                 url: '/:spec/:section',
-                templateUrl: 'apiView.html',
+                templateUrl: '/app/apiView.html',
                 controller: 'apiController',
                 controllerAs: 'vm'
             })
             .state('api', {
                 url: '/',
-                templateUrl: 'apiView.html',
+                templateUrl: '/app/apiView.html',
                 controller: 'apiController',
                 controllerAs: 'vm'
             });
