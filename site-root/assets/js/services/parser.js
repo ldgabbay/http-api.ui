@@ -13,6 +13,9 @@
             ParseError: ParseError
         };
 
+        // TODO this is bad
+        var context = null;
+
         return factory;
 
 
@@ -423,6 +426,8 @@
         }
 
         function ReferenceSS(ss) {
+            context.srefs.push(this);
+
             this.type = 'reference';
             this._ref = ss.ref;
 
@@ -455,6 +460,8 @@
         function makeJsonProperty(property) { return new JsonProperty(property); }
 
         function ReferenceJS(js) {
+            context.jrefs.push(this);
+
             this.type = 'reference';
             this._ref = js.ref;
 
@@ -532,6 +539,11 @@
         }
 
         function Specification(httpapiSpec) {
+            context = {
+                srefs: [],
+                jrefs: []
+            };
+
             this.sections = httpapiSpec.sections.map(makeSection);
             this.methods = Object.getOwnPropertyNames(httpapiSpec.methods).reduce(function(methods, key) {
                 methods[key] = makeMethod(httpapiSpec.methods[key]);
@@ -547,6 +559,16 @@
                     return js;
                 }, {})
             };
+
+            for(var i=0; i!=context.srefs.length; ++i) {
+                var ref = context.srefs[i];
+                ref._refObj = this.schemas.string[ref._ref];
+            }
+            for(var i=0; i!=context.jrefs.length; ++i) {
+                var ref = context.jrefs[i];
+                ref._refObj = this.schemas.json[ref._ref];
+            }
+            context = null;
         }
 
         function parse(httpapiSpec) {
