@@ -1,0 +1,4 @@
+<div ng-click="show = !show">
+	<span ng-class="{'expandable': model.extendedTemplate}" ng-include="'app/shared/string-schema/shortText.html'"></span>
+</div>
+<div ng-if="model.extendedTemplate && show" ng-include="model.extendedTemplate"></div>

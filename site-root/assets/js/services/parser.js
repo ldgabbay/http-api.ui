@@ -422,6 +422,9 @@
 
             this.shortTextClass = 'generalss';
             this.shortText = "string";
+
+            if (this._criteria || this._examples)
+                this.extendedTemplate = "app/shared/string-schema/general.html";
             // TODO extendedHtml
         }
 
@@ -433,6 +436,8 @@
 
             this.shortTextClass = 'referencess';
             this.shortText = this._ref;
+
+            this.extendedTemplate = "app/shared/string-schema/reference.html";
             // TODO extendedHtml
         }
 
