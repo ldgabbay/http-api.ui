@@ -11,7 +11,7 @@
             templateUrl: 'app/shared/schema-extended/view.html',
             scope: {
                 model: "=",
-                showScope: "="
+                show: "="
             }
         };
 

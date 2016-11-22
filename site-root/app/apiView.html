@@ -156,11 +156,9 @@
 
           <span ng-class="{'expanded': show, 'collapsed': !show}" class="expandable ssname" ng-click="show = !show" ng-bind="tag"></span>
           <div ng-if="show">
-            <span ng-init="newShowScope = {show: false}">
-              <div ng-click="newShowScope.show = !newShowScope.show">
-                <schema-short model="schema" show-scope="newShowScope"></schema-short>
-              </div>
-              <schema-extended model="schema" show-scope="newShowScope"></schema-extended>
+            <span ng-init="showInner = false">
+              <schema-short model="schema" show="showInner"></schema-short>
+              <schema-extended model="schema" show="showInner"></schema-extended>
             </span>
           </div>
 
