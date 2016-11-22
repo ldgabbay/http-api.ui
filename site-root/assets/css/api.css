@@ -575,30 +575,13 @@ div + div > .method-sub-label,
 }
 
 
-.jsprimitive {
-    color: #c90000;
-    font-weight: 600;
-}
-
-.jsreference {
-    color: #c90000;
-    font-weight: 600;
-    font-style: italic;
-}
-
-.ssreference {
-    color: #009900;
-    font-weight: 600;
-    font-style: italic;
-}
-
-.ssliteral {
-    color: #009900;
-    font-family: "Ubuntu Mono", monospace;
-}
+/*** TODO ***/
 
 .expanded {
-/*    content: "\25BC";
+
+}
+.expanded:before {
+    content: "\25BC";
     display: block;
     height: 16px;
     line-height: 18px;
@@ -608,11 +591,13 @@ div + div > .method-sub-label,
     left: 0;
     font-family: "Ubuntu", "Open Sans", sans-serif, arial;
     font-size: 10px;
-*/}
+}
 
 .collapsed {
-/*    content: "\25B6";
-    font-size: 9px;
+
+}
+.collapsed:before {
+    content: "\25B6";
     display: block;
     height: 16px;
     line-height: 18px;
@@ -621,8 +606,36 @@ div + div > .method-sub-label,
     top: 0;
     left: 0;
     font-family: "Ubuntu", "Open Sans", sans-serif, arial;
-*/}
+    font-size: 9px;
+}
 
 .not-expandable {
 
+}
+
+.primitive-js {
+    color: #c90000;
+    font-weight: 600;
+}
+
+.reference-js {
+    color: #c90000;
+    font-weight: 600;
+    font-style: italic;
+}
+
+.literal-ss {
+    color: #009900;
+    font-family: "Ubuntu Mono", monospace;
+}
+
+.primitive-ss {
+    color: #009900;
+    font-weight: 600;
+}
+
+.reference-ss {
+    color: #009900;
+    font-weight: 600;
+    font-style: italic;
 }

@@ -1,7 +1,7 @@
       <tr ng-repeat-start="parameter in parameters" class="parameter">
         <td class="parameter-property" ng-repeat="field in fields">
           <div ng-class="{'key': vm.isSchemaRef(parameter[field]), 'expandable': vm.hasExpandable(parameter) && field === fields[0], 'collapsed': !parameter.__show}" ng-click="vm.toggle(parameter)">
-            <span ng-class="{'jsprimitive': vm.isJSPrimitive('objectProperty', field, parameter[field]), 'jsreference': vm.isJSReference('objectProperty', field, parameter[field]), 'ssreference': vm.isSSReference('objectProperty', field, parameter[field]), 'ssliteral': vm.isSSLiteral('objectProperty', field, parameter[field])}" ng-bind="vm.objectPropertyText(parameter[field], field)"></span>
+            <span ng-class="{'primitive-js': vm.isJSPrimitive('objectProperty', field, parameter[field]), 'reference-js': vm.isJSReference('objectProperty', field, parameter[field]), 'reference-ss': vm.isSSReference('objectProperty', field, parameter[field]), 'literal-ss': vm.isSSLiteral('objectProperty', field, parameter[field])}" ng-bind="vm.objectPropertyText(parameter[field], field)"></span>
           </div>
         </td>
       </tr>

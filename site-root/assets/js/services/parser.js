@@ -422,7 +422,7 @@
             if (ss.hasOwnProperty('criteria')) this._criteria = ss.criteria;
             if (ss.hasOwnProperty('examples')) this._examples = ss.examples;
 
-            this.shortTextClass = 'general-ss';
+            this.shortTextClass = 'primitive-ss';
             this.shortText = 'string';
 
             this.isExpandable = this._criteria || this._examples;
@@ -474,7 +474,7 @@
             this.type = 'reference';
             this._ref = js.ref;
 
-            this.shortTextClass = 'referencejs';
+            this.shortTextClass = 'reference-js';
             this.shortText = this._ref;
             // TODO isExpandable
             // TODO shortTextClass
@@ -485,7 +485,7 @@
         function NullJS(js) {
             this.type = js.type;
 
-            this.shortTextClass = 'primitivejs';
+            this.shortTextClass = 'primitive-js';
             this.shortText = this.type;
             // TODO isExpandable
             // TODO shortTextClass
@@ -496,7 +496,7 @@
         function BooleanJS(js) {
             this.type = js.type;
 
-            this.shortTextClass = 'primitivejs';
+            this.shortTextClass = 'primitive-js';
             this.shortText = this.type;
             // TODO isExpandable
             // TODO shortTextClass
@@ -509,7 +509,7 @@
             if (js.hasOwnProperty('criteria')) this._criteria = js.criteria;
             if (js.hasOwnProperty('examples')) this._examples = js.examples;
 
-            this.shortTextClass = 'primitivejs';
+            this.shortTextClass = 'primitive-js';
             this.shortText = this.type;
             // TODO isExpandable
             // TODO shortTextClass
@@ -521,7 +521,7 @@
             this.type = js.type;
             if (js.hasOwnProperty('format')) this._format = makeStringSchema(js.format);
 
-            this.shortTextClass = 'primitivejs';
+            this.shortTextClass = 'primitive-js';
             this.shortText = this.type;
             // TODO isExpandable
             // TODO shortTextClass
@@ -535,7 +535,7 @@
             if (js.hasOwnProperty('examples')) this._examples = js.examples;
             this._items = js.items.map(makeJsonItem);
 
-            this.shortTextClass = 'primitivejs';
+            this.shortTextClass = 'primitive-js';
             this.shortText = this.type;
             // TODO isExpandable
             // TODO shortTextClass
@@ -549,7 +549,7 @@
             if (js.hasOwnProperty('examples')) this._examples = js.examples;
             this._properties = js.properties.map(makeJsonProperty);
 
-            this.shortTextClass = 'primitivejs';
+            this.shortTextClass = 'primitive-js';
             this.shortText = this.type;
             // TODO isExpandable
             // TODO shortTextClass
