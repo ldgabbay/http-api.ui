@@ -410,9 +410,14 @@
             this.type = 'literal';
             this._value = ss;
 
-            this.shortTextClass = 'literalss';
+            this.shortTextClass = 'literal-ss';
             this.shortText = JSON.stringify(this._value);
-            // TODO extendedHtml
+
+            this.isExpandable = false;
+            // TODO isExpandable
+            // TODO shortTextClass
+            // TODO shortText
+            // TODO extendedView
         }
 
         function GeneralSS(ss) {
@@ -420,12 +425,21 @@
             if (ss.hasOwnProperty('criteria')) this._criteria = ss.criteria;
             if (ss.hasOwnProperty('examples')) this._examples = ss.examples;
 
-            this.shortTextClass = 'generalss';
-            this.shortText = "string";
+            this.shortTextClass = 'general-ss';
+            this.shortText = 'string';
 
             if (this._criteria || this._examples)
                 this.extendedTemplate = "app/shared/string-schema/general.html";
-            // TODO extendedHtml
+
+            this.isExpandable = this._criteria || this._examples;
+            if (this.isExpandable) {
+                this.shortText = 'string+';
+                this.extendedView = 'app/shared/schema-extended/general-ss.html';
+            }
+            // TODO isExpandable
+            // TODO shortTextClass
+            // TODO shortText
+            // TODO extendedView
         }
 
         function ReferenceSS(ss) {
@@ -434,11 +448,17 @@
             this.type = 'reference';
             this._ref = ss.ref;
 
-            this.shortTextClass = 'referencess';
+            this.shortTextClass = 'reference-ss';
             this.shortText = this._ref;
 
             this.extendedTemplate = "app/shared/string-schema/reference.html";
-            // TODO extendedHtml
+
+            this.isExpandable = true;
+            this.extendedView = 'app/shared/schema-extended/reference-ss.html';
+            // TODO isExpandable
+            // TODO shortTextClass
+            // TODO shortText
+            // TODO extendedView
         }
 
         function makeStringSchema(ss) {
@@ -472,7 +492,10 @@
 
             this.shortTextClass = 'referencejs';
             this.shortText = this._ref;
-            // TODO extendedHtml
+            // TODO isExpandable
+            // TODO shortTextClass
+            // TODO shortText
+            // TODO extendedView
         }
 
         function NullJS(js) {
@@ -480,7 +503,10 @@
 
             this.shortTextClass = 'primitivejs';
             this.shortText = this.type;
-            // TODO extendedHtml
+            // TODO isExpandable
+            // TODO shortTextClass
+            // TODO shortText
+            // TODO extendedView
         }
 
         function BooleanJS(js) {
@@ -488,7 +514,10 @@
 
             this.shortTextClass = 'primitivejs';
             this.shortText = this.type;
-            // TODO extendedHtml
+            // TODO isExpandable
+            // TODO shortTextClass
+            // TODO shortText
+            // TODO extendedView
         }
 
         function NumberJS(js) {
@@ -498,7 +527,10 @@
 
             this.shortTextClass = 'primitivejs';
             this.shortText = this.type;
-            // TODO extendedHtml
+            // TODO isExpandable
+            // TODO shortTextClass
+            // TODO shortText
+            // TODO extendedView
         }
 
         function StringJS(js) {
@@ -507,7 +539,10 @@
 
             this.shortTextClass = 'primitivejs';
             this.shortText = this.type;
-            // TODO extendedHtml
+            // TODO isExpandable
+            // TODO shortTextClass
+            // TODO shortText
+            // TODO extendedView
         }
 
         function ArrayJS(js) {
@@ -518,7 +553,10 @@
 
             this.shortTextClass = 'primitivejs';
             this.shortText = this.type;
-            // TODO extendedHtml
+            // TODO isExpandable
+            // TODO shortTextClass
+            // TODO shortText
+            // TODO extendedView
         }
 
         function ObjectJS(js) {
@@ -529,7 +567,10 @@
 
             this.shortTextClass = 'primitivejs';
             this.shortText = this.type;
-            // TODO extendedHtml
+            // TODO isExpandable
+            // TODO shortTextClass
+            // TODO shortText
+            // TODO extendedView
         }
 
         function makeJsonSchema(js) {

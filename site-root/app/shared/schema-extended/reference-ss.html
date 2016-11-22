@@ -1,0 +1,6 @@
+<span ng-init="newShowScope = {show: false}">
+	<div ng-click="newShowScope.show = !newShowScope.show">
+		<schema-short model="model._refObj" show-scope="newShowScope"></schema-short>
+	</div>
+	<schema-extended model="model._refObj" show-scope="newShowScope"></schema-extended>
+</span>
