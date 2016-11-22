@@ -428,9 +428,6 @@
             this.shortTextClass = 'general-ss';
             this.shortText = 'string';
 
-            if (this._criteria || this._examples)
-                this.extendedTemplate = "app/shared/string-schema/general.html";
-
             this.isExpandable = this._criteria || this._examples;
             if (this.isExpandable) {
                 this.shortText = 'string+';
@@ -450,8 +447,6 @@
 
             this.shortTextClass = 'reference-ss';
             this.shortText = this._ref;
-
-            this.extendedTemplate = "app/shared/string-schema/reference.html";
 
             this.isExpandable = true;
             this.extendedView = 'app/shared/schema-extended/reference-ss.html';

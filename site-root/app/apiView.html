@@ -153,15 +153,6 @@
         <!-- String Schema definition section -->
         <div class="label">String</div>
         <div ng-repeat="(tag, schema) in vm.ooSpec.schemas.string" ng-init="show = false" style="border: 1px solid #000">
-          <span ng-class="{'expanded': show, 'collapsed': !show}" class="expandable ssname" ng-click="show = !show" ng-bind="tag"></span>
-          <div ng-if="show">
-            <div string-schema model="schema"></div>
-          </div>
-        </div>
-
-        <!-- String Schema definition section -->
-        <div class="label">String2</div>
-        <div ng-repeat="(tag, schema) in vm.ooSpec.schemas.string" ng-init="show = false" style="border: 1px solid #070">
 
           <span ng-class="{'expanded': show, 'collapsed': !show}" class="expandable ssname" ng-click="show = !show" ng-bind="tag"></span>
           <div ng-if="show">
