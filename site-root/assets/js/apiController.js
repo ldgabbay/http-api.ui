@@ -48,6 +48,7 @@
         vm.scrollToSchema = scrollToSchema;
         vm.slugify = slugify;
         vm.spec = null;
+        vm.ooSpec = null;
         vm.specList = null;
         vm.specUrl = null;
         vm.specName = null;
@@ -120,6 +121,7 @@
 
             vm.loading = true;
             vm.spec = null;
+            vm.ooSpec = null;
 
             $timeout(function() {
                 api.get(url)
@@ -134,6 +136,8 @@
                             alert('An error occurred while parsing API specifications from ' + url + '\n' + e.message);
                         }
                     }
+
+                    vm.ooSpec = Parser.parse(vm.spec);
 
                     for (var type in vm.spec.schemas) {
                         if (vm.spec.schemas.hasOwnProperty(type)) {
