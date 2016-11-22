@@ -15,8 +15,4 @@
         <span class="body-type-label">Type:</span>
         <span class="body-type-value" ng-bind="body.type"></span>
       </p>
-      <table class="parameter-list" ng-if="body.type.toLowerCase() === 'form'">
-        <thead ng-include="'/app/parameterTableHead.html'"></thead>
-        <tbody ng-init="parameters = body.parameters" ng-include="'/app/parameters.html'">
-        </tbody>
-      </table><!-- .parameter-list -->
+      <parameter-list ng-if="body.type.toLowerCase() === 'form'" model="body._parameters"></parameter-list>

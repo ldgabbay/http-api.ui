@@ -102,12 +102,7 @@
                     </div>
                     <div ng-if="response.header">
                       <div class="label method-sub-label">Header</div>
-                      <table class="parameter-list" ng-if="response.header">
-                        <thead ng-include="'/app/parameterTableHead.html'" onload="headers = ['Name', 'Frequency', 'Value','Description']"></thead>
-                        <tbody>
-                          <tr class="parameter" ng-repeat="parameter in response.header" ng-include="'/app/parameters.html'"></tr>
-                        </tbody>
-                      </table><!-- .parameter-list -->
+                      <parameter-list model="response.header"></parameter-list>
                     </div>
                     <div ng-if="response.body">
                       <div class="label method-sub-label">Body</div>
