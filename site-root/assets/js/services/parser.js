@@ -414,10 +414,7 @@
             this.shortText = JSON.stringify(this._value);
 
             this.isExpandable = false;
-            // TODO isExpandable
-            // TODO shortTextClass
-            // TODO shortText
-            // TODO extendedView
+            this.extendedView = null;
         }
 
         function GeneralSS(ss) {
@@ -433,10 +430,6 @@
                 this.shortText = 'string+';
                 this.extendedView = 'app/shared/schema-extended/general-ss.html';
             }
-            // TODO isExpandable
-            // TODO shortTextClass
-            // TODO shortText
-            // TODO extendedView
         }
 
         function ReferenceSS(ss) {
@@ -450,10 +443,6 @@
 
             this.isExpandable = true;
             this.extendedView = 'app/shared/schema-extended/reference-ss.html';
-            // TODO isExpandable
-            // TODO shortTextClass
-            // TODO shortText
-            // TODO extendedView
         }
 
         function makeStringSchema(ss) {
