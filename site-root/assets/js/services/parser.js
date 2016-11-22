@@ -325,6 +325,8 @@
         // ----------------- parser -----------------
 
         function Section(section) {
+            context.sections.push(this);
+
             this.name = section.name;
             if (section.hasOwnProperty('summary')) this.summary = section.summary;
             if (section.hasOwnProperty('description')) this.description = section.description;
@@ -571,7 +573,8 @@
         function Specification(httpapiSpec) {
             context = {
                 srefs: [],
-                jrefs: []
+                jrefs: [],
+                sections: []
             };
 
             this.sections = httpapiSpec.sections.map(makeSection);
@@ -597,6 +600,13 @@
             for(var i=0; i!=context.jrefs.length; ++i) {
                 var ref = context.jrefs[i];
                 ref._refObj = this.schemas.json[ref._ref];
+            }
+            for(var i=0; i!=context.sections.length; ++i) {
+                var section = context.sections[i];
+                var that = this;
+                section.methods = section.methods.map(function(methodTag) {
+                    return that.methods[methodTag];
+                });
             }
             context = null;
         }
