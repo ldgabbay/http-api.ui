@@ -347,7 +347,7 @@
         function BinaryBody(body) {
             this.type = body.type;
 
-            // TODO extendedHtml
+            // TODO extendedView
         }
 
         function FormBody(body) {
@@ -355,7 +355,7 @@
             if (body.hasOwnProperty('contentType')) this.contentType = body.contentType;
             this._parameters = body.parameters.map(makeParameter);
 
-            // TODO extendedHtml
+            // TODO extendedView
         }
 
         function JsonBody(body) {
@@ -363,7 +363,7 @@
             if (body.hasOwnProperty('contentType')) this.contentType = body.contentType;
             this._schema = makeJsonSchema(body.schema);
 
-            // TODO extendedHtml
+            // TODO extendedView
         }
 
         function makeBody(body) {
@@ -478,32 +478,26 @@
 
             this.shortTextClass = 'reference-js';
             this.shortText = this._ref;
-            // TODO isExpandable
-            // TODO shortTextClass
-            // TODO shortText
-            // TODO extendedView
+            this.isExpandable = true;
+            this.extendedView = 'app/shared/schema-extended/reference-js.html';
         }
 
         function NullJS(js) {
             this.type = js.type;
 
             this.shortTextClass = 'primitive-js';
-            this.shortText = this.type;
-            // TODO isExpandable
-            // TODO shortTextClass
-            // TODO shortText
-            // TODO extendedView
+            this.shortText = 'null';
+            this.isExpandable = false;
+            this.extendedView = null;
         }
 
         function BooleanJS(js) {
             this.type = js.type;
 
             this.shortTextClass = 'primitive-js';
-            this.shortText = this.type;
-            // TODO isExpandable
-            // TODO shortTextClass
-            // TODO shortText
-            // TODO extendedView
+            this.shortText = 'boolean';
+            this.isExpandable = false;
+            this.extendedView = null;
         }
 
         function NumberJS(js) {
@@ -512,23 +506,32 @@
             if (js.hasOwnProperty('examples')) this._examples = js.examples;
 
             this.shortTextClass = 'primitive-js';
-            this.shortText = this.type;
-            // TODO isExpandable
-            // TODO shortTextClass
-            // TODO shortText
-            // TODO extendedView
+            if (this._criteria || this._examples) {
+                this.isExpandable = true;
+                this.shortText = 'number+';
+                this.extendedView = 'app/shared/schema-extended/number-js.html';
+            } else {
+                this.isExpandable = false;
+                this.shortText = 'number';
+                this.extendedView = null;
+            }
         }
 
         function StringJS(js) {
             this.type = js.type;
             if (js.hasOwnProperty('format')) this._format = makeStringSchema(js.format);
 
-            this.shortTextClass = 'primitive-js';
-            this.shortText = this.type;
-            // TODO isExpandable
-            // TODO shortTextClass
-            // TODO shortText
-            // TODO extendedView
+            if (this._format) {
+                this.shortTextClass = this._format.shortTextClass;
+                this.shortText = this._format.shortText;
+                this.isExpandable = this._format.isExpandable;
+                this.extendedView = 'app/shared/schema-extended/string-js.html'; // TODO this._format.extendedView;
+            } else {
+                this.shortTextClass = 'primitive-js';
+                this.shortText = 'string';
+                this.isExpandable = false;
+                this.extendedView = null;
+            }
         }
 
         function ArrayJS(js) {
@@ -538,11 +541,15 @@
             this._items = js.items.map(makeJsonItem);
 
             this.shortTextClass = 'primitive-js';
-            this.shortText = this.type;
-            // TODO isExpandable
-            // TODO shortTextClass
-            // TODO shortText
-            // TODO extendedView
+            if (this._criteria || this._examples || this._items.length !== 0) {
+                this.shortText = 'array+';
+                this.isExpandable = true;
+                this.extendedView = 'app/shared/schema-extended/array-js.html';
+            } else {
+                this.shortText = 'array';
+                this.isExpandable = false;
+                this.extendedView = null;
+            }
         }
 
         function ObjectJS(js) {
@@ -552,11 +559,15 @@
             this._properties = js.properties.map(makeJsonProperty);
 
             this.shortTextClass = 'primitive-js';
-            this.shortText = this.type;
-            // TODO isExpandable
-            // TODO shortTextClass
-            // TODO shortText
-            // TODO extendedView
+            if (this._criteria || this._examples || this._items.length !== 0) {
+                this.shortText = 'object+';
+                this.isExpandable = true;
+                this.extendedView = 'app/shared/schema-extended/object-js.html';
+            } else {
+                this.shortText = 'object';
+                this.isExpandable = false;
+                this.extendedView = null;
+            }
         }
 
         function makeJsonSchema(js) {

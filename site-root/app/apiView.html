@@ -141,6 +141,20 @@
           </div>
         </div>
 
+        <!-- JSON Schema definition section -->
+        <div class="label">JSON</div>
+        <div ng-repeat="(tag, schema) in vm.ooSpec.schemas.json" ng-init="show = false" style="border: 1px solid #000">
+
+          <span ng-class="{'expanded': show, 'collapsed': !show}" class="expandable jsname" ng-click="show = !show" ng-bind="tag"></span>
+          <div ng-if="show">
+            <span ng-init="showInner = false">
+              <schema-short model="schema" show="showInner"></schema-short>
+              <schema-extended model="schema" show="showInner"></schema-extended>
+            </span>
+          </div>
+
+        </div>
+
         <!-- String Schema definition section -->
         <div class="label">String</div>
         <div ng-repeat="(tag, schema) in vm.ooSpec.schemas.string" ng-init="show = false" style="border: 1px solid #000">

@@ -1,0 +1,34 @@
+<span ng-include="'/app/shared/schema-extended/details.html'"></span>
+
+<table class="object-properties">
+	<thead>
+		<tr>
+			<th>Key</th>
+			<th>Frequency</th>
+			<th>Value</th>
+			<th>Description</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat-start="property in model._properties" ng-init="showKey = false; showValue = false" class="object-property">
+			<td>
+				<schema-short model="property.key" show="showKey"></schema-short>
+			</td>
+			<td>
+				<span ng-bind="property.frequency"></span>
+			</td>
+			<td>
+				<schema-short model="property.value" show="showValue"></schema-short>
+			</td>
+			<td>
+				<span ng-bind="property.description"></span>
+			</td>
+		</tr>
+		<tr ng-repeat-end ng-if="(showKey && property.key.isExpandable) || (showValue && property.value.isExpandable)">
+			<td colspan="4">
+				<schema-extended model="property.key" show="showKey"></schema-extended>
+				<schema-extended model="property.value" show="showValue"></schema-extended>
+			</td>
+		</tr>
+	</tbody>
+</table>

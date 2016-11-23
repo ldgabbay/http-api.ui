@@ -1,0 +1,29 @@
+<span ng-include="'/app/shared/schema-extended/details.html'"></span>
+
+<table class="array-items">
+	<thead>
+		<tr>
+			<th>Index</th>
+			<th>Value</th>
+			<th>Description</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat-start="item in model._items" ng-init="showValue = false" class="array-item">
+			<td>
+				<span ng-bind="item.index"></span>
+			</td>
+			<td>
+				<schema-short model="item.value" show="showValue"></schema-short>
+			</td>
+			<td>
+				<span ng-bind="item.description"></span>
+			</td>
+		</tr>
+		<tr ng-repeat-end ng-if="showValue && item.value.isExpandable">
+			<td colspan="3">
+				<schema-extended model="item.value" show="showValue"></schema-extended>
+			</td>
+		</tr>
+	</tbody>
+</table>

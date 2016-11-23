@@ -1,7 +1,7 @@
 <div class="property" ng-if="vm.isString(properties)" ng-class="key" ng-bind="properties"></div>
 <div class="property" ng-if="!vm.isString(properties) && !vm.isEmptyObject(properties) && !vm.isSchemaRef(properties)" ng-repeat="(key, value) in properties track by $index" ng-class="key" ng-click="property.__show = !property.__show">
-  <div ng-if="key === 'criteria'" ng-include="'/app/criteria.html'" onload="criteria = value" include-replace></div>
-  <div ng-if="key === 'examples'" ng-include="'/app/examples.html'" onload="examples = value" include-replace></div>
+  <div ng-if="key === 'criteria'" ng-include="'/app/shared/schema-extended/criteria.html'" onload="criteria = value" include-replace></div>
+  <div ng-if="key === 'examples'" ng-include="'/app/shared/schema-extended/examples.html'" onload="examples = value" include-replace></div>
 
   <div ng-if="key !== 'criteria' && key !== 'examples' && key !== 'items' && key !== 'properties' && !vm.isSchemaRef(value)">
     <div class="key" ng-if="key !== 'type' && key !== 'format'">

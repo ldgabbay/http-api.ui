@@ -9,20 +9,20 @@
 	</thead>
 	<tbody>
 		<tr ng-repeat-start="parameter in model" ng-init="showName = false; showValue = false" class="parameter">
-			<td class="parameter-property">
+			<td>
 				<schema-short model="parameter.name" show="showName"></schema-short>
 			</td>
-			<td class="parameter-property">
+			<td>
 				<span ng-bind="parameter.frequency"></span>
 			</td>
-			<td class="parameter-property">
+			<td>
 				<schema-short model="parameter.value" show="showValue"></schema-short>
 			</td>
-			<td class="parameter-property">
+			<td>
 				<span ng-bind="parameter.description"></span>
 			</td>
 		</tr>
-		<tr ng-repeat-end ng-if="showName || showValue">
+		<tr ng-repeat-end ng-if="(showName && parameter.name.isExpandable) || (showValue && parameter.value.isExpandable)">
 			<td colspan="4">
 				<schema-extended model="parameter.name" show="showName"></schema-extended>
 				<schema-extended model="parameter.value" show="showValue"></schema-extended>
