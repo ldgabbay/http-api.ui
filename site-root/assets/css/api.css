@@ -386,7 +386,7 @@ div + div > .method-sub-label,
 .parameter-list > thead > tr > th {
   text-transform: uppercase;
 }
-.parameter-name,
+.x-parameter-name,
 .examples {
     font-size: 14px;
 }
@@ -427,7 +427,7 @@ div + div > .method-sub-label,
     margin-left: 280px;
     margin-bottom: 30px;
 }
-.schemas .parameter-name {
+.schemas .x-parameter-name {
     padding: 3px;
 }
 .schemas-header {

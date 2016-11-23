@@ -129,7 +129,7 @@
                ng-repeat="schema in vm.spec.schemas.byType(type)"
                ng-attr-id="{{'schema-' + vm.slugify(schema.name)}}">
             <div>
-              <div class="monospace-text parameter-name">
+              <div class="monospace-text x-parameter-name">
                 <div class="expandable key"  ng-class="{'collapsed': !schema.__show}" ng-click="schema.__show = !schema.__show">
                   <span ng-bind="schema.name"></span>
                 </div>
