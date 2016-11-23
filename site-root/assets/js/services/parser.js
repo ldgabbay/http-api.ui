@@ -559,7 +559,7 @@
             this._properties = js.properties.map(makeJsonProperty);
 
             this.shortTextClass = 'primitive-js';
-            if (this._criteria || this._examples || this._items.length !== 0) {
+            if (this._criteria || this._examples || this._properties.length !== 0) {
                 this.shortText = 'object+';
                 this.isExpandable = true;
                 this.extendedView = 'app/shared/schema-extended/object-js.html';
