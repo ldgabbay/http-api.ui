@@ -253,34 +253,7 @@ table {
 .method-body {
     padding: 0 10px 10px;
 }
-.method .parameter-list,
-.method .parameter-list tr {
-    width: 100%;
-    border-bottom: 1px solid #F8F8F8;
-}
-.method .parameter-list {
-    border-collapse: collapse;
-    font-size: 13px;
-    text-align: left;
-}
-.method .parameter-list tr:last-child {
-    border-bottom: 0;
-}
-.method .parameter-list thead {
-    background-color: #F8F8F8;
-    font-weight: 600;
-}
-.method .parameter-list th {
-    padding: 5px 10px;
-    vertical-align: bottom;
-}
-.method .parameter-list td {
-    padding: 10px;
-    vertical-align: top;
-}
-.method .parameter-list > tbody > tr:nth-child(even) {
-    background-color: #F9F9F9;
-}
+
 .method .schema-container {
     border: 0;
     padding: 0;
@@ -383,9 +356,6 @@ div + div > .method-sub-label,
 }
 
 /* Parameter Table */
-.parameter-list > thead > tr > th {
-  text-transform: uppercase;
-}
 .x-parameter-name,
 .examples {
     font-size: 14px;
@@ -638,6 +608,41 @@ div + div > .method-sub-label,
     color: #009900;
     font-weight: 600;
     font-style: italic;
+}
+
+.parameter-list tr {
+    width: 100%;
+    border-bottom: 1px solid #F8F8F8;
+}
+
+.parameter-list tr.expansion {
+    background-color: #F8F8F8;
+}
+
+.parameter-list {
+    border-collapse: collapse;
+    font-size: 13px;
+    text-align: left;
+}
+
+.parameter-list tr:last-child {
+    /*border-bottom: 0;*/
+}
+
+.parameter-list thead {
+    background-color: #F8F8F8;
+    font-weight: 600;
+}
+
+.parameter-list th {
+    padding: 5px;
+    /*vertical-align: bottom;*/
+    font-variant: small-caps;
+}
+
+.parameter-list td {
+    padding: 5px;
+    /*vertical-align: top;*/
 }
 
 .parameter-list {
