@@ -603,6 +603,10 @@
                     return js;
                 }, {})
             };
+            this.schemaTags = {
+                string: Object.getOwnPropertyNames(httpapiSpec.schemas.string).sort(),
+                json: Object.getOwnPropertyNames(httpapiSpec.schemas.json).sort(),
+            }
 
             for(var i=0; i!=context.srefs.length; ++i) {
                 var ref = context.srefs[i];

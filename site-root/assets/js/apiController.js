@@ -56,6 +56,7 @@
         vm.toggleParameterType = toggleParameterType;
         vm.toggleResponse = toggleResponse;
         vm.transformItemsToProperties = transformItemsToProperties;
+        vm.schemaTypes = ['string', 'json'];
 
         activate();
 

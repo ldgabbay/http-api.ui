@@ -27,14 +27,14 @@
               </ul><!-- .navigation-methods -->
             </li><!-- .navigation-section -->
           </ul><!-- .navigation-sections -->
-          <ul ng-if="vm.spec.schemas.hasSchemas()">
+          <ul>
             <li>
               <div ng-click="vm.scrollToSchema()">Schemas</div>
-              <div ng-repeat="type in vm.spec.schemas.types()">
+              <div ng-repeat="type in vm.schemaTypes">
                 <div class="label" ng-bind="type"></div>
                 <ul class="navigation-schemas">
-                  <li class="navigation-schema" ng-repeat="(name, schema) in vm.spec.schemas.byType(type)">
-                    <div ng-bind="name" ng-click="vm.scrollToSchema(name)"></div>
+                  <li class="navigation-schema" ng-repeat="tag in vm.ooSpec.schemaTags[type]">
+                    <div ng-bind="tag" ng-click="vm.scrollToSchema(tag)"></div>
                   </li>
                 </ul><!-- .navigation-schemas -->
               </div>
@@ -118,57 +118,23 @@
         </div><!-- .section-body -->
       </div><!-- .section -->
     </div><!-- .sections -->
-    <div class="schemas" ng-if="vm.spec.schemas.hasSchemas()">
+    <div class="schemas">
       <div class="toggle-header schemas-header" id="schemas" ng-click="vm.hideSchemas = !vm.hideSchemas">
         <div class="toggle-header-title">Schemas</div>
       </div>
-      <div class="schemas-body" ng-if="vm.spec.schemas.hasSchemas()" ng-hide="vm.hideSchemas">
-        <div ng-repeat="type in vm.spec.schemas.types()">
+      <div class="schemas-body" ng-hide="vm.hideSchemas">
+        <span ng-repeat="type in vm.schemaTypes">
           <div class="label" ng-bind="type"></div>
-          <div class="method"
-               ng-repeat="schema in vm.spec.schemas.byType(type)"
-               ng-attr-id="{{'schema-' + vm.slugify(schema.name)}}">
-            <div>
-              <div class="monospace-text x-parameter-name">
-                <div class="expandable key"  ng-class="{'collapsed': !schema.__show}" ng-click="schema.__show = !schema.__show">
-                  <span ng-bind="schema.name"></span>
-                </div>
-              </div>
-            </div>
-            <div ng-show="schema.__show">
-              <div class="property-key extended-representation" ng-include="'/app/properties.html'" onload="properties = schema.definition"></div>
+          <div ng-repeat="tag in vm.ooSpec.schemaTags[type]" ng-init="show = false; schema = vm.ooSpec.schemas[type][tag]" style="border: 1px solid #000">
+            <span ng-class="{'expanded': show, 'collapsed': !show}" class="expandable jsname" ng-click="show = !show" ng-attr-id="{{'schema-' + vm.slugify(tag)}}" ng-bind="tag"></span>
+            <div ng-if="show">
+              <span ng-init="showInner = false">
+                <schema-short model="schema" show="showInner"></schema-short>
+                <schema-extended model="schema" show="showInner"></schema-extended>
+              </span>
             </div>
           </div>
-        </div>
-
-        <!-- JSON Schema definition section -->
-        <div class="label">JSON</div>
-        <div ng-repeat="(tag, schema) in vm.ooSpec.schemas.json" ng-init="show = false" style="border: 1px solid #000">
-
-          <span ng-class="{'expanded': show, 'collapsed': !show}" class="expandable jsname" ng-click="show = !show" ng-bind="tag"></span>
-          <div ng-if="show">
-            <span ng-init="showInner = false">
-              <schema-short model="schema" show="showInner"></schema-short>
-              <schema-extended model="schema" show="showInner"></schema-extended>
-            </span>
-          </div>
-
-        </div>
-
-        <!-- String Schema definition section -->
-        <div class="label">String</div>
-        <div ng-repeat="(tag, schema) in vm.ooSpec.schemas.string" ng-init="show = false" style="border: 1px solid #000">
-
-          <span ng-class="{'expanded': show, 'collapsed': !show}" class="expandable ssname" ng-click="show = !show" ng-bind="tag"></span>
-          <div ng-if="show">
-            <span ng-init="showInner = false">
-              <schema-short model="schema" show="showInner"></schema-short>
-              <schema-extended model="schema" show="showInner"></schema-extended>
-            </span>
-          </div>
-
-        </div>
-
+        </span>
       </div><!-- .schemas-body -->
     </div><!-- .schemas -->
   </div><!-- .container -->
