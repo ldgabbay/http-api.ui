@@ -74,13 +74,18 @@
                   <div class="label">Request</div>
                   <div class="request no-request-params" ng-if="vm.isEmptyObject(method.request)">None</div>
                   <div class="requests-content" ng-if="!vm.isEmptyObject(method.request)">
-                    <div class="request" ng-repeat="(requestType, requestParameterList) in method.request"> <!-- ng-hide="requestParameterList.__hide" -->
-                      <div class="label method-sub-label" ng-bind="requestType"></div>
-                      <parameter-list model="requestParameterList"></parameter-list>
-                      <div class="body-list" ng-if="vm.isBodyList(requestType)">
-                        <div class="body" ng-repeat="body in requestParameterList track by $index" ng-include="'/app/body.html'"></div>
-                      </div>
-                    </div><!-- .request -->
+                    <div class="request">
+                      <span ng-repeat="pltype in vm.requestParameterListTypes" ng-if="method.request.hasOwnProperty(pltype)" ng-init="pl = method.request[pltype]">
+                        <div class="label method-sub-label" ng-bind="pltype"></div>
+                        <parameter-list model="pl"></parameter-list>
+                      </span>
+                      <span ng-if="method.request.body && method.request.body.length !== 0">
+                        <div class="label method-sub-label">body</div>
+                        <div class="body-list">
+                          <div class="body" ng-repeat="body in method.request.body" ng-include="'/app/body.html'"></div>
+                        </div>
+                      </span>
+                    </div>
                   </div><!-- .requests-content -->
                 </div><!-- .requests -->
                 <div class="responses">

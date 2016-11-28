@@ -57,6 +57,7 @@
         vm.toggleResponse = toggleResponse;
         vm.transformItemsToProperties = transformItemsToProperties;
         vm.schemaTypes = ['string', 'json'];
+        vm.requestParameterListTypes = ['path', 'query', 'header'];
 
         activate();
 
