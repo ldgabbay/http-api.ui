@@ -15,13 +15,13 @@
         </select>
         <div class="navigation-menu">
           <ul class="navigation-sections">
-            <li class="navigation-section" ng-repeat="section in vm.spec.sections">
+            <li class="navigation-section" ng-repeat="section in vm.ooSpec.sections">
               <div ng-bind="section.name" ng-click="vm.scrollToMethod(section)"></div>
               <ul class="navigation-methods" ng-if="section.methods && section.methods.length">
                 <li class="navigation-method" ng-repeat="method in section.methods">
-                  <div ng-click="vm.scrollToMethod(section, vm.spec.methods[method])">
-                    <span class="{{'method-' + vm.spec.methods[method].method.toLowerCase() + '-label'}}" ng-bind="vm.spec.methods[method].method"></span>
-                    <span ng-bind="vm.spec.methods[method].location" ng-class="{'is-symbolic': vm.spec.methods[method].location_type.toLowerCase() === 'symbolic'}"></span>
+                  <div ng-click="vm.scrollToMethod(section, method)">
+                    <span class="{{'method-' + method.method.toLowerCase() + '-label'}}" ng-bind="method.method"></span>
+                    <span ng-bind="method.location" ng-class="{'is-symbolic': method.location_type.toLowerCase() === 'symbolic'}"></span>
                   </div>
                 </li><!-- .navigation-method -->
               </ul><!-- .navigation-methods -->
