@@ -124,14 +124,14 @@
       </div><!-- .section -->
     </div><!-- .sections -->
     <div class="schemas">
-      <div class="toggle-header schemas-header" id="schemas" ng-click="vm.hideSchemas = !vm.hideSchemas">
-        <div class="toggle-header-title">Schemas</div>
+      <div class="toggle-header section-header" id="schemas" ng-click="vm.hideSchemas = !vm.hideSchemas">
+        <div class="toggle-header-title section-name">Schemas</div>
       </div>
       <div class="schemas-body" ng-hide="vm.hideSchemas">
-        <span ng-repeat="type in vm.schemaTypes">
+        <div ng-repeat="type in vm.schemaTypes">
           <div class="label" ng-bind="type"></div>
-          <div ng-repeat="tag in vm.ooSpec.schemaTags[type]" ng-init="show = false; schema = vm.ooSpec.schemas[type][tag]" style="border: 1px solid #000">
-            <span ng-class="{'expanded': show, 'collapsed': !show}" class="expandable jsname" ng-click="show = !show" ng-attr-id="{{'schema-' + vm.slugify(tag)}}" ng-bind="tag"></span>
+          <div class="schema-container" ng-repeat="tag in vm.ooSpec.schemaTags[type]" ng-init="show = false; schema = vm.ooSpec.schemas[type][tag]">
+            <span ng-class="{'header-expanded': show, 'header-collapsed': !show}" ng-click="show = !show" ng-attr-id="{{'schema-' + vm.slugify(tag)}}" ng-bind="tag"></span>
             <div ng-if="show">
               <span ng-init="showInner = false">
                 <schema-short model="schema" show="showInner"></schema-short>
@@ -139,7 +139,7 @@
               </span>
             </div>
           </div>
-        </span>
+        </div>
       </div><!-- .schemas-body -->
     </div><!-- .schemas -->
   </div><!-- .container -->
