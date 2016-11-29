@@ -46,8 +46,6 @@
         }
 
         function getApiList() {
-            if (vm.loding) return;
-
             vm.loading = true;
 
             api
