@@ -16,7 +16,7 @@
         <div class="navigation-menu">
           <ul>
             <li>
-              <span class="menu-header1">API</span>
+              <span class="menu-header1" ng-click="vm.scrollTo('api')">API</span>
               <ul>
                 <li ng-repeat="section in vm.ooSpec.sections">
                   <span class="menu-header2" ng-click="vm.scrollToMethod(section)" ng-bind="section.name"></span>
@@ -30,7 +30,7 @@
               </ul>
             </li>
             <li>
-              <span class="menu-header1" ng-click="vm.scrollToSchema()">Schemas</span>
+              <span class="menu-header1" ng-click="vm.scrollTo('schema')">Schemas</span>
               <ul>
                 <li ng-repeat="type in vm.schemaTypes">
                     <span class="menu-header2" ng-bind="type"></span>
@@ -47,8 +47,8 @@
       </div><!-- .navigation-inner -->
     </div><!-- .navigation-outer -->
     <div class="content">
-      <div class="content-header1">API</div>
-      <div ng-repeat-start="section in vm.ooSpec.sections" class="content-header2" ng-init="show = true" ng-click="show = !show" ng-attr-id="{{vm.slugify(section.name)}}">
+      <div class="content-header1" ng-attr-id="{{'api' | escapeID}}">API</div>
+      <div ng-repeat-start="section in vm.ooSpec.sections" class="content-header2" ng-init="show = true" ng-click="show = !show" ng-attr-id="{{section.name | escapeID}}">
         <span ng-bind="section.name"></span>
         <span ng-if="section.summary" class="content-header2-summary" ng-bind="section.summary"></span>
       </div>
@@ -59,7 +59,7 @@
             <p class="description section-description" ng-bind-html="section.description | markup | addTargetBlank | unsafeHTML"></p>
           </div>
           <div class="methods">
-            <div class="method {{'method-' + method.method.toLowerCase()}}" ng-repeat="method in section.methods" ng-init="show = true" ng-attr-id="{{vm.slugify(section.name + '-' + method.method + ' ' + method.location)}}">
+            <div class="method {{'method-' + method.method.toLowerCase()}}" ng-repeat="method in section.methods" ng-init="show = true" ng-attr-id="{{(section.name + '-' + method.method + ' ' + method.location) | escapeID}}">
               <div class="toggle-header method-header" ng-click="show = !show">
                 <div class="toggle-header-title">
                   <div class="monospace-text method-method-location">
@@ -126,10 +126,10 @@
           </div><!-- .methods -->
         </div><!-- .section-body -->
       </div><!-- .section -->
-      <div class="content-header1">Schemas</div>
+      <div class="content-header1" ng-attr-id="{{'schema' | escapeID}}">Schemas</div>
       <div ng-repeat-start="type in vm.schemaTypes" class="content-header2" ng-bind="type"></div>
       <div ng-repeat-end class="schema-container" ng-repeat="tag in vm.ooSpec.schemaTags[type]" ng-init="show = false; schema = vm.ooSpec.schemas[type][tag]">
-        <span ng-class="{'header-expanded': show, 'header-collapsed': !show}" ng-click="show = !show" ng-attr-id="{{'schema-' + vm.slugify(tag)}}" ng-bind="tag"></span>
+        <span ng-class="{'header-expanded': show, 'header-collapsed': !show}" ng-click="show = !show" ng-attr-id="{{'schema-' + (tag | escapeID)}}" ng-bind="tag"></span>
         <div ng-if="show">
           <span ng-init="showInner = false">
             <schema-short model="schema" show="showInner"></schema-short>
