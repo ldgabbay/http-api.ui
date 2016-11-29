@@ -59,7 +59,7 @@
             <p class="description section-description" ng-bind-html="section.description | markup | addTargetBlank | unsafeHTML"></p>
           </div>
           <div class="methods">
-            <div class="method {{'method-' + method.method.toLowerCase()}}" ng-repeat="method in section.methods" ng-init="show = true" ng-attr-id="{{['api', section.name, method.tag] | escapeID}}">
+            <div class="method {{'method-' + method.method.toLowerCase()}}" ng-repeat="method in section.methods" ng-init="show = false" ng-attr-id="{{['api', section.name, method.tag] | escapeID}}">
               <div class="toggle-header method-header" ng-click="show = !show">
                 <div class="toggle-header-title">
                   <div class="monospace-text method-method-location">
