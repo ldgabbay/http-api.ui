@@ -35,13 +35,6 @@ h1, h2, h3, h4, h5, h6 {
 p {
     margin: 0 0 10px;
 }
-pre,
-code {
-    font-family: "Ubuntu Mono", monospace;
-}
-pre {
-    margin: 0;
-}
 table {
     width: 100%;
 }
@@ -141,9 +134,6 @@ table {
     height: 3px;
     background-color: #FFF;
 }
-.is-symbolic {
-    font-style: italic;
-}
 
 /* Header */
 .header {
@@ -164,7 +154,7 @@ table {
 /* Navigation */
 .navigation-outer,
 .navigation-inner {
-    width: 280px;
+    width: 200px;
 }
 .navigation-outer {
     float: left;
@@ -191,40 +181,76 @@ table {
     list-style-type: none;
     padding: 0;
     margin: 0;
+    color: #D9D9D9;
+}
+.navigation-menu > ul > li {
+    margin-bottom: 24px;
 }
 .navigation-menu ul ul li {
-    padding-left: 10px;
+    padding-left: 12px;
+    margin-bottom: 4px;
 }
-.navigation-menu li > div {
+.navigation-menu li {
     display: block;
-    cursor: pointer;
-    color: #D9D9D9;
-    line-height: 1.6;
     white-space: nowrap;
     text-overflow: ellipsis;
     width: 100%;
     overflow: hidden;
 }
-.navigation-menu li > div:hover {
+.menu-header1,
+.menu-header2,
+.menu-entry {
+    cursor: pointer;
+}
+.menu-header1:hover,
+.menu-header2:hover,
+.menu-entry:hover {
     color: #FFF;
 }
-.navigation-section {
-    margin-bottom: 20px;
+.menu-header1,
+.menu-header2 {
+    display: block; /* TODO: Remove */
+}
+.menu-header1 {
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+.menu-header2 {
+    margin-bottom: 4px;
+    font-variant: small-caps;
+}
+.content {
+    width: auto;
+    margin-left: 200px;
 }
 
-/* Section */
-.sections {
-    width: auto;
-    margin-left: 280px;
+/* Content Headers */
+.content-header1 {
+    font-size: 24px;
+    font-weight: bold;
 }
-.section-header {
+.content-header2,
+.content-header2-summary {
+}
+.content-header2 {
     border-bottom: 1px solid #DDD;
     padding: 4px 0;
-}
-.section-name {
     font-size: 20px;
-    color: #000;
 }
+.content-header2-summary {
+    float: right;
+    font-size: 14px;
+    height: 23px;
+    line-height: 23px;
+}
+.section-container + .content-header1 {
+    margin-top: 24px;
+}
+.content-header2 + .schema-container {
+    margin-top: 8px;
+}
+
+/* Sections */
 .section-body {
     margin-bottom: 12px;
 }
@@ -346,11 +372,10 @@ table {
 }
 div + div > .method-sub-label,
 .request + .request {
-    margin-top: 20px;
+    margin-top: 24px;
 }
 
 /* Parameter Table */
-.x-parameter-name,
 .examples {
     font-size: 14px;
 }
@@ -388,11 +413,9 @@ div + div > .method-sub-label,
 /* Schemas */
 .schemas {
     width: auto;
-    margin-left: 280px;
-    margin-bottom: 30px;
-}
-.schemas .x-parameter-name {
-    padding: 3px;
+    margin-left: 200px;
+    margin-bottom: 24px;
+    margin-top: 24px;
 }
 .schemas-header {
     padding: 10px 0;
@@ -403,9 +426,6 @@ div + div > .method-sub-label,
 }
 .schemas-body {
     padding-top: 4px;
-}
-.schemas-body > div + div {
-    margin-top: 24px;
 }
 .schema-header {
     border-bottom: 1px solid #DDD;
@@ -558,7 +578,7 @@ div + div > .method-sub-label,
 .collapsed {
     display: inline-block;
     cursor: pointer;
-    padding: 2px 4px;
+    padding: 0 4px;
     border-radius: 4px;
 }
 .expanded {
@@ -589,6 +609,9 @@ div + div > .method-sub-label,
 .reference-ss {
     color: #009900;
     font-weight: 600;
+    font-style: italic;
+}
+.is-symbolic {
     font-style: italic;
 }
 .methods table tr,
