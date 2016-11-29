@@ -22,9 +22,22 @@
 				<span ng-bind="parameter.description"></span>
 			</td>
 		</tr>
-		<tr ng-repeat-end ng-if="(showName && parameter.name.isExpandable) || (showValue && parameter.value.isExpandable)">
+		<tr class="marker-row" ng-if="(showName && parameter.name.isExpandable)">
+			<td class="marker"></td>
+			<td colspan="3"></td>
+		</tr>
+		<tr ng-if="(showName && parameter.name.isExpandable)">
 			<td colspan="4">
 				<schema-extended model="parameter.name" show="showName"></schema-extended>
+			</td>
+		</tr>
+		<tr class="marker-row" ng-if="(showValue && parameter.value.isExpandable)">
+			<td colspan="2"></td>
+			<td class="marker"></td>
+			<td></td>
+		</tr>
+		<tr ng-repeat-end ng-if="(showValue && parameter.value.isExpandable)">
+			<td colspan="4">
 				<schema-extended model="parameter.value" show="showValue"></schema-extended>
 			</td>
 		</tr>
