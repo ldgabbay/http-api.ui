@@ -422,7 +422,7 @@
         function GeneralSS(ss) {
             this.type = 'general';
             if (ss.hasOwnProperty('criteria')) this._criteria = ss.criteria;
-            if (ss.hasOwnProperty('examples')) this._examples = ss.examples;
+            if (ss.hasOwnProperty('examples')) this._examples = ss.examples.map(function(value) { return JSON.stringify(value); });
 
             this.shortTextClass = 'primitive-ss';
             this.shortText = 'string';
