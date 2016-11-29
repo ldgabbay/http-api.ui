@@ -607,6 +607,11 @@
                 string: Object.getOwnPropertyNames(httpapiSpec.schemas.string).sort(),
                 json: Object.getOwnPropertyNames(httpapiSpec.schemas.json).sort(),
             }
+            for(var key in this.methods) {
+                if(this.methods.hasOwnProperty(key)) {
+                    this.methods[key].tag = key;
+                }
+            }
 
             for(var i=0; i!=context.srefs.length; ++i) {
                 var ref = context.srefs[i];
