@@ -14,8 +14,8 @@
 	function escapeID() {
 		var printable = /[-a-zA-Z0-9]/;
 
-		return function(input) {
-			var chunks = ['x-'],
+		function escapeString(input) {
+			var chunks = [],
 				i = 0,
 				j = 0;
 			while (j != input.length) {
@@ -33,6 +33,21 @@
 				chunks.push(input.slice(i,j));
 			}
 			return chunks.join('');
+		}
+
+		return function(input) {
+			if (angular.isArray(input)) {
+				var chunks = [];
+				for (var i=0; i!==input.length; ++i) {
+					chunks.push(escapeString(input[i]));
+				}
+				return 'x-' + chunks.join('__');
+			} else if (angular.isString(input)) {
+				return 'x-' + escapeString(input);
+			} else {
+				// TODO this should not happen
+				return '';
+			}
 		};
 	}
 })();
