@@ -387,6 +387,17 @@ div + div > .method-sub-label,
 .list-container.examples:before {
     content: "Examples";
 }
+.list-container {
+    display: inline-block;
+}
+.list-container:before {
+    font-weight: 400;
+}
+.list-container ul {
+    margin: 0;
+    font-size: 11px;
+    padding-left: 1.5em;
+}
 
 /* Schemas */
 .schema-container {
@@ -457,19 +468,11 @@ div + div > .method-sub-label,
 .is-symbolic {
     font-style: italic;
 }
-.methods table tr,
-.expansion table tr {
+table.parameter-list tr,
+table.array-items tr,
+table.object-properties tr {
     width: 100%;
     border-bottom: 1px solid #F8F8F8;
-}
-.methods table tr.marker-row,
-.expansion table tr.marker-row,
-.methods table tr.marker-row + tr,
-.expansion table tr.marker-row + tr,
-.methods table tr.marker-row + tr > td,
-.expansion table tr.marker-row + tr > td {
-    border-bottom: none;
-    padding: 0;
 }
 .marker {
     padding: 1px 0 0;
@@ -480,45 +483,67 @@ div + div > .method-sub-label,
     height: 2px;
     background-color: #CCC;
 }
-.methods table tr.expansion,
-.expansion table tr.expansion {
+table.parameter-list tr.expansion,
+table.array-items tr.expansion,
+table.object-properties tr.expansion {
     background-color: #F8F8F8;
 }
-.methods table,
-.expansion table {
+table.parameter-list,
+table.object-properties {
     border-collapse: collapse;
     font-size: 13px;
     text-align: left;
 }
-.methods table tr:last-child,
-.expansion table tr:last-child {
+table.parameter-list tr:last-child,
+table.array-items tr:last-child,
+table.object-properties tr:last-child {
     /*border-bottom: 0;*/
 }
-.methods table thead,
-.expansion table thead {
+table.parameter-list thead,
+table.array-items thead,
+table.object-properties thead {
     background-color: #F8F8F8;
     font-weight: 600;
 }
-.methods table th,
-.expansion table th {
+table.parameter-list th,
+table.array-items th,
+table.object-properties th {
     padding: 2px;
     font-variant: small-caps;
 }
-.methods table td,
-.expansion table td {
+table.parameter-list > tbody > tr > td,
+table.array-items > tbody > tr > td,
+table.object-properties > tbody > tr > td {
     vertical-align: top;
+    padding: 2px 0;
 }
-.methods table td:first-of-type,
-.expansion table td:first-of-type {
+table.parameter-list td:first-of-type,
+table.array-items td:first-of-type,
+table.object-properties td:first-of-type {
     padding-left: 0;
 }
-.methods table td:last-of-type,
-.expansion table td:last-of-type {
+table.parameter-list td:last-of-type,
+table.array-items td:last-of-type,
+table.object-properties td:last-of-type {
     padding-right: 0;
 }
-.methods table,
-.expansion table {
+table.parameter-list,
+table.array-items,
+table.object-properties {
 }
+table.parameter-list tr.marker-row,
+table.array-items tr.marker-row,
+table.object-properties tr.marker-row,
+table.parameter-list tr.marker-row + tr > td,
+table.array-items tr.marker-row + tr > td,
+table.object-properties tr.marker-row + tr > td,
+table.parameter-list tr.marker-row > td,
+table.array-items tr.marker-row > td,
+table.object-properties tr.marker-row > td {
+    border-bottom: none;
+    padding: 0;
+}
+
 .parameter {
 
 }
