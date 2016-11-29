@@ -3,7 +3,7 @@
   <div class="loading-container">
     <div class="table">
       <div class="table-cell">
-        <img src="/assets/img/loader.svg" alt="Loading..." />
+        <img src="assets/img/loader.svg" alt="Loading..." />
       </div>
     </div><!-- .table -->
   </div><!-- .loading-container -->
@@ -86,7 +86,7 @@
                       <div ng-if="method.request.body && method.request.body.length !== 0">
                         <div class="label method-sub-label">body</div>
                         <div class="body-list">
-                          <div class="body" ng-repeat="body in method.request.body" ng-include="'/app/body.html'"></div>
+                          <div class="body" ng-repeat="body in method.request.body" ng-include="'app/body.html'"></div>
                         </div>
                       </div>
                     </div>
@@ -116,7 +116,7 @@
                     <div ng-if="response.body">
                       <div class="label method-sub-label">Body</div>
                       <div class="body-list">
-                        <div class="body" ng-repeat="body in response.body track by $index" ng-include="'/app/body.html'"></div>
+                        <div class="body" ng-repeat="body in response.body track by $index" ng-include="'app/body.html'"></div>
                       </div><!-- .body-list -->
                     </div>
                   </div><!-- .response -->
