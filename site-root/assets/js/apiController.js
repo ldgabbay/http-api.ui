@@ -118,8 +118,12 @@
 
                     vm.ooSpec = Parser.parse(response);
 
+                    var h1 = $stateParams.h1,
+                        h2 = $stateParams.h2,
+                        h3 = $stateParams.h3;
+
                     $timeout(function() {
-                        scrollTo($stateParams.h1, $stateParams.h2, $stateParams.h3);
+                        scrollTo(h1, h2, h3);
                     }, 1250);
 
                 }, function(response) {
