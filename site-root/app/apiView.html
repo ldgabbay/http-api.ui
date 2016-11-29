@@ -79,16 +79,16 @@
                   <div class="request no-request-params" ng-if="vm.isEmptyObject(method.request)">None</div>
                   <div class="requests-content" ng-if="!vm.isEmptyObject(method.request)">
                     <div class="request">
-                      <span ng-repeat="pltype in vm.requestParameterListTypes" ng-if="method.request.hasOwnProperty(pltype)" ng-init="pl = method.request[pltype]">
+                      <div ng-repeat="pltype in vm.requestParameterListTypes" ng-if="method.request.hasOwnProperty(pltype)" ng-init="pl = method.request[pltype]">
                         <div class="label method-sub-label" ng-bind="pltype"></div>
                         <parameter-list model="pl"></parameter-list>
-                      </span>
-                      <span ng-if="method.request.body && method.request.body.length !== 0">
+                      </div>
+                      <div ng-if="method.request.body && method.request.body.length !== 0">
                         <div class="label method-sub-label">body</div>
                         <div class="body-list">
                           <div class="body" ng-repeat="body in method.request.body" ng-include="'/app/body.html'"></div>
                         </div>
-                      </span>
+                      </div>
                     </div>
                   </div><!-- .requests-content -->
                 </div><!-- .requests -->
