@@ -26,8 +26,8 @@
 
         vm.hideSchemas = false;
         vm.loading = false;
-        vm.scrollToMethod = scrollToMethod;
-        vm.scrollToSchema = scrollToSchema;
+//        vm.scrollToMethod = scrollToMethod;
+//        vm.scrollToSchema = scrollToSchema;
         vm.ooSpec = null;
         vm.specList = null;
         vm.specUrl = null;
@@ -83,7 +83,6 @@
                             if (vm.specList[i].path === newVal) {
                                 vm.specName = vm.specList[i].name;
 
-                                // debugger;
                                 // $state.go('apiDeeplink0', {
                                 //     spec: vm.specName
                                 // }, options.stateChangeOptionsWithOverride);
@@ -121,41 +120,17 @@
 
                     vm.ooSpec = Parser.parse(response);
 
-                    if ($stateParams.h1 === 'api') {
-                        if ($stateParams.h2) {
-                            // take me to a section
-                            if ($stateParams.h3) {
-                                // TODO take me to a method
-                            } else {
-                                // TODO just take me to the section
-                            }
-                        } else {
-                            // TODO just take me to the api
-                            scrollToID($filter('escapeID')($stateParams.h1));
-                        }
-                    } else if ($stateParams.h1 === 'schema') {
-                        if ($stateParams.h2) {
-                            // take me to a schema type
-                            if ($stateParams.h3) {
-                                // TODO take me to a schema of that type
-                            } else {
-                                // TODO just take me to the schema type
-                            }
-                        } else {
-                            // TODO just take me to the schemas
-                            scrollToID($filter('escapeID')($stateParams.h1));
-                        }
-                    } else {
-                        // TODO just take me to the top
-                    }
+                    $timeout(function() {
+                        scrollTo($stateParams.h1, $stateParams.h2, $stateParams.h3);
+                    }, 1250);
 
-                    if (!!$stateParams.section) {
-                        _scrollToSection($stateParams.section);
-                    }
                 }, function(response) {
                     alert('An error occurred while retrieving API specifications from ' + url);
                 })['finally'](function() {
-                    vm.loading = false;
+                    // TODO find a better way to know when angular is finally done
+                    $timeout(function() {
+                        vm.loading = false;
+                    });
                 });
             });
         }
@@ -168,12 +143,16 @@
                     h2: h2,
                     h3: h3
                 }, options.stateChangeOptionsWithOverride);
+
+                scrollToID($filter('escapeID')([h1, h2, h3]));
             } else if (h2) {
                 $state.go('apiDeeplink2', {
                     spec: vm.specName,
                     h1: h1,
                     h2: h2
                 }, options.stateChangeOptionsWithOverride);
+
+                scrollToID($filter('escapeID')([h1, h2]));
             } else if (h1) {
                 $state.go('apiDeeplink1', {
                     spec: vm.specName,
@@ -185,13 +164,12 @@
                 $state.go('apiDeeplink0', {
                     spec: vm.specName
                 }, options.stateChangeOptionsWithOverride);
+
+                scrollToID($filter('escapeID')('api'));
             }
         }
 
         function scrollToID(tag, period) {
-            if (!period)
-                period = 100;
-
             function wait() {
                 if (!vm.loading) {
                     $anchorScroll(tag);
@@ -203,49 +181,49 @@
             $timeout(wait);
         }
 
-        function scrollToMethod(section, method, overrideState) {
-            var id = section.name;
-            section.__hide = false;
-
-            if (method) {
-                id += '-' + method.method + '-' + method.location;
-                method.__hide = false;
-            }
-
-            $state.go('apiDeeplink', {
-                spec: $filter('escapeID')(vm.specName),
-                section: $filter('escapeID')(id)
-            }, overrideState ? options.stateChangeOptionsWithOverride : options.stateChangeOptions);
-
-            $timeout(function() {
-                $anchorScroll($filter('escapeID')(id));
-            });
-        }
-
-        function scrollToSchema(name, overrideState) {
-            if (!name) {
-                return;
-            }
-
-            var slug = 'schemas',
-                schema = vm.spec.schemas.find(name);
-            vm.hideSchemas = false;
-
-
-            if (typeof(schema) !== 'undefined') {
-                schema.__show = true;
-                slug = 'schema-' + $filter('escapeID')(schema.name);
-
-                $state.go('apiDeeplink', {
-                    spec: $filter('escapeID')(vm.specName),
-                    section: slug
-                }, overrideState ? options.stateChangeOptionsWithOverride : options.stateChangeOptions);
-
-                $timeout(function() {
-                    $anchorScroll(slug);
-                });
-            }
-        }
+//        function scrollToMethod(section, method, overrideState) {
+//            var id = section.name;
+//            section.__hide = false;
+//
+//            if (method) {
+//                id += '-' + method.method + '-' + method.location;
+//                method.__hide = false;
+//            }
+//
+//            $state.go('apiDeeplink', {
+//                spec: $filter('escapeID')(vm.specName),
+//                section: $filter('escapeID')(id)
+//            }, overrideState ? options.stateChangeOptionsWithOverride : options.stateChangeOptions);
+//
+//            $timeout(function() {
+//                $anchorScroll($filter('escapeID')(id));
+//            });
+//        }
+//
+//        function scrollToSchema(name, overrideState) {
+//            if (!name) {
+//                return;
+//            }
+//
+//            var slug = 'schemas',
+//                schema = vm.spec.schemas.find(name);
+//            vm.hideSchemas = false;
+//
+//
+//            if (typeof(schema) !== 'undefined') {
+//                schema.__show = true;
+//                slug = 'schema-' + $filter('escapeID')(schema.name);
+//
+//                $state.go('apiDeeplink', {
+//                    spec: $filter('escapeID')(vm.specName),
+//                    section: slug
+//                }, overrideState ? options.stateChangeOptionsWithOverride : options.stateChangeOptions);
+//
+//                $timeout(function() {
+//                    $anchorScroll(slug);
+//                });
+//            }
+//        }
 
         function toggleFirstResponse(index, responses, response) {
             if (index === 0) {
