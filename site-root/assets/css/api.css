@@ -519,17 +519,15 @@ table.parameter-list > tbody > tr > td,
 table.array-items > tbody > tr > td,
 table.object-properties > tbody > tr > td {
     vertical-align: top;
-    padding: 2px 0;
+    padding: 2px;
 }
 table.parameter-list td:first-of-type,
 table.array-items td:first-of-type,
 table.object-properties td:first-of-type {
-    padding-left: 0;
 }
 table.parameter-list td:last-of-type,
 table.array-items td:last-of-type,
 table.object-properties td:last-of-type {
-    padding-right: 0;
 }
 table.parameter-list,
 table.array-items,
