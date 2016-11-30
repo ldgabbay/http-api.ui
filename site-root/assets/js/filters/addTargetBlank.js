@@ -7,10 +7,9 @@
 
     function addTargetBlank() {
         return function(input) {
-            var html = angular.element('<div>' + input + '</div>'); // Defensively wrap in a div to avoid 'invalid html' exception
+            var html = angular.element('<div>' + input + '</div>'); // wrap input to create a single element
             html.find('a').attr('target', '_blank');
-            
-            return angular.element('<div></div>').append(html).html(); // Trick to have a string representation of HTML
+            return html.html(); // return inner HTML from the artificially added div
         };
     };
 })();
