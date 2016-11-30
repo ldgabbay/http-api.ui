@@ -499,15 +499,15 @@ table.array-items tr:last-child,
 table.object-properties tr:last-child {
     /*border-bottom: 0;*/
 }
-table.parameter-list thead,
-table.array-items thead,
-table.object-properties thead {
+table.parameter-list > thead,
+table.array-items > thead,
+table.object-properties > thead {
     background-color: #F8F8F8;
     font-weight: 600;
 }
-table.parameter-list th,
-table.array-items th,
-table.object-properties th {
+table.parameter-list > thead > tr > th,
+table.array-items > thead > tr > th,
+table.object-properties > thead > tr > th {
     padding: 2px;
     font-variant: small-caps;
 }
