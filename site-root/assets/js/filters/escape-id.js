@@ -18,7 +18,7 @@
             var chunks = [],
                 i = 0,
                 j = 0;
-            while (j != input.length) {
+            while (j !== input.length) {
                 if (! (input[j].match(printable))) {
                     if (i!==j) {
                         chunks.push(input.slice(i,j));

@@ -3,7 +3,7 @@
 
     angular
         .module('api')
-        .factory('api', api)
+        .factory('api', api);
 
     api.$inject = ['$http', '$q'];
 
