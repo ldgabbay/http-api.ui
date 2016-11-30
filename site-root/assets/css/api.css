@@ -498,9 +498,9 @@ table.object-properties {
     font-size: 13px;
     text-align: left;
 }
-table.parameter-list tr:last-child,
-table.array-items tr:last-child,
-table.object-properties tr:last-child {
+table.parameter-list > tbody > tr:last-child,
+table.array-items > tbody > tr:last-child,
+table.object-properties > tbody > tr:last-child {
     /*border-bottom: 0;*/
 }
 table.parameter-list > thead,
