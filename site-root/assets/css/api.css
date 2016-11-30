@@ -501,7 +501,7 @@ table.object-properties {
 table.parameter-list > tbody > tr:last-child,
 table.array-items > tbody > tr:last-child,
 table.object-properties > tbody > tr:last-child {
-    /*border-bottom: 0;*/
+    border-bottom: 2px solid #F8F8F8;
 }
 table.parameter-list > thead,
 table.array-items > thead,
