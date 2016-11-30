@@ -2,7 +2,7 @@
     <span class="body-content-type-label">Content Type:</span>
     <span class="body-content-type-value" ng-bind="body.contentType"></span>
 </p>
-<div class="method" ng-if="body.type === 'json'" ng-init="showInner = true">
+<div ng-if="body.type === 'json'" ng-init="showInner = true">
     <schema-short model="body._schema" show="showInner"></schema-short>
     <schema-extended model="body._schema" show="showInner"></schema-extended>
 </div>
