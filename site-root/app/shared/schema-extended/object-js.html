@@ -1,47 +1,47 @@
 <span ng-include="'app/shared/schema-extended/details.html'"></span>
 
 <table class="object-properties">
-	<thead>
-		<tr>
-			<th>Key</th>
-			<th>Frequency</th>
-			<th>Value</th>
-			<th>Description</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr ng-repeat-start="property in model._properties" ng-init="showKey = false; showValue = false" class="object-property">
-			<td>
-				<schema-short model="property.key" show="showKey"></schema-short>
-			</td>
-			<td>
-				<span ng-bind="property.frequency"></span>
-			</td>
-			<td>
-				<schema-short model="property.value" show="showValue"></schema-short>
-			</td>
-			<td>
-				<span ng-bind-html="property.description | markup | addTargetBlank | unsafeHTML"></span>
-			</td>
-		</tr>
-		<tr class="marker-row" ng-if="(showKey && property.key.isExpandable)">
-			<td class="marker"></td>
-			<td colspan="3"></td>
-		</tr>
-		<tr ng-if="(showKey && property.key.isExpandable)">
-			<td colspan="4">
-				<schema-extended model="property.key" show="showKey"></schema-extended>
-			</td>
-		</tr>
-		<tr class="marker-row" ng-if="(showValue && property.value.isExpandable)">
-			<td colspan="2"></td>
-			<td class="marker"></td>
-			<td></td>
-		</tr>
-		<tr ng-repeat-end ng-if="(showValue && property.value.isExpandable)">
-			<td colspan="4">
-				<schema-extended model="property.value" show="showValue"></schema-extended>
-			</td>
-		</tr>
-	</tbody>
+    <thead>
+        <tr>
+            <th>Key</th>
+            <th>Frequency</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat-start="property in model._properties" ng-init="showKey = false; showValue = false" class="object-property">
+            <td>
+                <schema-short model="property.key" show="showKey"></schema-short>
+            </td>
+            <td>
+                <span ng-bind="property.frequency"></span>
+            </td>
+            <td>
+                <schema-short model="property.value" show="showValue"></schema-short>
+            </td>
+            <td>
+                <span ng-bind-html="property.description | markup | addTargetBlank | unsafeHTML"></span>
+            </td>
+        </tr>
+        <tr class="marker-row" ng-if="(showKey && property.key.isExpandable)">
+            <td class="marker"></td>
+            <td colspan="3"></td>
+        </tr>
+        <tr ng-if="(showKey && property.key.isExpandable)">
+            <td colspan="4">
+                <schema-extended model="property.key" show="showKey"></schema-extended>
+            </td>
+        </tr>
+        <tr class="marker-row" ng-if="(showValue && property.value.isExpandable)">
+            <td colspan="2"></td>
+            <td class="marker"></td>
+            <td></td>
+        </tr>
+        <tr ng-repeat-end ng-if="(showValue && property.value.isExpandable)">
+            <td colspan="4">
+                <schema-extended model="property.value" show="showValue"></schema-extended>
+            </td>
+        </tr>
+    </tbody>
 </table>

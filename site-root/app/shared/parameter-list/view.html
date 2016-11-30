@@ -1,45 +1,45 @@
 <table class="parameter-list">
-	<thead>
-		<tr>
-			<th>Name</th>
-			<th>Frequency</th>
-			<th>Value</th>
-			<th>Description</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr ng-repeat-start="parameter in model" ng-init="showName = false; showValue = false" class="parameter">
-			<td>
-				<schema-short model="parameter.name" show="showName"></schema-short>
-			</td>
-			<td>
-				<span ng-bind="parameter.frequency"></span>
-			</td>
-			<td>
-				<schema-short model="parameter.value" show="showValue"></schema-short>
-			</td>
-			<td>
-				<span ng-bind-html="parameter.description | markup | addTargetBlank | unsafeHTML"></span>
-			</td>
-		</tr>
-		<tr class="marker-row" ng-if="(showName && parameter.name.isExpandable)">
-			<td class="marker"></td>
-			<td colspan="3"></td>
-		</tr>
-		<tr ng-if="(showName && parameter.name.isExpandable)">
-			<td colspan="4">
-				<schema-extended model="parameter.name" show="showName"></schema-extended>
-			</td>
-		</tr>
-		<tr class="marker-row" ng-if="(showValue && parameter.value.isExpandable)">
-			<td colspan="2"></td>
-			<td class="marker"></td>
-			<td></td>
-		</tr>
-		<tr ng-repeat-end ng-if="(showValue && parameter.value.isExpandable)">
-			<td colspan="4">
-				<schema-extended model="parameter.value" show="showValue"></schema-extended>
-			</td>
-		</tr>
-	</tbody>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Frequency</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat-start="parameter in model" ng-init="showName = false; showValue = false" class="parameter">
+            <td>
+                <schema-short model="parameter.name" show="showName"></schema-short>
+            </td>
+            <td>
+                <span ng-bind="parameter.frequency"></span>
+            </td>
+            <td>
+                <schema-short model="parameter.value" show="showValue"></schema-short>
+            </td>
+            <td>
+                <span ng-bind-html="parameter.description | markup | addTargetBlank | unsafeHTML"></span>
+            </td>
+        </tr>
+        <tr class="marker-row" ng-if="(showName && parameter.name.isExpandable)">
+            <td class="marker"></td>
+            <td colspan="3"></td>
+        </tr>
+        <tr ng-if="(showName && parameter.name.isExpandable)">
+            <td colspan="4">
+                <schema-extended model="parameter.name" show="showName"></schema-extended>
+            </td>
+        </tr>
+        <tr class="marker-row" ng-if="(showValue && parameter.value.isExpandable)">
+            <td colspan="2"></td>
+            <td class="marker"></td>
+            <td></td>
+        </tr>
+        <tr ng-repeat-end ng-if="(showValue && parameter.value.isExpandable)">
+            <td colspan="4">
+                <schema-extended model="parameter.value" show="showValue"></schema-extended>
+            </td>
+        </tr>
+    </tbody>
 </table>
