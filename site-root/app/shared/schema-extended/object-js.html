@@ -21,7 +21,7 @@
 				<schema-short model="property.value" show="showValue"></schema-short>
 			</td>
 			<td>
-				<span ng-bind="property.description"></span>
+				<span ng-bind-html="property.description | markup | addTargetBlank | unsafeHTML"></span>
 			</td>
 		</tr>
 		<tr class="marker-row" ng-if="(showKey && property.key.isExpandable)">

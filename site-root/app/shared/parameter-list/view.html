@@ -19,7 +19,7 @@
 				<schema-short model="parameter.value" show="showValue"></schema-short>
 			</td>
 			<td>
-				<span ng-bind="parameter.description"></span>
+				<span ng-bind-html="parameter.description | markup | addTargetBlank | unsafeHTML"></span>
 			</td>
 		</tr>
 		<tr class="marker-row" ng-if="(showName && parameter.name.isExpandable)">

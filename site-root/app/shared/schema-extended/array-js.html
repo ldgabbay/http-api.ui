@@ -17,7 +17,7 @@
 				<schema-short model="item.value" show="showValue"></schema-short>
 			</td>
 			<td>
-				<span ng-bind="item.description"></span>
+				<span ng-bind-html="item.description | markup | addTargetBlank | unsafeHTML"></span>
 			</td>
 		</tr>
 		<tr ng-repeat-end ng-if="showValue && item.value.isExpandable">
