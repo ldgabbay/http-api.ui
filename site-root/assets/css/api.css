@@ -147,7 +147,7 @@ p + p {
     width: 100%;
     height: 4px;
     background-color: #888;
-    z-index: 2;
+    z-index: 3;
 }
 .api-container {
     width: 100%;
@@ -157,21 +157,24 @@ p + p {
 
 /* Navigation */
 .navigation-outer,
-.navigation-inner {
+.navigation-mid {
     width: 200px;
 }
 .navigation-outer {
+    position: relative;
     float: left;
 }
-.navigation-inner {
+.navigation-mid {
     position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
     overflow-y: scroll;
-    padding: 20px;
     background-color: #4A4A4A;
     z-index: 1;
+}
+.navigation-inner {
+    padding: 20px;
 }
 .api-selector {
     margin-bottom: 30px;
@@ -226,6 +229,42 @@ p + p {
 .content {
     width: auto;
     margin-left: 200px;
+}
+
+.navigation-resize-container {
+    background: #333;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 200px;
+    width: 6px;
+    margin-left: -3px;
+    cursor: col-resize;
+    z-index: 2;
+}
+.nagivation-resize-icon,
+.nagivation-resize-icon:before,
+.nagivation-resize-icon:after {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background: #FFF;
+}
+.nagivation-resize-icon {
+    top: 50%;
+    margin: -2px 2px 0;
+}
+.nagivation-resize-icon:before,
+.nagivation-resize-icon:after {
+    content: "";
+    display: inline-block;
+}
+.nagivation-resize-icon:before {
+    top: -6px;
+}
+.nagivation-resize-icon:after {
+    bottom: -6px;
 }
 
 /* Content Headers */
