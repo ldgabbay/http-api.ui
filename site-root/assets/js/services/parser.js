@@ -244,6 +244,9 @@
                     validateOnlyKeys(top, path, x, ["ref"]);
                     validateRequiredKey(top, path, x, "ref", validateString);
                     assert(top.schemas.string.hasOwnProperty(x["ref"]), path + " string schema reference " + JSON.stringify(x["ref"]) + " not found");
+                } else if (x.hasOwnProperty("oneOf")) {
+                    validateOnlyKeys(top, path, x, ["oneOf"]);
+                    validateRequiredKey(top, path, x, "oneOf", validateStringSchemaList);
                 } else {
                     validateOnlyKeys(top, path, x, ["criteria", "examples"]);
                     validateOptionalKey(top, path, x, "criteria", function(t, p, y) { validateList(t, p, y, validateString); });
@@ -254,12 +257,20 @@
             }
         }
 
+        function validateStringSchemaList(top, path, x) {
+            validateArray(top, path, x);
+            validateList(top, path, x, validateStringSchema);
+        }
+
         function validateJsonSchema(top, path, x) {
             validateObject(top, path, x);
             if (x.hasOwnProperty("ref")) {
                 validateOnlyKeys(top, path, x, ["ref"]);
                 validateRequiredKey(top, path, x, "ref", validateString);
                 assert(top.schemas.json.hasOwnProperty(x["ref"]), path + " json schema reference " + JSON.stringify(x["ref"]) + " not found");
+            } else if (x.hasOwnProperty("oneOf")) {
+                validateOnlyKeys(top, path, x, ["oneOf"]);
+                validateRequiredKey(top, path, x, "oneOf", validateJsonSchemaList);
             } else {
                 validateRequiredKey(top, path, x, "type", validateString);
                 if (x["type"] === "null") {
@@ -288,6 +299,11 @@
                 }
             }
             return false;
+        }
+
+        function validateJsonSchemaList(top, path, x) {
+            validateArray(top, path, x);
+            validateList(top, path, x, validateJsonSchema);
         }
 
         function validateJsonItemList(top, path, x) {
@@ -447,9 +463,21 @@
             this.extendedView = 'app/shared/schema-extended/reference-ss.html';
         }
 
+        function OneOfSS(ss) {
+            this.type = 'oneOf';
+            this._oneOf = ss.oneOf.map(makeStringSchema);
+
+            this.shortTextClass = 'primitive-ss';
+            this.shortText = 'oneOf';
+
+            this.isExpandable = true;
+            this.extendedView = 'app/shared/schema-extended/one-of-ss.html';
+        }
+
         function makeStringSchema(ss) {
             if (jsonTypeof(ss) === "string") return new LiteralSS(ss);
             if (ss.hasOwnProperty("ref")) return new ReferenceSS(ss);
+            if (ss.hasOwnProperty("oneOf")) return new OneOfSS(ss);
             return new GeneralSS(ss);
         }
 
@@ -480,6 +508,16 @@
             this.shortText = this._ref;
             this.isExpandable = true;
             this.extendedView = 'app/shared/schema-extended/reference-js.html';
+        }
+
+        function OneOfJS(js) {
+            this.type = 'oneOf';
+            this._oneOf = js.oneOf.map(makeJsonSchema);
+
+            this.shortTextClass = 'primitive-js';
+            this.shortText = 'oneOf';
+            this.isExpandable = true;
+            this.extendedView = 'app/shared/schema-extended/one-of-js.html';
         }
 
         function NullJS(js) {
@@ -572,6 +610,7 @@
 
         function makeJsonSchema(js) {
             if (js.hasOwnProperty("ref")) return new ReferenceJS(js);
+            if (js.hasOwnProperty("oneOf")) return new OneOfJS(js);
             if (js.type === 'null') return new NullJS(js);
             if (js.type === 'boolean') return new BooleanJS(js);
             if (js.type === 'number') return new NumberJS(js);
