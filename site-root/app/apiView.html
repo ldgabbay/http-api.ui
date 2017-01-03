@@ -131,7 +131,7 @@
             <div ng-repeat-end class="schema-container" ng-repeat="tag in vm.ooSpec.schemaTags[type]" ng-init="show = false; schema = vm.ooSpec.schemas[type][tag]">
                 <span ng-class="{'header-expanded': show, 'header-collapsed': !show}" ng-click="show = !show" ng-attr-id="{{['schema', type, tag] | escapeID}}" ng-bind="tag"></span>
                 <div ng-if="show">
-                    <span ng-init="showInner = false">
+                    <span ng-init="showInner = true">
                         <schema-short model="schema" show="showInner"></schema-short>
                         <schema-extended model="schema" show="showInner"></schema-extended>
                     </span>
