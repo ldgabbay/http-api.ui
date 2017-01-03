@@ -493,6 +493,7 @@ table.object-properties tr.expansion {
     background-color: #F8F8F8;
 }
 table.parameter-list,
+table.array-items,
 table.object-properties {
     border-collapse: collapse;
     font-size: 13px;
