@@ -445,7 +445,7 @@
 
             this.isExpandable = this._criteria || this._examples;
             if (this.isExpandable) {
-                this.shortText = 'string+';
+                this.shortText = 'string'; // NOTE should we display something to signify expandability?
                 this.extendedView = 'app/shared/schema-extended/general-ss.html';
             }
         }
@@ -546,7 +546,7 @@
             this.shortTextClass = 'primitive-js';
             if (this._criteria || this._examples) {
                 this.isExpandable = true;
-                this.shortText = 'number+';
+                this.shortText = 'number'; // NOTE should we display something to signify expandability?
                 this.extendedView = 'app/shared/schema-extended/number-js.html';
             } else {
                 this.isExpandable = false;
@@ -580,7 +580,7 @@
 
             this.shortTextClass = 'primitive-js';
             if (this._criteria || this._examples || this._items.length !== 0) {
-                this.shortText = 'array+';
+                this.shortText = 'array'; // NOTE should we display something to signify expandability?
                 this.isExpandable = true;
                 this.extendedView = 'app/shared/schema-extended/array-js.html';
             } else {
@@ -598,7 +598,7 @@
 
             this.shortTextClass = 'primitive-js';
             if (this._criteria || this._examples || this._properties.length !== 0) {
-                this.shortText = 'object+';
+                this.shortText = 'object'; // NOTE should we display something to signify expandability?
                 this.isExpandable = true;
                 this.extendedView = 'app/shared/schema-extended/object-js.html';
             } else {
