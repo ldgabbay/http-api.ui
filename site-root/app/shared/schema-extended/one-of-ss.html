@@ -1,4 +1,6 @@
-<div ng-repeat="oneOf in model._oneOf" ng-init="show = false" class="one-of-schema">
-    <schema-short model="oneOf" show="show"></schema-short>
-    <schema-extended model="oneOf" show="show"></schema-extended>
-</div>
+<ol class="oneof-list">
+    <li ng-repeat="oneOf in model._oneOf" ng-init="show = false" class="one-of-schema">
+        <schema-short model="oneOf" show="show"></schema-short>
+        <schema-extended model="oneOf" show="show"></schema-extended>
+    </li>
+</ol>

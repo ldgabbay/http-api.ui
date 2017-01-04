@@ -576,3 +576,12 @@ table.object-properties tr.marker-row > td {
 [show="showName"] + [show="showValue"] > div {
     margin-top: 4px;
 }
+.oneof-list {
+    margin: 0;
+    padding-left: 2em;
+}
+.oneof-list > li {
+    border: 1px solid #CCC;
+    padding: 2px 4px;
+    margin-bottom: 2px;
+}
