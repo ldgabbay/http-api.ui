@@ -10,7 +10,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat-start="property in model._properties" ng-init="showKey = false; showValue = false" class="object-property">
+        <tr ng-repeat-start="property in model.properties" ng-init="showKey = false; showValue = false" class="object-property">
             <td>
                 <schema-short model="property.key" show="showKey"></schema-short>
             </td>

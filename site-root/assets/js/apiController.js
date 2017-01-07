@@ -108,15 +108,13 @@
                 .get(url)
                 .then(function(response) {
                     try {
-                        Parser.validate(response);
+                        vm.ooSpec = Parser.parse(response);
                     }
                     catch(e) {
                         if (e instanceof Parser.ParseError) {
                             alert('An error occurred while parsing API specifications from ' + url + '\n' + e.message);
                         }
                     }
-
-                    vm.ooSpec = Parser.parse(response);
 
                     var h1 = $stateParams.h1,
                         h2 = $stateParams.h2,
