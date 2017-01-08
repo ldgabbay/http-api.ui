@@ -8,7 +8,7 @@
     function parameterList() {
         var directive = {
             link: link,
-            restrict: 'E',
+            restrict: 'C',
             templateUrl: 'app/shared/parameter-list/view.html',
             scope: {
                 model: "="

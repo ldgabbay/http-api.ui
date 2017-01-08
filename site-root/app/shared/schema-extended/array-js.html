@@ -14,7 +14,7 @@
                 <span ng-bind="item.index"></span>
             </td>
             <td>
-                <schema-short model="item.value" show="showValue"></schema-short>
+                <div class="schema-short" model="item.value" show="showValue"></div>
             </td>
             <td>
                 <span ng-bind-html="item.description | markup | addTargetBlank | unsafeHTML"></span>
@@ -22,7 +22,7 @@
         </tr>
         <tr ng-repeat-end ng-if="showValue && item.value.isExpandable">
             <td colspan="3">
-                <schema-extended model="item.value" show="showValue"></schema-extended>
+                <div class="schema-extended" model="item.value" show="showValue"></div>
             </td>
         </tr>
     </tbody>

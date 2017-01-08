@@ -7,7 +7,7 @@
 
     function schemaShort() {
         var directive = {
-            restrict: 'E',
+            restrict: 'C',
             templateUrl: 'app/shared/schema-short/view.html',
             scope: {
                 model: "=",

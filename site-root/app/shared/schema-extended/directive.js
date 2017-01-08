@@ -7,7 +7,7 @@
 
     function schemaExtended() {
         var directive = {
-            restrict: 'E',
+            restrict: 'C',
             templateUrl: 'app/shared/schema-extended/view.html',
             scope: {
                 model: "=",

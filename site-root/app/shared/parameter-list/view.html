@@ -1,4 +1,4 @@
-<table class="parameter-list">
+<table class="parameters">
     <thead>
         <tr>
             <th>Name</th>
@@ -10,13 +10,13 @@
     <tbody>
         <tr ng-repeat-start="parameter in model" ng-init="showName = false; showValue = false" class="parameter">
             <td>
-                <schema-short model="parameter.name" show="showName"></schema-short>
+                <div class="schema-short" model="parameter.name" show="showName"></div>
             </td>
             <td>
                 <span ng-bind="parameter.frequency"></span>
             </td>
             <td>
-                <schema-short model="parameter.value" show="showValue"></schema-short>
+                <div class="schema-short" model="parameter.value" show="showValue"></div>
             </td>
             <td>
                 <span ng-bind-html="parameter.description | markup | addTargetBlank | unsafeHTML"></span>
@@ -28,7 +28,7 @@
         </tr>
         <tr ng-if="(showName && parameter.name.isExpandable)">
             <td colspan="4">
-                <schema-extended model="parameter.name" show="showName"></schema-extended>
+                <div class="schema-extended" model="parameter.name" show="showName"></div>
             </td>
         </tr>
         <tr class="marker-row" ng-if="(showValue && parameter.value.isExpandable)">
@@ -38,7 +38,7 @@
         </tr>
         <tr ng-repeat-end ng-if="(showValue && parameter.value.isExpandable)">
             <td colspan="4">
-                <schema-extended model="parameter.value" show="showValue"></schema-extended>
+                <div class="schema-extended" model="parameter.value" show="showValue"></div>
             </td>
         </tr>
     </tbody>

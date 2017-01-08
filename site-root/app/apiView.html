@@ -86,7 +86,7 @@
                                         <div class="request">
                                             <div ng-repeat="pltype in vm.requestParameterListTypes" ng-if="method.request.hasOwnProperty(pltype)" ng-init="pl = method.request[pltype]">
                                                 <div class="label method-sub-label" ng-bind="pltype"></div>
-                                                <parameter-list model="pl"></parameter-list>
+                                                <div class="parameter-list" model="pl"></div>
                                             </div>
                                             <div ng-if="method.request.body && method.request.body.length !== 0">
                                                 <div class="label method-sub-label">body</div>
@@ -116,7 +116,7 @@
                                         </div>
                                         <div ng-if="response.header">
                                             <div class="label method-sub-label">Header</div>
-                                            <parameter-list model="response.header"></parameter-list>
+                                            <div class="parameter-list" model="response.header"></div>
                                         </div>
                                         <div ng-if="response.body">
                                             <div class="label method-sub-label">Body</div>
@@ -137,8 +137,8 @@
                 <span ng-class="{'header-expanded': show, 'header-collapsed': !show}" ng-click="show = !show" ng-attr-id="{{['schema', type, tag] | escapeID}}" ng-bind="tag"></span>
                 <div ng-if="show">
                     <span ng-init="showInner = true">
-                        <schema-short model="schema" show="showInner"></schema-short>
-                        <schema-extended model="schema" show="showInner"></schema-extended>
+                        <div class="schema-short" model="schema" show="showInner"></div>
+                        <div class="schema-extended" model="schema" show="showInner"></div>
                     </span>
                 </div>
             </div>

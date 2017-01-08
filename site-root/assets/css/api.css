@@ -515,7 +515,7 @@ div + div > .method-sub-label,
 .is-symbolic {
     font-style: italic;
 }
-table.parameter-list tr,
+table.parameters tr,
 table.array-items tr,
 table.object-properties tr {
     width: 100%;
@@ -530,60 +530,60 @@ table.object-properties tr {
     height: 2px;
     background-color: #CCC;
 }
-table.parameter-list tr.expansion,
+table.parameters tr.expansion,
 table.array-items tr.expansion,
 table.object-properties tr.expansion {
     background-color: #F8F8F8;
 }
-table.parameter-list,
+table.parameters,
 table.array-items,
 table.object-properties {
     border-collapse: collapse;
     font-size: 13px;
     text-align: left;
 }
-table.parameter-list > tbody > tr:last-child,
+table.parameters > tbody > tr:last-child,
 table.array-items > tbody > tr:last-child,
 table.object-properties > tbody > tr:last-child {
     border-bottom: 2px solid #F8F8F8;
 }
-table.parameter-list > thead,
+table.parameters > thead,
 table.array-items > thead,
 table.object-properties > thead {
     background-color: #F8F8F8;
     font-weight: 600;
 }
-table.parameter-list > thead > tr > th,
+table.parameters > thead > tr > th,
 table.array-items > thead > tr > th,
 table.object-properties > thead > tr > th {
     padding: 2px;
     font-variant: small-caps;
 }
-table.parameter-list > tbody > tr > td,
+table.parameters > tbody > tr > td,
 table.array-items > tbody > tr > td,
 table.object-properties > tbody > tr > td {
     vertical-align: top;
     padding: 2px;
 }
-table.parameter-list td:first-of-type,
+table.parameters td:first-of-type,
 table.array-items td:first-of-type,
 table.object-properties td:first-of-type {
 }
-table.parameter-list td:last-of-type,
+table.parameters td:last-of-type,
 table.array-items td:last-of-type,
 table.object-properties td:last-of-type {
 }
-table.parameter-list,
+table.parameters,
 table.array-items,
 table.object-properties {
 }
-table.parameter-list tr.marker-row,
+table.parameters tr.marker-row,
 table.array-items tr.marker-row,
 table.object-properties tr.marker-row,
-table.parameter-list tr.marker-row + tr > td,
+table.parameters tr.marker-row + tr > td,
 table.array-items tr.marker-row + tr > td,
 table.object-properties tr.marker-row + tr > td,
-table.parameter-list tr.marker-row > td,
+table.parameters tr.marker-row > td,
 table.array-items tr.marker-row > td,
 table.object-properties tr.marker-row > td {
     border-bottom: none;
