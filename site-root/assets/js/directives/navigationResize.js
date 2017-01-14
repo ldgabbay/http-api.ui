@@ -9,7 +9,7 @@
 
     function navigationResize($document, $window) {
         var active = false;
-        var defaultWidth = 200;
+        var defaultWidth = 300;
         var currentWidth = null;
         var resizeContainerOffset = 3;
         var content = angular.element('.content');
