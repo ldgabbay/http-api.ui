@@ -16,7 +16,7 @@ body,
     height: 100%;
 }
 html {
-    font-family: "Ubuntu", "Open Sans", sans-serif, arial;
+    font-family: Avenir Next,avenir-next-web,Avenir,Helvetica Neue,Hevetica,sans-serif;
     font-size: 14px;
     font-weight: 400;
     color: #434A54;
@@ -60,7 +60,7 @@ p + p {
     display: none;
 }
 .monospace-text {
-    font-family: "Ubuntu Mono", monospace;
+    font-family: Roboto Mono,Menlo,Monaco,Consolas,Courier New,monospace;
 }
 .table,
 .table-cell {
@@ -480,7 +480,7 @@ div + div > .method-sub-label,
     position: absolute;
     top: 0;
     left: 0;
-    font-family: "Ubuntu", "Open Sans", sans-serif, arial;
+    font-family: Avenir Next,avenir-next-web,Avenir,Helvetica Neue,Hevetica,sans-serif;
 }
 .expanded:before {
     content: "\25BC";
@@ -501,7 +501,7 @@ div + div > .method-sub-label,
 }
 .literal-ss {
     color: #009900;
-    font-family: "Ubuntu Mono", monospace;
+    font-family: Roboto Mono,Menlo,Monaco,Consolas,Courier New,monospace;
 }
 .primitive-ss {
     color: #009900;
