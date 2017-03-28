@@ -1,17 +1,10 @@
 # HTTP API UI
 
-## Modify `specs.json`
 
-The `specs.json` file specifies a list of HTTP API spec documents to display. The general form is:
+## Usage
 
-	[
-		{
-			"name": "Name of API 1",
-			"path": "api1-spec.json"
-		},
-		{
-			"name": "Name of API 2",
-			"path": "api2-spec.json"
-		},
-		...
-	]
+This UI can be hosted statically, as it pulls the API from a query string parameter. Syntax is:
+
+`<site_root>/#/?src=<url>`
+
+The URL can be relative to the site root or absolute.
