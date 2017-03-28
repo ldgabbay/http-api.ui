@@ -1,4 +1,5 @@
-<!-- TODO find a better way to define a new 'model' variable for the inner scope -->
-<span ng-init="model2 = model.format">
-    <div onload="model = model2" ng-include="model2.extendedView"></div>
+<span ng-if="model.description" ng-bind-html="model.description | markup | addTargetBlank | unsafeHTML"></span>
+<span ng-if="model.format" ng-init="innerShow = true">
+    <div class="schema-short" model="model.format" show="innerShow"></div>
+    <div class="schema-extended" model="model.format" show="innerShow"></div>
 </span>

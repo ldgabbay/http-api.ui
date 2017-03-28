@@ -1,3 +1,4 @@
+<span ng-if="model.description" ng-bind-html="model.description | markup | addTargetBlank | unsafeHTML"></span>
 <ol class="oneof-list">
     <li ng-repeat="oneOf in model.oneOf" ng-init="show = false" class="one-of-schema">
         <div class="schema-short" model="oneOf" show="show"></div>
