@@ -21,11 +21,22 @@
 
         return directive;
 
+        function pauseEvent(e){
+            if(e.stopPropagation) e.stopPropagation();
+            if(e.preventDefault) e.preventDefault();
+            e.cancelBubble=true;
+            e.returnValue=false;
+            return false;
+        }
+
         function link(scope, element, attrs) {
             resizeNavigation(defaultWidth);
 
+            var lastWindowWidth = $window.outerWidth;
+
             element.bind('mousedown', function(e) {
                 active = true;
+                return pauseEvent(e);
             });
 
             $document.bind('mousemove', function(e) {
@@ -39,23 +50,23 @@
             });
 
             angular.element($window).bind('resize', function(e) {
-                var windowWidth = $window.outerWidth - resizeContainerOffset;
-                
-                if (currentWidth > windowWidth) {
-                    resizeNavigation(windowWidth);
-                }
+                var windowWidth = $window.outerWidth;
+                resizeNavigation(currentWidth * windowWidth / lastWindowWidth);
+                lastWindowWidth = windowWidth;
             });
 
             function resizeNavigation(width) {
-                if (width >= resizeContainerOffset && width <= ($window.outerWidth - resizeContainerOffset)) {
-                    currentWidth = width;
-                    width += 'px';
+                if (width < resizeContainerOffset)
+                    width = resizeContainerOffset;
+                if (width > $window.outerWidth - resizeContainerOffset)
+                    width = $window.outerWidth - resizeContainerOffset;
 
-                    element.css('left', width);
-                    navigation.css('width', width);
-                    content.css('margin-left', width);
+                currentWidth = width;
+                width += 'px';
 
-                }
+                element.css('left', width);
+                navigation.css('width', width);
+                content.css('margin-left', width);
             }
         }
     }
