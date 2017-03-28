@@ -10,7 +10,6 @@
     function apiController($anchorScroll, $scope, $state, $stateParams, $interval, $timeout, $filter, api, Parser) {
         var vm = this;
         var options = {
-            specListUrl: 'specs.json',
             apiContainerSelector: '.api-container',
             jsonTabSize: 2,
             stateChangeOptions: {
@@ -26,12 +25,8 @@
 
         vm.hideSchemas = false;
         vm.loading = false;
-//        vm.scrollToMethod = scrollToMethod;
-//        vm.scrollToSchema = scrollToSchema;
         vm.ooSpec = null;
-        vm.specList = null;
         vm.specUrl = null;
-        vm.specName = null;
         vm.toggleFirstResponse = toggleFirstResponse;
         vm.toggleResponse = toggleResponse;
         vm.schemaTypes = ['string', 'json'];
@@ -48,55 +43,13 @@
         function getApiList() {
             vm.loading = true;
 
-            api
-            .get(options.specListUrl)
-            .then(function(response) {
-                vm.specList = response;
+            vm.specUrl = $stateParams.src;
 
-                if (vm.specList.length) {
-                    if ($stateParams.spec) {
-                        var spec = $stateParams.spec;
-
-                        for (var i=0, len=vm.specList.length; i!==len; ++i) {
-                            if (vm.specList[i].name === spec) {
-                                vm.specUrl = vm.specList[i].path;
-                                vm.specName = vm.specList[i].name;
-                                break;
-                            }
-                        }
-                    } else {
-                        // do this when the path is just '/'
-                        vm.specUrl = vm.specList[0].path;
-                        vm.specName = vm.specList[0].name;
-                    }
-
-                    if (!vm.specUrl) {
-                        $state.go('api');
-                    }
-
-                    $scope.$watch('vm.specUrl', function(newVal, oldVal) {
-                        getApiSpecificicationJson(newVal);
-
-                        for (var i = 0, len = vm.specList.length; i < len; i++) {
-                            if (vm.specList[i].path === newVal) {
-                                vm.specName = vm.specList[i].name;
-
-                                // $state.go('apiDeeplink0', {
-                                //     spec: vm.specName
-                                // }, options.stateChangeOptionsWithOverride);
-
-                                break;
-                            }
-                        }
-                    });
-                } else {
-                    alert('No API specifications found.');
-                    vm.loading = false;
-                }
-            }, function(response) {
-                alert('An error occurred while retrieving the list of API specifications');
-                vm.loading = false;
-            });
+            if (!vm.specUrl) {
+                alert('Please specify API spec URL.');
+            } else {
+                getApiSpecificicationJson(vm.specUrl);                
+            }
         }
 
         function getApiSpecificicationJson(url) {
@@ -138,7 +91,7 @@
         function scrollTo(h1, h2, h3) {
             if (h3) {
                 $state.go('apiDeeplink3', {
-                    spec: vm.specName,
+                    src: vm.specUrl,
                     h1: h1,
                     h2: h2,
                     h3: h3
@@ -147,7 +100,7 @@
                 scrollToID($filter('escapeID')([h1, h2, h3]));
             } else if (h2) {
                 $state.go('apiDeeplink2', {
-                    spec: vm.specName,
+                    src: vm.specUrl,
                     h1: h1,
                     h2: h2
                 }, options.stateChangeOptionsWithOverride);
@@ -155,14 +108,14 @@
                 scrollToID($filter('escapeID')([h1, h2]));
             } else if (h1) {
                 $state.go('apiDeeplink1', {
-                    spec: vm.specName,
+                    src: vm.specUrl,
                     h1: h1
                 }, options.stateChangeOptionsWithOverride);
 
                 scrollToID($filter('escapeID')(h1));
             } else {
                 $state.go('apiDeeplink0', {
-                    spec: vm.specName
+                    src: vm.specUrl
                 }, options.stateChangeOptionsWithOverride);
 
                 scrollToID($filter('escapeID')('api'));
@@ -180,50 +133,6 @@
 
             $timeout(wait);
         }
-
-//        function scrollToMethod(section, method, overrideState) {
-//            var id = section.name;
-//            section.__hide = false;
-//
-//            if (method) {
-//                id += '-' + method.method + '-' + method.location;
-//                method.__hide = false;
-//            }
-//
-//            $state.go('apiDeeplink', {
-//                spec: $filter('escapeID')(vm.specName),
-//                section: $filter('escapeID')(id)
-//            }, overrideState ? options.stateChangeOptionsWithOverride : options.stateChangeOptions);
-//
-//            $timeout(function() {
-//                $anchorScroll($filter('escapeID')(id));
-//            });
-//        }
-//
-//        function scrollToSchema(name, overrideState) {
-//            if (!name) {
-//                return;
-//            }
-//
-//            var slug = 'schemas',
-//                schema = vm.spec.schemas.find(name);
-//            vm.hideSchemas = false;
-//
-//
-//            if (typeof(schema) !== 'undefined') {
-//                schema.__show = true;
-//                slug = 'schema-' + $filter('escapeID')(schema.name);
-//
-//                $state.go('apiDeeplink', {
-//                    spec: $filter('escapeID')(vm.specName),
-//                    section: slug
-//                }, overrideState ? options.stateChangeOptionsWithOverride : options.stateChangeOptions);
-//
-//                $timeout(function() {
-//                    $anchorScroll(slug);
-//                });
-//            }
-//        }
 
         function toggleFirstResponse(index, responses, response) {
             if (index === 0) {

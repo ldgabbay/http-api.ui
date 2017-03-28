@@ -176,14 +176,6 @@ p + p {
 .navigation-inner {
     padding: 20px;
 }
-.api-selector {
-    margin-bottom: 30px;
-}
-.api-selector {
-    display: block;
-    width: 100%;
-    margin-bottom: 30px;
-}
 .navigation-menu ul {
     list-style-type: none;
     padding: 0;
