@@ -601,7 +601,6 @@ table.object-properties tr.marker-row > td {
     display: block;
     border: 1px solid #CCC;
     padding: 4px;
-    margin-top: 4px;
 }
 [show="showKey"] + [show="showValue"] > div,
 [show="showName"] + [show="showValue"] > div {
