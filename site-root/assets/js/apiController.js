@@ -47,6 +47,7 @@
 
             if (!vm.specUrl) {
                 alert('Please specify API spec URL.');
+                $state.go('error');
             } else {
                 getApiSpecificicationJson(vm.specUrl);                
             }
@@ -66,6 +67,7 @@
                     catch(e) {
                         if (e instanceof Parser.ParseError) {
                             alert('An error occurred while parsing API specifications from ' + url + '\n' + e.message);
+                            $state.go('error');
                         }
                     }
 
@@ -79,6 +81,7 @@
 
                 }, function(response) {
                     alert('An error occurred while retrieving API specifications from ' + url);
+                    $state.go('error');
                 })['finally'](function() {
                     // TODO find a better way to know when angular is finally done
                     $timeout(function() {
