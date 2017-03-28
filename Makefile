@@ -1,7 +1,4 @@
-.PHONY: build specs
+.PHONY: push
 
-build:
-	aws s3 sync --cache-control "no-cache" site-root/ s3://docs.pegasussolutions.com/obscure-ibe/ --delete --exclude '*.json'
-
-specs:
-	aws s3 sync --cache-control "no-store" site-root/ s3://docs.pegasussolutions.com/obscure-ibe/ --delete --exclude '*' --include '*.json'
+push:
+	aws s3 sync --cache-control "no-cache" site-root/ s3://cache.queuecontinuum.com/www/http-api.ui/ --delete
