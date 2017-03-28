@@ -20,7 +20,12 @@
                 <span ng-bind-html="item.description | markup | addTargetBlank | unsafeHTML"></span>
             </td>
         </tr>
-        <tr ng-repeat-end ng-if="showValue && item.value.isExpandable">
+        <tr class="marker-row" ng-if="(showValue && item.value.isExpandable)">
+            <td colspan="1"></td>
+            <td class="marker"></td>
+            <td colspan="1"></td>
+        </tr>
+        <tr ng-repeat-end ng-if="(showValue && item.value.isExpandable)">
             <td colspan="3">
                 <div class="schema-extended" model="item.value" show="showValue"></div>
             </td>
