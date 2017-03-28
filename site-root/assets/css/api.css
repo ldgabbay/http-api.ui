@@ -582,6 +582,10 @@ table.object-properties tr.marker-row > td {
     padding: 0;
 }
 
+.details > tbody > tr > td {
+    vertical-align: top;
+}
+
 .parameter {
 
 }
