@@ -13,25 +13,25 @@
 
         $stateProvider
             .state('apiDeeplink3', {
-                url: '/:src/:h1/:h2/:h3',
+                url: '/:h1/:h2/:h3?src',
                 templateUrl: 'app/apiView.html',
                 controller: 'apiController',
                 controllerAs: 'vm'
             })
             .state('apiDeeplink2', {
-                url: '/:src/:h1/:h2',
+                url: '/:h1/:h2?src',
                 templateUrl: 'app/apiView.html',
                 controller: 'apiController',
                 controllerAs: 'vm'
             })
             .state('apiDeeplink1', {
-                url: '/:src/:h1',
+                url: '/:h1?src',
                 templateUrl: 'app/apiView.html',
                 controller: 'apiController',
                 controllerAs: 'vm'
             })
             .state('apiDeeplink0', {
-                url: '/:src',
+                url: '/?src',
                 templateUrl: 'app/apiView.html',
                 controller: 'apiController',
                 controllerAs: 'vm'
