@@ -1,0 +1,3 @@
+<span ng-class="{'not-expandable': !model.isExpandable, 'expanded': model.isExpandable && show, 'collapsed': model.isExpandable && !show}" ng-click="show = !show">
+    <span class="{{model.shortTextClass}}" ng-bind="model.shortText"></span>
+</span>

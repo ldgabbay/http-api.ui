@@ -1,0 +1,12 @@
+<table class="details" ng-if='model.criteria || model.examples'>
+    <tbody>
+        <tr>
+            <td>
+                <div ng-include="'app/directives/schema-extended/criteria.html'" onload="criteria = model.criteria" include-replace></div>
+            </td>
+            <td>
+                <div ng-include="'app/directives/schema-extended/examples.html'" onload="examples = model.examples" include-replace></div>
+            </td>
+        </tr>
+    </tbody>
+</table>
