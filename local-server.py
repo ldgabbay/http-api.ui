@@ -3,6 +3,7 @@ import SimpleHTTPServer
 import SocketServer
 import os
 
+
 class MyHTTPRequestHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
     def end_headers(self):
         self.send_my_headers()
@@ -15,6 +16,6 @@ class MyHTTPRequestHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
 
 
 if __name__ == '__main__':
-	os.chdir('site-root')
-	httpd = SocketServer.TCPServer(("", 8080), MyHTTPRequestHandler)
-	httpd.serve_forever()
+    os.chdir('site-root')
+    httpd = SocketServer.TCPServer(("", 8080), MyHTTPRequestHandler)
+    httpd.serve_forever()
