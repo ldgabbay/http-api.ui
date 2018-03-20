@@ -234,28 +234,28 @@ p + p {
     cursor: col-resize;
     z-index: 2;
 }
-.nagivation-resize-icon,
-.nagivation-resize-icon:before,
-.nagivation-resize-icon:after {
+.navigation-resize-icon,
+.navigation-resize-icon:before,
+.navigation-resize-icon:after {
     position: absolute;
     width: 2px;
     height: 2px;
     border-radius: 50%;
     background: #FFF;
 }
-.nagivation-resize-icon {
+.navigation-resize-icon {
     top: 50%;
     margin: -2px 2px 0;
 }
-.nagivation-resize-icon:before,
-.nagivation-resize-icon:after {
+.navigation-resize-icon:before,
+.navigation-resize-icon:after {
     content: "";
     display: inline-block;
 }
-.nagivation-resize-icon:before {
+.navigation-resize-icon:before {
     top: -6px;
 }
-.nagivation-resize-icon:after {
+.navigation-resize-icon:after {
     bottom: -6px;
 }
 
