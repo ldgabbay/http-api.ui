@@ -157,7 +157,7 @@ p + p {
 /* Navigation */
 .navigation-outer,
 .navigation-mid {
-    width: 300px;
+    width: 294px;
 }
 .navigation-outer {
     position: relative;
@@ -229,9 +229,8 @@ p + p {
     position: fixed;
     top: 0;
     bottom: 0;
-    left: 300px;
+    left: 294px;
     width: 6px;
-    margin-left: -3px;
     cursor: col-resize;
     z-index: 2;
 }

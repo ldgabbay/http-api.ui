@@ -8,12 +8,6 @@
     navigationResize.$inject = ['$document', '$window'];
 
     function navigationResize($document, $window) {
-        var active = false;
-        var defaultWidth = 300;
-        var currentWidth = null;
-        var resizeContainerOffset = 3;
-        var content = angular.element('.content');
-        var navigation = angular.element('.navigation-outer, .navigation-mid');
         var directive = {
             link: link,
             restrict: 'AE'
@@ -21,52 +15,34 @@
 
         return directive;
 
-        function pauseEvent(e){
-            if(e.stopPropagation) e.stopPropagation();
-            if(e.preventDefault) e.preventDefault();
-            e.cancelBubble=true;
-            e.returnValue=false;
-            return false;
-        }
-
         function link(scope, element, attrs) {
-            resizeNavigation(defaultWidth);
+            var content = angular.element('.content');
+            var navigationOuter = angular.element('.navigation-outer');
+            var navigationMid = angular.element('.navigation-mid');
 
-            var lastWindowWidth = $window.outerWidth;
+            var startX, startWidth;
 
-            element.bind('mousedown', function(e) {
-                active = true;
-                return pauseEvent(e);
-            });
+            element.bind('mousedown', initDrag);
 
-            $document.bind('mousemove', function(e) {
-                if (active) {
-                    resizeNavigation(e.pageX);
-                }
-            });
+            function initDrag(e) {
+                startX = e.clientX;
+                startWidth = parseInt($window.getComputedStyle(navigationOuter[0], null).width);
+                $document.bind('mousemove', doDrag);
+                $document.bind('mouseup', stopDrag);
+            }
 
-            $document.bind('mouseup', function(e) {
-                active = false;
-            });
+            function doDrag(e) {
+                var newWidth = (startWidth + e.clientX - startX);
 
-            angular.element($window).bind('resize', function(e) {
-                var windowWidth = $window.outerWidth;
-                resizeNavigation(currentWidth * windowWidth / lastWindowWidth);
-                lastWindowWidth = windowWidth;
-            });
+                element.css('left', (newWidth-6) + 'px');
+                navigationOuter.css('width', (newWidth) + 'px');
+                navigationMid.css('width', (newWidth-6) + 'px');
+                content.css('margin-left', (newWidth) + 'px');
+            }
 
-            function resizeNavigation(width) {
-                if (width < resizeContainerOffset)
-                    width = resizeContainerOffset;
-                if (width > $window.outerWidth - resizeContainerOffset)
-                    width = $window.outerWidth - resizeContainerOffset;
-
-                currentWidth = width;
-                width += 'px';
-
-                element.css('left', width);
-                navigation.css('width', width);
-                content.css('margin-left', width);
+            function stopDrag(e) {
+                $document.unbind('mousemove', doDrag);
+                $document.unbind('mouseup', stopDrag);
             }
         }
     }
