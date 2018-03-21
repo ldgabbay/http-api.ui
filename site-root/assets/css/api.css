@@ -442,7 +442,7 @@ div + div > .method-sub-label,
 }
 .schema-container > span,
 .schema-container > div {
-    padding: 4px;
+    padding: 4px 0px;
 }
 .schema-container > span {
     display: inline-block;
@@ -604,7 +604,7 @@ table.object-properties tr.marker-row > td {
 .expansion {
     display: block;
     border: 1px solid #CCC;
-    padding: 4px;
+    padding: 4px 0px;
 }
 [show="showKey"] + [show="showValue"] > div,
 [show="showName"] + [show="showValue"] > div {
