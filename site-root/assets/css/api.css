@@ -152,7 +152,6 @@ p + p {
 .api-container {
     width: 100%;
     min-width: 768px;
-    padding: 20px;
 }
 
 /* Navigation */
@@ -163,6 +162,7 @@ p + p {
 .navigation-outer {
     position: relative;
     float: left;
+    padding: 20px;
 }
 .navigation-mid {
     position: fixed;
@@ -221,6 +221,7 @@ p + p {
 .content {
     width: auto;
     margin-left: 300px;
+    padding: 20px;
 }
 
 .navigation-resize-container {
