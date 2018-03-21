@@ -33,6 +33,8 @@
 
             function doDrag(e) {
                 var newWidth = (startWidth + e.clientX - startX);
+                if (newWidth < 30)
+                    newWidth = 30;
 
                 element.css('left', (newWidth-6) + 'px');
                 navigationOuter.css('width', (newWidth) + 'px');
