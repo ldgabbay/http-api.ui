@@ -31,7 +31,6 @@
         vm.toggleFirstResponse = toggleFirstResponse;
         vm.toggleResponse = toggleResponse;
         vm.schemaTypes = ['string', 'json'];
-        vm.requestParameterListTypes = ['path', 'query', 'header'];
         vm.scrollTo = scrollTo;
 
         activate();

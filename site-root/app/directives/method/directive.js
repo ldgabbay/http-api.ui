@@ -7,6 +7,7 @@
 
     function method() {
         var directive = {
+            link: link,
             restrict: 'A',
             templateUrl: 'app/directives/method/view.html',
             scope: {
@@ -16,5 +17,9 @@
         };
 
         return directive;
+
+        function link(scope, iElement, iAttrs, controller, transcludeFn) {
+            scope.requestParameterListTypes = ['path', 'query', 'header'];
+        }
     }
 })();
