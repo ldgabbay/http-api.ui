@@ -132,7 +132,7 @@
 
         function scrollToID(tag, period) {
             function wait() {
-                if (!vm.appState) {
+                if (vm.appState === 'loaded') {
                     $anchorScroll(tag);
                 } else {
                     $timeout(wait, period);
