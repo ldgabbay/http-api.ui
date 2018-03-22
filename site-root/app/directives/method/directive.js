@@ -10,8 +10,8 @@
             restrict: 'A',
             templateUrl: 'app/directives/method/view.html',
             scope: {
-                section: "=sectionv",
-                method: "="
+                section: "<vSection",
+                method: "<"
             }
         };
 

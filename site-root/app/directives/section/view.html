@@ -8,7 +8,7 @@
             <div class="label">Description</div>
             <p class="description section-description" ng-bind-html="section.description | markup | addTargetBlank | unsafeHTML"></p>
         </div>
-        <div class="methods" ng-repeat="method in section.methods" method="method" sectionv="section">
+        <div class="methods" ng-repeat="method in section.methods" method="method" v-section="section">
         </div><!-- .methods -->
     </div><!-- .section-body -->
 </div><!-- .section-container -->
