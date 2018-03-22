@@ -1,0 +1,78 @@
+<div class="content-header2" ng-init="show = true" ng-click="show = !show" ng-attr-id="{{['api', section.name] | escapeID}}">
+    <span ng-bind="section.name"></span>
+    <span ng-if="section.summary" class="content-header2-summary" ng-bind="section.summary"></span>
+</div>
+<div class="section-container">
+    <div class="toggle-content section-body" ng-show="show">
+        <div ng-if="section.description">
+            <div class="label">Description</div>
+            <p class="description section-description" ng-bind-html="section.description | markup | addTargetBlank | unsafeHTML"></p>
+        </div>
+        <div class="methods">
+            <div class="method {{'method-' + method.method.toLowerCase()}}" ng-repeat="method in section.methods" ng-init="show = false" ng-attr-id="{{['api', section.name, method.tag] | escapeID}}">
+                <div class="toggle-header method-header" ng-click="show = !show">
+                    <div class="toggle-header-title">
+                        <div class="monospace-text method-method-location">
+                            <span class="method-method" ng-bind="method.method"></span>
+                            <span class="method-location" ng-bind="method.location" ng-class="{'is-symbolic': method.location_type.toLowerCase() === 'symbolic'}"></span>
+                        </div>
+                    </div><!-- .toggle-header-title -->
+                    <div class="toggle-header-subtitle method-summary" ng-if="method.summary" ng-bind="method.summary"></div>
+                </div><!-- .method-header -->
+                <div class="toggle-content method-body" ng-show="show">
+                    <div ng-if="method.description">
+                        <div class="label">Description</div>
+                        <p class="description method-description" ng-bind-html="method.description | markup | addTargetBlank | unsafeHTML"></p>
+                    </div>
+                    <div class="requests">
+                        <div class="label">Request</div>
+                        <div class="request no-request-params" ng-if="vm.isEmptyObject(method.request)">None</div>
+                        <div class="requests-content" ng-if="!vm.isEmptyObject(method.request)">
+                            <div class="request">
+                                <div ng-repeat="pltype in vm.requestParameterListTypes" ng-if="method.request.hasOwnProperty(pltype)" ng-init="pl = method.request[pltype]">
+                                    <div class="label method-sub-label" ng-bind="pltype"></div>
+                                    <div class="parameter-list" model="pl"></div>
+                                </div>
+                                <div ng-if="method.request.body && method.request.body.length !== 0">
+                                    <div class="label method-sub-label">body</div>
+                                    <div class="body-list">
+                                        <div class="body" ng-repeat="body in method.request.body" ng-include="'app/controllers/app/body.html'"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- .requests-content -->
+                    </div><!-- .requests -->
+                    <div class="responses">
+                        <div class="label">Responses</div>
+                        <ul class="toggle-tabs" ng-if="method.response && method.response.length">
+                            <li class="toggle-tab" ng-repeat="response in method.response" ng-click="vm.toggleResponse(method.response, response)" ng-class="{'selected': !response.__hide}" ng-init="vm.toggleFirstResponse($index, method.response, response)" ng-bind="response.name || response.statusMessage || response.statusCode"></li>
+                        </ul>
+                        <div class="response" ng-repeat="response in method.response" ng-hide="response.__hide">
+                            <div ng-if="response.description">
+                                <div class="label method-sub-label">Description</div>
+                                <p class="description response-description" ng-bind-html="response.description | markup | addTargetBlank | unsafeHTML"></p>
+                            </div>
+                            <div>
+                                <div class="label method-sub-label">Status</div>
+                                <p class="description response-status">
+                                    <span ng-bind="response.statusCode"></span>
+                                    <span ng-bind="response.statusMessage"></span>
+                                </p>
+                            </div>
+                            <div ng-if="response.header">
+                                <div class="label method-sub-label">Header</div>
+                                <div class="parameter-list" model="response.header"></div>
+                            </div>
+                            <div ng-if="response.body">
+                                <div class="label method-sub-label">Body</div>
+                                <div class="body-list">
+                                    <div class="body" ng-repeat="body in response.body track by $index" ng-include="'app/controllers/app/body.html'"></div>
+                                </div><!-- .body-list -->
+                            </div>
+                        </div><!-- .response -->
+                    </div><!-- .responses -->
+                </div><!-- .method-body -->
+            </div><!-- .method -->
+        </div><!-- .methods -->
+    </div><!-- .section-body -->
+</div><!-- .section-container -->
