@@ -1,12 +1,14 @@
-<div ng-class="{loading: vm.loading}">
-    <div class="loading-container">
+<div ng-switch="vm.appState">
+
+    <div ng-switch-when="loading" class="loading-container">
         <div class="table">
             <div class="table-cell">
                 <img src="assets/img/loader.svg" alt="Loading..." />
             </div>
         </div><!-- .table -->
     </div><!-- .loading-container -->
-    <div class="api-container">
+
+    <div ng-switch-when="loaded" class="api-container">
         <div class="navigation-outer">
             <div class="navigation-mid">
                 <div class="navigation-inner">
@@ -140,4 +142,5 @@
             </div>
         </div><!-- .content -->
     </div><!-- .api-container -->
+
 </div>

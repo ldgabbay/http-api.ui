@@ -24,7 +24,7 @@
         };
 
         vm.hideSchemas = false;
-        vm.loading = false;
+        vm.appState = 'loaded';
         vm.ooSpec = null;
         vm.specUrl = null;
         vm.toggleFirstResponse = toggleFirstResponse;
@@ -41,7 +41,7 @@
         }
 
         function getApiList() {
-            vm.loading = true;
+            vm.appState = 'loading';
 
             vm.specUrl = $stateParams.src;
 
@@ -54,7 +54,7 @@
         }
 
         function getApiSpecificicationJson(url) {
-            vm.loading = true;
+            vm.appState = 'loading';
             vm.ooSpec = null;
 
             $timeout(function() {
@@ -63,11 +63,14 @@
                 .then(function(response) {
                     try {
                         vm.ooSpec = Parser.parse(response);
+                        // TODO the ui may not be ready yet... need to figure out when angular is done
+                        vm.appState = 'loaded';
                     }
                     catch(e) {
                         if (e instanceof Parser.ParseError) {
                             alert('An error occurred while parsing API specifications from ' + url + '\n' + e.message);
                             $state.go('error');
+                            vm.appState = 'error';
                         }
                     }
 
@@ -82,12 +85,11 @@
                 }, function(response) {
                     alert('An error occurred while retrieving API specifications from ' + url);
                     $state.go('error');
-                })['finally'](function() {
-                    // TODO find a better way to know when angular is finally done
-                    $timeout(function() {
-                        vm.loading = false;
-                    });
-                });
+                    vm.appState = 'error';
+                })
+                // ['finally'](function() {
+                // })
+                ;
             });
         }
 
@@ -127,7 +129,7 @@
 
         function scrollToID(tag, period) {
             function wait() {
-                if (!vm.loading) {
+                if (!vm.appState) {
                     $anchorScroll(tag);
                 } else {
                     $timeout(wait, period);

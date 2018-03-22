@@ -12,7 +12,8 @@
 }
 html,
 body,
-.ui-view {
+.ui-view,
+.ui-view > div {
     height: 100%;
 }
 html {
@@ -43,24 +44,13 @@ p + p {
     margin: 6px 0 0 0;
 }
 
-/* Global */
-.loading,
+
+/* Loading Container */
+
 .loading-container {
-    height: 100%;
-}
-.loading-container {
-    display: none;
+    display: table;
     width: 100%;
     height: 100%;
-}
-.loading .loading-container {
-    display: table;
-}
-.loading .api-container {
-    display: none;
-}
-.monospace-text {
-    font-family: Roboto Mono,Menlo,Monaco,Consolas,Courier New,monospace;
 }
 .table,
 .table-cell {
@@ -74,6 +64,13 @@ p + p {
     display: table-cell;
     vertical-align: middle;
     text-align: center;
+}
+
+
+/* Global */
+
+.monospace-text {
+    font-family: Roboto Mono,Menlo,Monaco,Consolas,Courier New,monospace;
 }
 .toggle-header {
     display: table;
