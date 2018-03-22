@@ -219,7 +219,9 @@ p + p {
 .content {
     width: auto;
     margin-left: 300px;
-    padding: 20px;
+    padding: 0px 20px;
+    margin-top: 20px;
+    margin-bottom: 40px;
 }
 
 .navigation-resize-container {
@@ -261,6 +263,8 @@ p + p {
 .content-header1 {
     font-size: 24px;
     font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 .content-header2,
 .content-header2-summary {
@@ -284,7 +288,7 @@ p + p {
 }
 
 /* Sections */
-.section-body {
+.section-container {
     margin-bottom: 12px;
 }
 .section-description {
