@@ -15,8 +15,8 @@
         </div>
         <div class="requests">
             <div class="label">Request</div>
-            <div class="request no-request-params" ng-if="vm.isEmptyObject(method.request)">None</div>
-            <div class="requests-content" ng-if="!vm.isEmptyObject(method.request)">
+            <div class="request no-request-params" ng-if="isEmpty">None</div>
+            <div class="requests-content" ng-if="!isEmpty">
                 <div class="request">
                     <div ng-repeat="pltype in requestParameterListTypes" ng-if="method.request.hasOwnProperty(pltype)" ng-init="pl = method.request[pltype]">
                         <div class="label method-sub-label" ng-bind="pltype"></div>
