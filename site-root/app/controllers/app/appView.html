@@ -1,4 +1,4 @@
-<div ng-switch="vm.appState">
+<div ng-switch="vm.appState" ng-class="{'noselect': vm.noselect}">
 
     <div ng-switch-when="loading" class="loading-container">
         <div class="table">

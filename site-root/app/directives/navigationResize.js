@@ -25,6 +25,7 @@
             element.bind('mousedown', initDrag);
 
             function initDrag(e) {
+                scope.vm.noselect = true;
                 startX = e.clientX;
                 startWidth = parseInt($window.getComputedStyle(navigationOuter[0], null).width);
                 $document.bind('mousemove', doDrag);
@@ -45,6 +46,7 @@
             function stopDrag(e) {
                 $document.unbind('mousemove', doDrag);
                 $document.unbind('mouseup', stopDrag);
+                scope.vm.noselect = false;
             }
         }
     }

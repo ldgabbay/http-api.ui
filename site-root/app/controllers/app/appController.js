@@ -23,6 +23,7 @@
             }
         };
 
+        vm.noselect = false;
         vm.hideSchemas = false;
         vm.appState = 'loaded';
         vm.ooSpec = null;
