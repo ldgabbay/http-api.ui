@@ -25,7 +25,7 @@
 
         vm.noselect = false;
         vm.hideSchemas = false;
-        vm.appState = 'loaded';
+        vm.appState = 'none';
         vm.ooSpec = null;
         vm.specUrl = null;
         vm.toggleFirstResponse = toggleFirstResponse;
