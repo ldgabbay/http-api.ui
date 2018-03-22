@@ -38,6 +38,8 @@
 
         function activate() {
             $anchorScroll.yOffset = parseInt(angular.element(options.apiContainerSelector).css('padding-top'));
+            // TODO is NaN now
+            $anchorScroll.yOffset = 8;
             getApiList();
         }
 
