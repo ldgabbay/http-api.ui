@@ -13,6 +13,9 @@
             restrict: 'AE'
         };
 
+        var gripWidth = 6;
+        var minMargin = gripWidth;
+
         return directive;
 
         function link(scope, element, attrs) {
@@ -24,6 +27,13 @@
 
             element.bind('mousedown', initDrag);
 
+            angular.element($window).bind('resize', resize);
+
+            function resize(e) {
+                var width = parseInt($window.getComputedStyle(navigationOuter[0], null).width);
+                setWidth(width);
+            }
+
             function initDrag(e) {
                 scope.vm.noselect = true;
                 startX = e.clientX;
@@ -34,19 +44,25 @@
 
             function doDrag(e) {
                 var newWidth = (startWidth + e.clientX - startX);
-                if (newWidth < 30)
-                    newWidth = 30;
-
-                element.css('left', (newWidth-6) + 'px');
-                navigationOuter.css('width', (newWidth) + 'px');
-                navigationMid.css('width', (newWidth-6) + 'px');
-                content.css('margin-left', (newWidth) + 'px');
+                setWidth(newWidth);
             }
 
             function stopDrag(e) {
                 $document.unbind('mousemove', doDrag);
                 $document.unbind('mouseup', stopDrag);
                 scope.vm.noselect = false;
+            }
+
+            function setWidth(newWidth) {
+                if (newWidth < minMargin)
+                    newWidth = minMargin;
+                if (newWidth > $window.outerWidth - minMargin + gripWidth)
+                    newWidth = $window.outerWidth - minMargin + gripWidth;
+
+                element.css('left', (newWidth-gripWidth) + 'px');
+                navigationOuter.css('width', (newWidth) + 'px');
+                navigationMid.css('width', (newWidth-gripWidth) + 'px');
+                content.css('margin-left', (newWidth) + 'px');
             }
         }
     }
