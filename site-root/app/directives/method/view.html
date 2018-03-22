@@ -34,7 +34,7 @@
         <div class="responses">
             <div class="label">Responses</div>
             <ul class="toggle-tabs" ng-if="method.response && method.response.length">
-                <li class="toggle-tab" ng-repeat="response in method.response" ng-click="vm.toggleResponse(method.response, response)" ng-class="{'selected': !response.__hide}" ng-init="vm.toggleFirstResponse($index, method.response, response)" ng-bind="response.name || response.statusMessage || response.statusCode"></li>
+                <li class="toggle-tab" ng-repeat="response in method.response" ng-click="toggleResponse(method.response, response)" ng-class="{'selected': !response.__hide}" ng-init="toggleFirstResponse($index, method.response, response)" ng-bind="response.name || response.statusMessage || response.statusCode"></li>
             </ul>
             <div class="response" ng-repeat="response in method.response" ng-hide="response.__hide">
                 <div ng-if="response.description">

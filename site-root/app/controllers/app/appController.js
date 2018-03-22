@@ -28,8 +28,6 @@
         vm.appState = 'none';
         vm.ooSpec = null;
         vm.specUrl = null;
-        vm.toggleFirstResponse = toggleFirstResponse;
-        vm.toggleResponse = toggleResponse;
         vm.schemaTypes = ['string', 'json'];
         vm.scrollTo = scrollTo;
 
@@ -137,20 +135,6 @@
             }
 
             $timeout(wait);
-        }
-
-        function toggleFirstResponse(index, responses, response) {
-            if (index === 0) {
-                vm.toggleResponse(responses, response);
-            }
-        }
-
-        function toggleResponse(responses, response) {
-            responses.map(function(response) {
-                response.__hide = true;
-            });
-
-            response.__hide = false;
         }
     }
 })();

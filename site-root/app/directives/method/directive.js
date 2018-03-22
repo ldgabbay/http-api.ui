@@ -25,6 +25,23 @@
             scope.requestHasHeader = scope.method.request.header && scope.method.request.header.length;
             scope.requestHasBody = scope.method.request.body && scope.method.request.body.length;
             scope.isEmpty = !(scope.requestHasPath || scope.requestHasQuery || scope.requestHasHeader || scope.requestHasBody);
+
+            scope.toggleFirstResponse = toggleFirstResponse;
+            scope.toggleResponse = toggleResponse;
+        }
+
+        function toggleFirstResponse(index, responses, response) {
+            if (index === 0) {
+                toggleResponse(responses, response);
+            }
+        }
+
+        function toggleResponse(responses, response) {
+            responses.map(function(response) {
+                response.__hide = true;
+            });
+
+            response.__hide = false;
         }
     }
 })();
