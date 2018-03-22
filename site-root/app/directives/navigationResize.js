@@ -40,6 +40,7 @@
                 startWidth = parseInt($window.getComputedStyle(navigationOuter[0], null).width);
                 $document.bind('mousemove', doDrag);
                 $document.bind('mouseup', stopDrag);
+                scope.$apply();
             }
 
             function doDrag(e) {
@@ -51,6 +52,7 @@
                 $document.unbind('mousemove', doDrag);
                 $document.unbind('mouseup', stopDrag);
                 scope.vm.noselect = false;
+                scope.$apply();
             }
 
             function setWidth(newWidth) {
