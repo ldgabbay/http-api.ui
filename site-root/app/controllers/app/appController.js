@@ -81,9 +81,7 @@
                         h2 = $stateParams.h2,
                         h3 = $stateParams.h3;
 
-                    $timeout(function() {
-                        scrollTo(h1, h2, h3);
-                    }, 1250);
+                    scrollTo(h1, h2, h3);
 
                 }, function(response) {
                     alert('An error occurred while retrieving API specifications from ' + url);
