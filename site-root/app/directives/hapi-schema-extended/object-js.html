@@ -1,5 +1,5 @@
 <span ng-if="model.description" ng-bind-html="model.description | markup | addTargetBlank | unsafeHTML"></span>
-<span ng-include="'app/directives/schema-extended/details.html'"></span>
+<span ng-include="'app/directives/hapi-schema-extended/details.html'"></span>
 
 <table class="object-properties">
     <thead>
@@ -31,7 +31,7 @@
         </tr>
         <tr ng-if="(showKey && property.key.isExpandable)">
             <td colspan="4">
-                <div class="schema-extended" model="property.key" show="showKey"></div>
+                <div hapi-schema-extended hapi-scope-model="property.key" hapi-scope-show="showKey"></div>
             </td>
         </tr>
         <tr class="marker-row" ng-if="(showValue && property.value.isExpandable)">
@@ -41,7 +41,7 @@
         </tr>
         <tr ng-repeat-end ng-if="(showValue && property.value.isExpandable)">
             <td colspan="4">
-                <div class="schema-extended" model="property.value" show="showValue"></div>
+                <div hapi-schema-extended hapi-scope-model="property.value" hapi-scope-show="showValue"></div>
             </td>
         </tr>
     </tbody>

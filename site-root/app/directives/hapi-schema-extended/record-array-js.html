@@ -1,5 +1,5 @@
 <span ng-if="model.description" ng-bind-html="model.description | markup | addTargetBlank | unsafeHTML"></span>
-<span ng-include="'app/directives/schema-extended/details.html'"></span>
+<span ng-include="'app/directives/hapi-schema-extended/details.html'"></span>
 
 <table class="array-items">
     <thead>
@@ -28,7 +28,7 @@
         </tr>
         <tr ng-repeat-end ng-if="(showValue && item.value.isExpandable)">
             <td colspan="3">
-                <div class="schema-extended" model="item.value" show="showValue"></div>
+                <div hapi-schema-extended hapi-scope-model="item.value" hapi-scope-show="showValue"></div>
             </td>
         </tr>
     </tbody>

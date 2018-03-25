@@ -31,7 +31,7 @@
                 if (obj.description || obj.criteria || obj.examples) {
                     obj.isExpandable = true;
                     obj.shortText = 'string';
-                    obj.extendedView = 'app/directives/schema-extended/general-ss.html';
+                    obj.extendedView = 'app/directives/hapi-schema-extended/general-ss.html';
                 } else {
                     obj.isExpandable = false;
                     obj.shortText = 'string';
@@ -45,14 +45,14 @@
                 obj.shortText = obj.ref;
 
                 obj.isExpandable = true;
-                obj.extendedView = 'app/directives/schema-extended/reference-ss.html';
+                obj.extendedView = 'app/directives/hapi-schema-extended/reference-ss.html';
             },
             exitOneOfSS: function(obj) {
                 obj.shortTextClass = 'primitive-ss';
                 obj.shortText = 'oneOf';
 
                 obj.isExpandable = true;
-                obj.extendedView = 'app/directives/schema-extended/one-of-ss.html';
+                obj.extendedView = 'app/directives/hapi-schema-extended/one-of-ss.html';
             },
             exitReferenceJS: function(obj) {
                 obj.refObj = this.hapi.schemas.json[obj.ref];
@@ -61,14 +61,14 @@
                 obj.shortText = obj.ref;
 
                 obj.isExpandable = true;
-                obj.extendedView = 'app/directives/schema-extended/reference-js.html';
+                obj.extendedView = 'app/directives/hapi-schema-extended/reference-js.html';
             },
             exitOneOfJS: function(obj) {
                 obj.shortTextClass = 'primitive-js';
                 obj.shortText = 'oneOf';
 
                 obj.isExpandable = true;
-                obj.extendedView = 'app/directives/schema-extended/one-of-js.html';
+                obj.extendedView = 'app/directives/hapi-schema-extended/one-of-js.html';
             },
             exitNullJS: function(obj) {
                 obj.shortTextClass = 'primitive-js';
@@ -76,7 +76,7 @@
 
                 if (obj.description) {
                     obj.isExpandable = true;
-                    obj.extendedView = 'app/directives/schema-extended/null-js.html';
+                    obj.extendedView = 'app/directives/hapi-schema-extended/null-js.html';
                 } else {
                     obj.isExpandable = false;
                     obj.extendedView = null;
@@ -88,7 +88,7 @@
 
                 if (obj.description) {
                     obj.isExpandable = true;
-                    obj.extendedView = 'app/directives/schema-extended/boolean-js.html';
+                    obj.extendedView = 'app/directives/hapi-schema-extended/boolean-js.html';
                 } else {
                     obj.isExpandable = false;
                     obj.extendedView = null;
@@ -100,7 +100,7 @@
 
                 if (obj.description || obj.criteria || obj.examples) {
                     obj.isExpandable = true;
-                    obj.extendedView = 'app/directives/schema-extended/number-js.html';
+                    obj.extendedView = 'app/directives/hapi-schema-extended/number-js.html';
                 } else {
                     obj.isExpandable = false;
                     obj.extendedView = null;
@@ -111,13 +111,13 @@
                     obj.shortTextClass = 'primitive-js';
                     obj.shortText = 'string';
                     obj.isExpandable = true;
-                    obj.extendedView = 'app/directives/schema-extended/string-js.html';
+                    obj.extendedView = 'app/directives/hapi-schema-extended/string-js.html';
                 } else {
                     if (obj.format) {
                         obj.shortTextClass = obj.format.shortTextClass;
                         obj.shortText = obj.format.shortText;
                         obj.isExpandable = obj.format.isExpandable;
-                        obj.extendedView = 'app/directives/schema-extended/format-string-js.html'; // TODO obj.format.extendedView;
+                        obj.extendedView = 'app/directives/hapi-schema-extended/format-string-js.html'; // TODO obj.format.extendedView;
                     } else {
                         obj.shortTextClass = 'primitive-js';
                         obj.shortText = 'string';
@@ -136,7 +136,7 @@
 
                     if (obj.description || obj.criteria || obj.examples || obj.items.isExpandable) {
                         obj.isExpandable = true;
-                        obj.extendedView = 'app/directives/schema-extended/simple-array-js.html';
+                        obj.extendedView = 'app/directives/hapi-schema-extended/simple-array-js.html';
                     } else {
                         obj.isExpandable = false;
                         obj.extendedView = null;
@@ -144,7 +144,7 @@
                 } else if (obj.arrayType === 'record') {
                     if (obj.description || obj.criteria || obj.examples || obj.items.length !== 0) {
                         obj.isExpandable = true;
-                        obj.extendedView = 'app/directives/schema-extended/record-array-js.html';
+                        obj.extendedView = 'app/directives/hapi-schema-extended/record-array-js.html';
                     } else {
                         obj.isExpandable = false;
                         obj.extendedView = null;
@@ -157,7 +157,7 @@
 
                 if (obj.description || obj.criteria || obj.examples || obj.properties.length !== 0) {
                     obj.isExpandable = true;
-                    obj.extendedView = 'app/directives/schema-extended/object-js.html';
+                    obj.extendedView = 'app/directives/hapi-schema-extended/object-js.html';
                 } else {
                     obj.isExpandable = false;
                     obj.extendedView = null;

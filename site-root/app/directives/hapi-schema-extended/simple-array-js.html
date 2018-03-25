@@ -1,7 +1,7 @@
 <span ng-if="model.description" ng-bind-html="model.description | markup | addTargetBlank | unsafeHTML"></span>
-<span ng-include="'app/directives/schema-extended/details.html'"></span>
+<span ng-include="'app/directives/hapi-schema-extended/details.html'"></span>
 
 <span ng-init="innerShow = true">
     <div hapi-schema-short hapi-scope-model="model.items" hapi-scope-show="innerShow"></div>
-    <div class="schema-extended" model="model.items" show="innerShow"></div>
+    <div hapi-schema-extended hapi-scope-model="model.items" hapi-scope-show="innerShow"></div>
 </span>

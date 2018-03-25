@@ -28,7 +28,7 @@
         </tr>
         <tr ng-if="(showName && parameter.name.isExpandable)">
             <td colspan="4">
-                <div class="schema-extended" model="parameter.name" show="showName"></div>
+                <div hapi-schema-extended hapi-scope-model="parameter.name" hapi-scope-show="showName"></div>
             </td>
         </tr>
         <tr class="marker-row" ng-if="(showValue && parameter.value.isExpandable)">
@@ -38,7 +38,7 @@
         </tr>
         <tr ng-repeat-end ng-if="(showValue && parameter.value.isExpandable)">
             <td colspan="4">
-                <div class="schema-extended" model="parameter.value" show="showValue"></div>
+                <div hapi-schema-extended hapi-scope-model="parameter.value" hapi-scope-show="showValue"></div>
             </td>
         </tr>
     </tbody>
