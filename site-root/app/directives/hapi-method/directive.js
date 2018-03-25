@@ -3,16 +3,16 @@
 
     angular
         .module('app')
-        .directive('method', method);
+        .directive('hapiMethod', hapiMethod);
 
-    function method() {
+    function hapiMethod() {
         var directive = {
             link: link,
             restrict: 'A',
-            templateUrl: 'app/directives/method/view.html',
+            templateUrl: 'app/directives/hapi-method/view.html',
             scope: {
-                section: "<vSection",
-                method: "<"
+                section: "<hapiScopeSection",
+                method: "<hapiScopeMethod"
             }
         };
 

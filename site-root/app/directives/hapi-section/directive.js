@@ -3,14 +3,14 @@
 
     angular
         .module('app')
-        .directive('section', section);
+        .directive('hapiSection', hapiSection);
 
-    function section() {
+    function hapiSection() {
         var directive = {
             restrict: 'A',
-            templateUrl: 'app/directives/section/view.html',
+            templateUrl: 'app/directives/hapi-section/view.html',
             scope: {
-                section: "="
+                section: "<hapiScopeSection"
             }
         };
 
