@@ -11,7 +11,7 @@
 </div>
 <div ng-if="response.header && response.header.length">
     <div class="label method-sub-label">Header</div>
-    <div class="parameter-list" model="response.header"></div>
+    <div hapi-parameter-list hapi-scope-model="response.header"></div>
 </div>
 <div ng-if="response.body && response.body.length">
     <div class="label method-sub-label">Body</div>

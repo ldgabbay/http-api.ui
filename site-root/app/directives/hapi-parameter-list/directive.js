@@ -3,15 +3,15 @@
 
     angular
         .module('app')
-        .directive('parameterList', parameterList);
+        .directive('hapiParameterList', hapiParameterList);
 
-    function parameterList() {
+    function hapiParameterList() {
         var directive = {
             link: link,
-            restrict: 'C',
-            templateUrl: 'app/directives/parameter-list/view.html',
+            restrict: 'A',
+            templateUrl: 'app/directives/hapi-parameter-list/view.html',
             scope: {
-                model: "="
+                model: "=hapiScopeModel"
             }
         };
 

@@ -20,7 +20,7 @@
                 <div class="request">
                     <div ng-repeat="pltype in requestParameterListTypes" ng-if="method.request.hasOwnProperty(pltype)" ng-init="pl = method.request[pltype]">
                         <div class="label method-sub-label" ng-bind="pltype"></div>
-                        <div class="parameter-list" model="pl"></div>
+                        <div hapi-parameter-list hapi-scope-model="pl"></div>
                     </div>
                     <div ng-if="method.request.body && method.request.body.length !== 0">
                         <div class="label method-sub-label">body</div>

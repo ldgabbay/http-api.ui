@@ -6,4 +6,4 @@
     <div hapi-schema-short hapi-scope-model="body.schema" hapi-scope-show="showInner"></div>
     <div hapi-schema-extended hapi-scope-model="body.schema" hapi-scope-show="showInner"></div>
 </div>
-<div class="parameter-list" ng-if="body.type === 'form'" model="body.parameters"></div>
+<div ng-if="body.type === 'form'" hapi-parameter-list hapi-scope-model="body.parameters"></div>
