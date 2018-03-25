@@ -1,4 +1,4 @@
-<span ng-if="model.description" ng-bind-html="model.description | markup | addTargetBlank | unsafeHTML"></span>
+<span ng-if="model.description" ng-bind-html="model.description | hapiMarkdown"></span>
 <span ng-include="'app/directives/hapi-schema-extended/details.html'"></span>
 
 <table class="array-items">
@@ -18,7 +18,7 @@
                 <div hapi-schema-short hapi-scope-model="item.value" hapi-scope-show="showValue"></div>
             </td>
             <td>
-                <span ng-bind-html="item.description | markup | addTargetBlank | unsafeHTML"></span>
+                <span ng-bind-html="item.description | hapiMarkdown"></span>
             </td>
         </tr>
         <tr class="marker-row" ng-if="(showValue && item.value.isExpandable)">

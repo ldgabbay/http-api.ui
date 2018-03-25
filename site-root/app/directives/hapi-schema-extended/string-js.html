@@ -1,4 +1,4 @@
-<span ng-if="model.description" ng-bind-html="model.description | markup | addTargetBlank | unsafeHTML"></span>
+<span ng-if="model.description" ng-bind-html="model.description | hapiMarkdown"></span>
 <span ng-if="model.format" ng-init="innerShow = true">
     <div hapi-schema-short hapi-scope-model="model.format" hapi-scope-show="innerShow"></div>
     <div hapi-schema-extended hapi-scope-model="model.format" hapi-scope-show="innerShow"></div>

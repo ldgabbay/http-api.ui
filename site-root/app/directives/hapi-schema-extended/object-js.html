@@ -1,4 +1,4 @@
-<span ng-if="model.description" ng-bind-html="model.description | markup | addTargetBlank | unsafeHTML"></span>
+<span ng-if="model.description" ng-bind-html="model.description | hapiMarkdown"></span>
 <span ng-include="'app/directives/hapi-schema-extended/details.html'"></span>
 
 <table class="object-properties">
@@ -22,7 +22,7 @@
                 <div hapi-schema-short hapi-scope-model="property.value" hapi-scope-show="showValue"></div>
             </td>
             <td>
-                <span ng-bind-html="property.description | markup | addTargetBlank | unsafeHTML"></span>
+                <span ng-bind-html="property.description | hapiMarkdown"></span>
             </td>
         </tr>
         <tr class="marker-row" ng-if="(showKey && property.key.isExpandable)">

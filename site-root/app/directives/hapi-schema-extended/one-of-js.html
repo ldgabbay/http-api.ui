@@ -1,4 +1,4 @@
-<span ng-if="model.description" ng-bind-html="model.description | markup | addTargetBlank | unsafeHTML"></span>
+<span ng-if="model.description" ng-bind-html="model.description | hapiMarkdown"></span>
 <ol class="oneof-list">
     <li ng-repeat="oneOf in model.oneOf" ng-init="show = false" class="one-of-schema">
         <div hapi-schema-short hapi-scope-model="oneOf" hapi-scope-show="show"></div>

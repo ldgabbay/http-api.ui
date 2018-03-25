@@ -19,7 +19,7 @@
                 <div hapi-schema-short hapi-scope-model="parameter.value" hapi-scope-show="showValue"></div>
             </td>
             <td>
-                <span ng-bind-html="parameter.description | markup | addTargetBlank | unsafeHTML"></span>
+                <span ng-bind-html="parameter.description | hapiMarkdown"></span>
             </td>
         </tr>
         <tr class="marker-row" ng-if="(showName && parameter.name.isExpandable)">

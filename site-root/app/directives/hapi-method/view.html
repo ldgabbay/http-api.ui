@@ -11,7 +11,7 @@
     <div class="toggle-content method-body" ng-show="show">
         <div ng-if="method.description">
             <div class="label">Description</div>
-            <p class="description method-description" ng-bind-html="method.description | markup | addTargetBlank | unsafeHTML"></p>
+            <p class="description method-description" ng-bind-html="method.description | hapiMarkdown"></p>
         </div>
         <div class="requests">
             <div class="label">Request</div>

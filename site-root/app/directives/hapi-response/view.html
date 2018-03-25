@@ -1,6 +1,6 @@
 <div ng-if="response.description">
     <div class="label method-sub-label">Description</div>
-    <p class="description response-description" ng-bind-html="response.description | markup | addTargetBlank | unsafeHTML"></p>
+    <p class="description response-description" ng-bind-html="response.description | hapiMarkdown"></p>
 </div>
 <div>
     <div class="label method-sub-label">Status</div>

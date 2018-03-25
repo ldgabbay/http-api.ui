@@ -6,7 +6,7 @@
     <div class="toggle-content section-body" ng-show="show">
         <div ng-if="section.description">
             <div class="label">Description</div>
-            <p class="description section-description" ng-bind-html="section.description | markup | addTargetBlank | unsafeHTML"></p>
+            <p class="description section-description" ng-bind-html="section.description | hapiMarkdown"></p>
         </div>
         <div class="methods" ng-repeat="method in section.methods" hapi-method hapi-scope-section="section" hapi-scope-method="method">
         </div><!-- .methods -->

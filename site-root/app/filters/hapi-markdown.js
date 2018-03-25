@@ -3,15 +3,20 @@
 
     angular
         .module('app')
-        .filter('markup', markup);
+        .filter('hapiMarkdown', hapiMarkdown);
 
-    var converter = new showdown.Converter();
+    var converter = new showdown.Converter({
+        'openLinksInNewWindow': true
+    });
 
-    function markup() {
+    hapiMarkdown.$inject = ['$sce'];
+
+    function hapiMarkdown($sce) {
         return function(input) {
             if (!input)
                 return '';
             var html = converter.makeHtml(input);
+            html = $sce.trustAsHtml(html);
             return html;
         };
     }
