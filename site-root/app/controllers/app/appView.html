@@ -58,7 +58,7 @@
                 <span ng-class="{'header-expanded': show, 'header-collapsed': !show}" ng-click="show = !show" ng-attr-id="{{['schema', type, tag] | escapeID}}" ng-bind="tag"></span>
                 <div ng-if="show">
                     <span ng-init="showInner = true">
-                        <div class="schema-short" model="schema" show="showInner"></div>
+                        <div hapi-schema-short hapi-scope-model="schema" hapi-scope-show="showInner"></div>
                         <div class="schema-extended" model="schema" show="showInner"></div>
                     </span>
                 </div>

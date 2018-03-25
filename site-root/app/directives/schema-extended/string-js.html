@@ -1,5 +1,5 @@
 <span ng-if="model.description" ng-bind-html="model.description | markup | addTargetBlank | unsafeHTML"></span>
 <span ng-if="model.format" ng-init="innerShow = true">
-    <div class="schema-short" model="model.format" show="innerShow"></div>
+    <div hapi-schema-short hapi-scope-model="model.format" hapi-scope-show="innerShow"></div>
     <div class="schema-extended" model="model.format" show="innerShow"></div>
 </span>

@@ -13,13 +13,13 @@
     <tbody>
         <tr ng-repeat-start="property in model.properties" ng-init="showKey = false; showValue = false" class="object-property">
             <td>
-                <div class="schema-short" model="property.key" show="showKey"></div>
+                <div hapi-schema-short hapi-scope-model="property.key" hapi-scope-show="showKey"></div>
             </td>
             <td>
                 <span ng-bind="property.frequency"></span>
             </td>
             <td>
-                <div class="schema-short" model="property.value" show="showValue"></div>
+                <div hapi-schema-short hapi-scope-model="property.value" hapi-scope-show="showValue"></div>
             </td>
             <td>
                 <span ng-bind-html="property.description | markup | addTargetBlank | unsafeHTML"></span>

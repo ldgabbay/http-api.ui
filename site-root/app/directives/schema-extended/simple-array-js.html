@@ -2,6 +2,6 @@
 <span ng-include="'app/directives/schema-extended/details.html'"></span>
 
 <span ng-init="innerShow = true">
-    <div class="schema-short" model="model.items" show="innerShow"></div>
+    <div hapi-schema-short hapi-scope-model="model.items" hapi-scope-show="innerShow"></div>
     <div class="schema-extended" model="model.items" show="innerShow"></div>
 </span>

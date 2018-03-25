@@ -10,13 +10,13 @@
     <tbody>
         <tr ng-repeat-start="parameter in model" ng-init="showName = false; showValue = false" class="parameter">
             <td>
-                <div class="schema-short" model="parameter.name" show="showName"></div>
+                <div hapi-schema-short hapi-scope-model="parameter.name" hapi-scope-show="showName"></div>
             </td>
             <td>
                 <span ng-bind="parameter.frequency"></span>
             </td>
             <td>
-                <div class="schema-short" model="parameter.value" show="showValue"></div>
+                <div hapi-schema-short hapi-scope-model="parameter.value" hapi-scope-show="showValue"></div>
             </td>
             <td>
                 <span ng-bind-html="parameter.description | markup | addTargetBlank | unsafeHTML"></span>

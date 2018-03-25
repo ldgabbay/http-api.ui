@@ -3,7 +3,7 @@
     <span class="body-content-type-value" ng-bind="body.contentType"></span>
 </p>
 <div ng-if="body.type === 'json'" ng-init="showInner = true">
-    <div class="schema-short" model="body.schema" show="showInner"></div>
+    <div hapi-schema-short hapi-scope-model="body.schema" hapi-scope-show="showInner"></div>
     <div class="schema-extended" model="body.schema" show="showInner"></div>
 </div>
 <div class="parameter-list" ng-if="body.type === 'form'" model="body.parameters"></div>

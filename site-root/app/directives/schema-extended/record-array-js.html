@@ -15,7 +15,7 @@
                 <span ng-bind="item.index"></span>
             </td>
             <td>
-                <div class="schema-short" model="item.value" show="showValue"></div>
+                <div hapi-schema-short hapi-scope-model="item.value" hapi-scope-show="showValue"></div>
             </td>
             <td>
                 <span ng-bind-html="item.description | markup | addTargetBlank | unsafeHTML"></span>
