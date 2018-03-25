@@ -16,6 +16,6 @@
 <div ng-if="response.body && response.body.length">
     <div class="label method-sub-label">Body</div>
     <div class="body-list">
-        <div class="body" ng-repeat="body in response.body track by $index" ng-include="'app/controllers/app/body.html'"></div>
+        <div ng-repeat="body in response.body track by $index" hapi-body hapi-scope-body="body"></div>
     </div><!-- .body-list -->
 </div>

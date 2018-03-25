@@ -25,7 +25,7 @@
                     <div ng-if="method.request.body && method.request.body.length !== 0">
                         <div class="label method-sub-label">body</div>
                         <div class="body-list">
-                            <div class="body" ng-repeat="body in method.request.body" ng-include="'app/controllers/app/body.html'"></div>
+                            <div ng-repeat="body in method.request.body" hapi-body hapi-scope-body="body"></div>
                         </div>
                     </div>
                 </div>
