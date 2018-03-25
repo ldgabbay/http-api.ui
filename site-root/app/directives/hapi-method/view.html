@@ -31,34 +31,12 @@
                 </div>
             </div><!-- .requests-content -->
         </div><!-- .requests -->
-        <div class="responses">
+        <div class="responses" ng-if="method.response && method.response.length">
             <div class="label">Responses</div>
-            <ul class="toggle-tabs" ng-if="method.response && method.response.length">
-                <li class="toggle-tab" ng-repeat="response in method.response" ng-click="toggleResponse(method.response, response)" ng-class="{'selected': !response.__hide}" ng-init="toggleFirstResponse($index, method.response, response)" ng-bind="response.name || response.statusMessage || response.statusCode"></li>
+            <ul class="toggle-tabs">
+                <li class="toggle-tab" ng-repeat="response in method.response track by $index" ng-click="select($index)" ng-class="{'selected': selected === $index}" ng-bind="response.name || response.statusMessage || response.statusCode"></li>
             </ul>
-            <div class="response" ng-repeat="response in method.response" ng-hide="response.__hide">
-                <div ng-if="response.description">
-                    <div class="label method-sub-label">Description</div>
-                    <p class="description response-description" ng-bind-html="response.description | markup | addTargetBlank | unsafeHTML"></p>
-                </div>
-                <div>
-                    <div class="label method-sub-label">Status</div>
-                    <p class="description response-status">
-                        <span ng-bind="response.statusCode"></span>
-                        <span ng-bind="response.statusMessage"></span>
-                    </p>
-                </div>
-                <div ng-if="response.header && response.header.length">
-                    <div class="label method-sub-label">Header</div>
-                    <div class="parameter-list" model="response.header"></div>
-                </div>
-                <div ng-if="response.body && response.body.length">
-                    <div class="label method-sub-label">Body</div>
-                    <div class="body-list">
-                        <div class="body" ng-repeat="body in response.body track by $index" ng-include="'app/controllers/app/body.html'"></div>
-                    </div><!-- .body-list -->
-                </div>
-            </div><!-- .response -->
+            <div class="response" hapi-response hapi-scope-response="method.response[selected]" /><!-- .response -->
         </div><!-- .responses -->
     </div><!-- .method-body -->
 </div><!-- .method -->

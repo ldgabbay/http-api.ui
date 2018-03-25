@@ -1,0 +1,21 @@
+<div ng-if="response.description">
+    <div class="label method-sub-label">Description</div>
+    <p class="description response-description" ng-bind-html="response.description | markup | addTargetBlank | unsafeHTML"></p>
+</div>
+<div>
+    <div class="label method-sub-label">Status</div>
+    <p class="description response-status">
+        <span ng-bind="response.statusCode"></span>
+        <span ng-bind="response.statusMessage"></span>
+    </p>
+</div>
+<div ng-if="response.header && response.header.length">
+    <div class="label method-sub-label">Header</div>
+    <div class="parameter-list" model="response.header"></div>
+</div>
+<div ng-if="response.body && response.body.length">
+    <div class="label method-sub-label">Body</div>
+    <div class="body-list">
+        <div class="body" ng-repeat="body in response.body track by $index" ng-include="'app/controllers/app/body.html'"></div>
+    </div><!-- .body-list -->
+</div>
