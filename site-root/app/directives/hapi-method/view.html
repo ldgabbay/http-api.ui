@@ -22,12 +22,7 @@
                         <div class="label method-sub-label" ng-bind="pltype"></div>
                         <div hapi-parameter-list hapi-scope-model="pl"></div>
                     </div>
-                    <div ng-if="method.request.body && method.request.body.length !== 0">
-                        <div class="label method-sub-label">body</div>
-                        <div class="body-list">
-                            <div ng-repeat="body in method.request.body" hapi-body hapi-scope-body="body"></div>
-                        </div>
-                    </div>
+                    <div hapi-body-list hapi-scope-body-list="method.request.body" />
                 </div>
             </div><!-- .requests-content -->
         </div><!-- .requests -->

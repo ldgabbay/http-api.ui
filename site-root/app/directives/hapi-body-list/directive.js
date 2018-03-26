@@ -3,15 +3,15 @@
 
     angular
         .module('app')
-        .directive('hapiResponse', hapiResponse);
+        .directive('hapiBodyList', hapiBodyList);
 
-    function hapiResponse() {
+    function hapiBodyList() {
         var directive = {
             link: link,
             restrict: 'A',
-            templateUrl: 'app/directives/hapi-response/view.html',
+            templateUrl: 'app/directives/hapi-body-list/view.html',
             scope: {
-                response: "<hapiScopeResponse"
+                bodyList: "<hapiScopeBodyList"
             }
         };
 

@@ -379,6 +379,14 @@ p + p {
     color: #C5862B;
 }
 
+
+.tab-page {
+    padding: 10px;
+    border: 1px solid #DDD;
+    border-top-width: 0;
+}
+
+
 /* Request/Response */
 .requests-content,
 .response {

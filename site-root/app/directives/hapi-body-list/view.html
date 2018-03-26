@@ -1,0 +1,7 @@
+<div class="body-list" ng-if="bodyList && bodyList.length">
+    <div class="label method-sub-label">Body</div>
+    <ul class="toggle-tabs">
+        <li class="toggle-tab" ng-repeat="body in bodyList track by $index" ng-click="select($index)" ng-class="{'selected': selected === $index}" ng-bind="$index"></li>
+    </ul>
+    <div class="tab-page" hapi-body hapi-scope-body="bodyList[selected]"></div>
+</div><!-- .body-list -->

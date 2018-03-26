@@ -13,9 +13,4 @@
     <div class="label method-sub-label">Header</div>
     <div hapi-parameter-list hapi-scope-model="response.header"></div>
 </div>
-<div ng-if="response.body && response.body.length">
-    <div class="label method-sub-label">Body</div>
-    <div class="body-list">
-        <div ng-repeat="body in response.body track by $index" hapi-body hapi-scope-body="body"></div>
-    </div><!-- .body-list -->
-</div>
+<div hapi-body-list hapi-scope-body-list="response.body" />
