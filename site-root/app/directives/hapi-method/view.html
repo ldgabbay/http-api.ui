@@ -9,29 +9,30 @@
         <div class="toggle-header-subtitle method-summary" ng-if="method.summary" ng-bind="method.summary"></div>
     </div><!-- .method-header -->
     <div class="toggle-content method-body" ng-show="show">
-        <div ng-if="method.description">
-            <div class="label">Description</div>
-            <p class="description method-description" ng-bind-html="method.description | hapiMarkdown"></p>
+        <div class="method-l1" ng-if="method.description">
+            <div class="method-l1-label">Description</div>
+            <div class="method-l1-body description method-description" ng-bind-html="method.description | hapiMarkdown"/>
         </div>
-        <div class="requests">
-            <div class="label">Request</div>
-            <div class="request no-request-params" ng-if="isEmpty">None</div>
-            <div class="requests-content" ng-if="!isEmpty">
-                <div class="request">
-                    <div ng-repeat="pltype in requestParameterListTypes" ng-if="method.request.hasOwnProperty(pltype)" ng-init="pl = method.request[pltype]">
-                        <div class="label method-sub-label" ng-bind="pltype"></div>
-                        <div hapi-parameter-list hapi-scope-model="pl"></div>
+        <div class="method-l1 requests" ng-if="!isEmpty">
+            <div class="method-l1-label">Request</div>
+            <div class="method-l1-body">
+                <div class="requests-content">
+                    <div class="method-l2" ng-repeat="pltype in requestParameterListTypes" ng-if="method.request.hasOwnProperty(pltype)" ng-init="pl = method.request[pltype]">
+                        <div class="method-l2-label" ng-bind="pltype"></div>
+                        <div class="method-l2-body" hapi-parameter-list hapi-scope-model="pl"></div>
                     </div>
-                    <div hapi-body-list hapi-scope-body-list="method.request.body" />
-                </div>
-            </div><!-- .requests-content -->
+                    <div class="method-l2" hapi-body-list hapi-scope-body-list="method.request.body" />
+                </div><!-- .requests-content -->
+            </div>
         </div><!-- .requests -->
-        <div class="responses" ng-if="method.response && method.response.length">
-            <div class="label">Responses</div>
-            <ul class="toggle-tabs">
-                <li class="toggle-tab" ng-repeat="response in method.response track by $index" ng-click="select($index)" ng-class="{'selected': selected === $index}" ng-bind="response.name || response.statusMessage || response.statusCode"></li>
-            </ul>
-            <div class="response" hapi-response hapi-scope-response="method.response[selected]" /><!-- .response -->
+        <div class="method-l1 responses" ng-if="method.response && method.response.length">
+            <div class="method-l1-label">Responses</div>
+            <div class="method-l1-body">
+                <ul class="toggle-tabs">
+                    <li class="toggle-tab" ng-repeat="response in method.response track by $index" ng-click="select($index)" ng-class="{'selected': selected === $index}" ng-bind="response.name || response.statusMessage || response.statusCode"></li>
+                </ul>
+                <div class="response" hapi-response hapi-scope-response="method.response[selected]" /><!-- .response -->
+            </div>
         </div><!-- .responses -->
     </div><!-- .method-body -->
 </div><!-- .method -->

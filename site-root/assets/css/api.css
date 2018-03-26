@@ -97,11 +97,6 @@ p + p {
 .toggle-content {
     padding-bottom: 8px;
 }
-.label {
-    margin: 8px 0 4px;
-    text-transform: uppercase;
-    color: #888;
-}
 .toggle-tabs {
     list-style-type: none;
     padding: 0 0 0 5px;
@@ -291,11 +286,42 @@ p + p {
 .section-container {
     margin-bottom: 12px;
 }
-.section-description {
+.section-l1-body {
     margin-bottom: 8px;
+}
+.section-l1-label {
+    margin: 8px 0 4px;
+    text-transform: uppercase;
+    color: #888;
 }
 
 /* Method */
+
+.method-l1 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.method-l1-body {
+    /*background-color: rgba(0, 0, 0, 0.15);*/
+}
+.method-l1-label {
+    margin: 8px 0 4px;
+    text-transform: uppercase;
+    color: #888;
+}
+.method-l2 {
+    padding: 4px;
+}
+.method-l2-body {
+    /*background-color: rgba(255, 255, 255, 0.55);*/
+}
+.method-l2-label {
+    margin: 8px 0 4px;
+    text-transform: uppercase;
+    color: #888;
+}
+
+
 .method {
     margin-top: 4px;
     border: 1px solid #888;
@@ -329,7 +355,7 @@ p + p {
 .method-get .method-method-location {
     background-color: #2392F7;
 }
-.method-get .label {
+.method-get .method-l1-label {
     color: #2392F7;
 }
 
@@ -343,7 +369,7 @@ p + p {
 .method-delete .method-method-location {
     background-color: #A41E22;
 }
-.method-delete .label {
+.method-delete .method-l1-label {
     color: #A41E22;
 }
 
@@ -357,7 +383,7 @@ p + p {
 .method-post .method-method-location {
     background-color: #10A54A;
 }
-.method-post .label {
+.method-post .method-l1-label {
     color: #10A54A;
 }
 
@@ -374,8 +400,8 @@ p + p {
 .method-patch .method-method-location {
     background-color: #C5862B;
 }
-.method-put .label,
-.method-patch .label {
+.method-put .method-l1-label,
+.method-patch .method-l1-label {
     color: #C5862B;
 }
 
@@ -387,10 +413,10 @@ p + p {
 }
 
 
+
 /* Request/Response */
 .requests-content,
 .response {
-    padding: 10px;
     border: 1px solid #DDD;
 }
 .response {
@@ -403,11 +429,6 @@ p + p {
     font-size: 15px;
     font-weight: 600;
 }
-.method-sub-label {
-    margin-top: 0;
-    color: #888 !important;
-}
-div + div > .method-sub-label,
 .request + .request {
     margin-top: 24px;
 }

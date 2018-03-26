@@ -1,16 +1,16 @@
-<div ng-if="response.description">
-    <div class="label method-sub-label">Description</div>
-    <p class="description response-description" ng-bind-html="response.description | hapiMarkdown"></p>
+<div class="method-l2" ng-if="response.description">
+    <div class="method-l2-label">Description</div>
+    <div class="method-l2-body description response-description" ng-bind-html="response.description | hapiMarkdown"></div>
 </div>
-<div>
-    <div class="label method-sub-label">Status</div>
-    <p class="description response-status">
+<div class="method-l2">
+    <div class="method-l2-label">Status</div>
+    <div class="method-l2-body description response-status">
         <span ng-bind="response.statusCode"></span>
         <span ng-bind="response.statusMessage"></span>
-    </p>
+    </div>
 </div>
-<div ng-if="response.header && response.header.length">
-    <div class="label method-sub-label">Header</div>
-    <div hapi-parameter-list hapi-scope-model="response.header"></div>
+<div class="method-l2" ng-if="response.header && response.header.length">
+    <div class="method-l2-label">Header</div>
+    <div class="method-l2-body" hapi-parameter-list hapi-scope-model="response.header"></div>
 </div>
-<div hapi-body-list hapi-scope-body-list="response.body" />
+<div class="method-l2" hapi-body-list hapi-scope-body-list="response.body" />
