@@ -13,9 +13,6 @@
             restrict: 'AE'
         };
 
-        var gripWidth = 6;
-        var minMargin = gripWidth;
-
         return directive;
 
         function link(scope, element, attrs) {
@@ -23,6 +20,8 @@
             var sidebar = angular.element('[hapi-sidebar]');
 
             var startX, startWidth;
+            var gripWidth = parseInt($window.getComputedStyle(element[0], null).width);
+            var minMargin = gripWidth;
 
             element.bind('mousedown', initDrag);
 
