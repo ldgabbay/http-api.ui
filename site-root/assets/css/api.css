@@ -17,7 +17,7 @@ body,
     height: 100%;
 }
 html {
-    font-family: Avenir Next,avenir-next-web,Avenir,Helvetica Neue,Hevetica,sans-serif;
+    font-family: Roboto,Helvetica Neue,Hevetica,sans-serif;
     font-size: 14px;
     font-weight: 400;
     color: #434A54;
@@ -80,7 +80,7 @@ p + p {
 }
 
 .monospace-text {
-    font-family: Roboto Mono,Menlo,Monaco,Consolas,Courier New,monospace;
+    font-family: Roboto Mono,Courier New,monospace;
 }
 .toggle-header {
     display: table;
@@ -422,12 +422,19 @@ p + p {
 .description {
     margin-bottom: 0;
 }
+.body-content-type {
+    padding: 4px 0px 4px;
+}
+.body-content-type-value,
 .body-content-type-label {
-    font-size: 15px;
-    font-weight: 600;
+    font-family: Roboto Mono,Courier New,monospace;    
 }
 .request + .request {
     margin-top: 24px;
+}
+
+.response-status {
+    font-family: Roboto Mono,Courier New,monospace;    
 }
 
 /* Parameter Table */
@@ -480,6 +487,9 @@ p + p {
     background-color: #FFF;
     border-top: 1px solid #DDD;
 }
+.expanded {
+    /*padding-bottom: 4px;*/
+}
 .expanded,
 .collapsed {
     position: relative;
@@ -500,7 +510,7 @@ p + p {
     position: absolute;
     top: 0;
     left: 0;
-    font-family: Avenir Next,avenir-next-web,Avenir,Helvetica Neue,Hevetica,sans-serif;
+    font-family: Roboto,Helvetica Neue,Hevetica,sans-serif;
 }
 .expanded:before {
     content: "\25BC";
@@ -521,7 +531,7 @@ p + p {
 }
 .literal-ss {
     color: #009900;
-    font-family: Roboto Mono,Menlo,Monaco,Consolas,Courier New,monospace;
+    font-family: Roboto Mono,Courier New,monospace;
 }
 .primitive-ss {
     color: #009900;
