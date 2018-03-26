@@ -21,7 +21,6 @@
         function link(scope, element, attrs) {
             var content = angular.element('.content');
             var sidebar = angular.element('[hapi-sidebar]');
-            var sidebarContainer = angular.element('.sidebar-container');
 
             var startX, startWidth;
 
@@ -63,7 +62,6 @@
 
                 element.css('left', (newWidth-gripWidth) + 'px');
                 sidebar.css('width', (newWidth) + 'px');
-                sidebarContainer.css('width', (newWidth-gripWidth) + 'px');
                 content.css('margin-left', (newWidth) + 'px');
             }
         }

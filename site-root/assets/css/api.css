@@ -148,9 +148,11 @@ p + p {
 }
 
 /* Sidebar */
-[hapi-sidebar],
-.sidebar-container {
+[hapi-sidebar] {
     width: 294px;
+}
+.sidebar-container {
+    width: inherit;
 }
 [hapi-sidebar] {
     position: relative;
