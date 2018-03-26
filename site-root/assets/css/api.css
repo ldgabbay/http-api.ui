@@ -94,9 +94,6 @@ p + p {
 .toggle-header-subtitle {
     text-align: right;
 }
-.toggle-content {
-    padding-bottom: 8px;
-}
 .toggle-tabs {
     list-style-type: none;
     padding: 0 0 0 5px;
@@ -299,25 +296,30 @@ p + p {
 /* Method */
 
 .method-l1 {
-    margin-top: 10px;
-    margin-bottom: 10px;
+    padding: 12px 4px 4px;
+}
+.method-l1:first-of-type {
+    padding-top: 8px;
 }
 .method-l1-body {
     /*background-color: rgba(0, 0, 0, 0.15);*/
 }
 .method-l1-label {
-    margin: 8px 0 4px;
+    margin-bottom: 4px;
     text-transform: uppercase;
     color: #888;
 }
 .method-l2 {
-    padding: 4px;
+    padding: 12px 0px 0px;
+}
+.method-l2:first-of-type {
+    padding-top: 4px;
 }
 .method-l2-body {
     /*background-color: rgba(255, 255, 255, 0.55);*/
 }
 .method-l2-label {
-    margin: 8px 0 4px;
+    margin-bottom: 4px;
     text-transform: uppercase;
     color: #888;
 }
@@ -338,9 +340,6 @@ p + p {
 }
 .method-summary {
     padding-right: 4px;
-}
-.method-body {
-    padding: 0 4px 4px;
 }
 .method .schema {
     margin: 0;
@@ -408,7 +407,7 @@ p + p {
 
 
 .tab-page {
-    padding: 10px;
+    padding: 4px;  /* DEFINE border padding */
     border: 1px solid #DDD;
     border-top-width: 0;
 }
@@ -416,14 +415,11 @@ p + p {
 
 
 /* Request/Response */
-.requests-content,
-.response {
+.requests-content {
     border: 1px solid #DDD;
+    padding: 4px;  /* DEFINE border padding */
 }
-.response {
-    border-top-width: 0;
-}
-.response .description {
+.description {
     margin-bottom: 0;
 }
 .body-content-type-label {
@@ -636,7 +632,10 @@ table.object-properties tr.marker-row > td {
 .expansion {
     display: block;
     border: 1px solid #CCC;
-    padding: 4px 0px;
+    /*padding: 4px 0px;*/
+    padding: 4px;
+    background-color: rgba(0, 0, 0, 0.05);
+    /* box-shadow: 2px 2px 4px 1px rgba(0, 0, 0, 0.2); */
 }
 [show="showKey"] + [show="showValue"] > div,
 [show="showName"] + [show="showValue"] > div {

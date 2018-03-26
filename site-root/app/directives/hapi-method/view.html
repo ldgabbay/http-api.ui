@@ -8,7 +8,7 @@
         </div><!-- .toggle-header-title -->
         <div class="toggle-header-subtitle method-summary" ng-if="method.summary" ng-bind="method.summary"></div>
     </div><!-- .method-header -->
-    <div class="toggle-content method-body" ng-show="show">
+    <div class="method-body" ng-show="show">
         <div class="method-l1" ng-if="method.description">
             <div class="method-l1-label">Description</div>
             <div class="method-l1-body description method-description" ng-bind-html="method.description | hapiMarkdown"/>
@@ -21,7 +21,15 @@
                         <div class="method-l2-label" ng-bind="pltype"></div>
                         <div class="method-l2-body" hapi-parameter-list hapi-scope-model="pl"></div>
                     </div>
-                    <div class="method-l2" hapi-body-list hapi-scope-body-list="method.request.body" />
+                    <div class="method-l2 body-list" ng-if="method.request.body && method.request.body.length">
+                        <div class="method-l2-label">Body</div>
+                        <div class="method-l2-body">
+                            <ul class="toggle-tabs">
+                                <li class="toggle-tab" ng-repeat="body in method.request.body track by $index" ng-click="selectA($index)" ng-class="{'selected': selectedA === $index}" ng-bind="$index"></li>
+                            </ul>
+                            <div class="tab-page" hapi-body hapi-scope-body="method.request.body[selectedA]"></div>
+                        </div>
+                    </div><!-- .body-list -->
                 </div><!-- .requests-content -->
             </div>
         </div><!-- .requests -->
@@ -29,9 +37,9 @@
             <div class="method-l1-label">Responses</div>
             <div class="method-l1-body">
                 <ul class="toggle-tabs">
-                    <li class="toggle-tab" ng-repeat="response in method.response track by $index" ng-click="select($index)" ng-class="{'selected': selected === $index}" ng-bind="response.name || response.statusMessage || response.statusCode"></li>
+                    <li class="toggle-tab" ng-repeat="response in method.response track by $index" ng-click="selectB($index)" ng-class="{'selected': selectedB === $index}" ng-bind="response.name || response.statusMessage || response.statusCode"></li>
                 </ul>
-                <div class="response" hapi-response hapi-scope-response="method.response[selected]" /><!-- .response -->
+                <div class="tab-page" hapi-response hapi-scope-response="method.response[selectedB]" />
             </div>
         </div><!-- .responses -->
     </div><!-- .method-body -->

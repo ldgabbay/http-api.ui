@@ -26,8 +26,11 @@
             scope.requestHasBody = scope.method.request.body && scope.method.request.body.length;
             scope.isEmpty = !(scope.requestHasPath || scope.requestHasQuery || scope.requestHasHeader || scope.requestHasBody);
 
-            scope.selected = 0;
-            scope.select = function(index) { scope.selected = index; };
+            scope.selectedA = 0;
+            scope.selectA = function(index) { scope.selectedA = index; };
+
+            scope.selectedB = 0;
+            scope.selectB = function(index) { scope.selectedB = index; };
         }
     }
 })();

@@ -3,7 +3,7 @@
     <span ng-if="section.summary" class="content-header2-summary" ng-bind="section.summary"></span>
 </div>
 <div class="section-container">
-    <div class="toggle-content section-body" ng-show="show">
+    <div class="section-body" ng-show="show">
         <div ng-if="section.description">
             <div class="section-l1-label">Description</div>
             <div class="section-l1-body description" ng-bind-html="section.description | hapiMarkdown"></div>
