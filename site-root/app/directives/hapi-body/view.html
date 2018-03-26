@@ -1,6 +1,6 @@
-<div class="description body-content-type" ng-if="body.contentType">
+<!-- <div class="description body-content-type" ng-if="body.contentType">
     <span class="body-content-type-label">Content-Type:</span> <span class="body-content-type-value" ng-bind="body.contentType"></span>
-</div>
+</div> -->
 <div ng-if="body.type === 'json'" ng-init="showInner = true">
     <div hapi-schema-short hapi-scope-model="body.schema" hapi-scope-show="showInner"></div>
     <div hapi-schema-extended hapi-scope-model="body.schema" hapi-scope-show="showInner"></div>

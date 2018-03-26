@@ -17,7 +17,7 @@
     <div class="method-l2-label">Body</div>
     <div class="method-l2-body">
 	    <ul class="toggle-tabs">
-	        <li class="toggle-tab" ng-repeat="body in response.body track by $index" ng-click="select($index)" ng-class="{'selected': selected === $index}" ng-bind="$index"></li>
+	        <li class="toggle-tab" ng-repeat="body in response.body track by $index" ng-click="select($index)" ng-class="{'selected': selected === $index}" ng-bind="body.contentType"></li>
 	    </ul>
 	    <div class="tab-page" hapi-body hapi-scope-body="response.body[selected]"></div>
 	</div>
