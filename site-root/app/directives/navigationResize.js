@@ -20,8 +20,8 @@
 
         function link(scope, element, attrs) {
             var content = angular.element('.content');
-            var navigationOuter = angular.element('.navigation-outer');
-            var navigationMid = angular.element('.navigation-mid');
+            var sidebar = angular.element('[hapi-sidebar]');
+            var sidebarContainer = angular.element('.sidebar-container');
 
             var startX, startWidth;
 
@@ -30,14 +30,14 @@
             angular.element($window).bind('resize', resize);
 
             function resize(e) {
-                var width = parseInt($window.getComputedStyle(navigationOuter[0], null).width);
+                var width = parseInt($window.getComputedStyle(sidebar[0], null).width);
                 setWidth(width);
             }
 
             function initDrag(e) {
                 scope.vm.noselect = true;
                 startX = e.clientX;
-                startWidth = parseInt($window.getComputedStyle(navigationOuter[0], null).width);
+                startWidth = parseInt($window.getComputedStyle(sidebar[0], null).width);
                 $document.bind('mousemove', doDrag);
                 $document.bind('mouseup', stopDrag);
                 scope.$apply();
@@ -62,8 +62,8 @@
                     newWidth = $window.outerWidth - minMargin + gripWidth;
 
                 element.css('left', (newWidth-gripWidth) + 'px');
-                navigationOuter.css('width', (newWidth) + 'px');
-                navigationMid.css('width', (newWidth-gripWidth) + 'px');
+                sidebar.css('width', (newWidth) + 'px');
+                sidebarContainer.css('width', (newWidth-gripWidth) + 'px');
                 content.css('margin-left', (newWidth) + 'px');
             }
         }

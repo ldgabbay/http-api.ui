@@ -9,46 +9,7 @@
     </div><!-- .loading-container -->
 
     <div ng-switch-when="loaded" class="api-container">
-        <div class="navigation-outer">
-            <div class="navigation-mid">
-                <div class="navigation-inner">
-                    <div class="navigation-menu">
-                        <ul>
-                            <li>
-                                <span class="menu-header1" ng-click="vm.scrollTo('api')">API</span>
-                                <ul>
-                                    <li ng-repeat="section in vm.ooSpec.sections">
-                                        <span class="menu-header2" ng-click="vm.scrollTo('api', section.name)" ng-bind="section.name"></span>
-                                        <ul ng-if="section.methods && section.methods.length">
-                                            <li class="menu-entry" ng-repeat="method in section.methods" ng-click="vm.scrollTo('api', section.name, method.tag)">
-                                                <span ng-bind="method.method"></span>
-                                                <span ng-bind="method.location" ng-class="{'is-symbolic': method.location_type.toLowerCase() === 'symbolic'}"></span>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <span class="menu-header1" ng-click="vm.scrollTo('schema')">Schemas</span>
-                                <ul>
-                                    <li ng-repeat="type in vm.schemaTypes">
-                                            <span class="menu-header2" ng-bind="type" ng-click="vm.scrollTo('schema', type)"></span>
-                                            <ul ng-if="vm.ooSpec.schemaTags[type] && vm.ooSpec.schemaTags[type].length">
-                                                <li class="menu-entry" ng-repeat="tag in vm.ooSpec.schemaTags[type]" ng-click="vm.scrollTo('schema', type, tag)">
-                                                    <span ng-bind="tag"></span>
-                                                </li>
-                                            </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div><!-- .navigation-menu -->
-                </div><!-- .navigation-inner -->
-            </div><!-- .navigation-mid -->
-            <div class="navigation-resize-container" navigation-resize>
-                <div class="navigation-resize-icon"></div>
-            </div>
-        </div><!-- .navigation-outer -->
+        <div hapi-sidebar hapi-scope-vm="vm" />
         <div class="content">
             <div class="content-header1" ng-attr-id="{{['api'] | escapeID}}">API</div>
             <div ng-repeat="section in vm.ooSpec.sections" hapi-section hapi-scope-section="section"></div>

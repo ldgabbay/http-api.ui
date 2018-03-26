@@ -1,0 +1,36 @@
+<div class="sidebar-container">
+    <div class="sidebar-body">
+        <ul>
+            <li>
+                <span class="menu-header1" ng-click="vm.scrollTo('api')">API</span>
+                <ul>
+                    <li ng-repeat="section in vm.ooSpec.sections">
+                        <span class="menu-header2" ng-click="vm.scrollTo('api', section.name)" ng-bind="section.name"></span>
+                        <ul ng-if="section.methods && section.methods.length">
+                            <li class="menu-entry" ng-repeat="method in section.methods" ng-click="vm.scrollTo('api', section.name, method.tag)">
+                                <span ng-bind="method.method"></span>
+                                <span ng-bind="method.location" ng-class="{'is-symbolic': method.location_type.toLowerCase() === 'symbolic'}"></span>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <span class="menu-header1" ng-click="vm.scrollTo('schema')">Schemas</span>
+                <ul>
+                    <li ng-repeat="type in vm.schemaTypes">
+                            <span class="menu-header2" ng-bind="type" ng-click="vm.scrollTo('schema', type)"></span>
+                            <ul ng-if="vm.ooSpec.schemaTags[type] && vm.ooSpec.schemaTags[type].length">
+                                <li class="menu-entry" ng-repeat="tag in vm.ooSpec.schemaTags[type]" ng-click="vm.scrollTo('schema', type, tag)">
+                                    <span ng-bind="tag"></span>
+                                </li>
+                            </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div><!-- .sidebar-body -->
+</div><!-- .sidebar-container -->
+<div class="navigation-resize-container" navigation-resize>
+    <div class="navigation-resize-icon"></div>
+</div>
