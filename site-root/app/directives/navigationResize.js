@@ -60,9 +60,10 @@
                 if (newWidth > $window.outerWidth - minMargin + gripWidth)
                     newWidth = $window.outerWidth - minMargin + gripWidth;
 
-                element.css('left', (newWidth-gripWidth) + 'px');
-                sidebar.css('width', (newWidth) + 'px');
-                content.css('margin-left', (newWidth) + 'px');
+                newWidth = newWidth + 'px'
+
+                sidebar.css('width', newWidth);
+                content.css('margin-left', newWidth);
             }
         }
     }

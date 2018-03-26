@@ -149,21 +149,19 @@ p + p {
 
 /* Sidebar */
 [hapi-sidebar] {
-    width: 294px;
-}
-.sidebar-container {
-    width: inherit;
-}
-[hapi-sidebar] {
-    position: relative;
-    float: left;
-    /*padding: 20px;*/
-}
-.sidebar-container {
+    width: 300px;  /* DEFINE initial width of sidebar */
     position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
+    overflow: hidden;
+}
+.sidebar-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 6px;  /* DEFINE width of grip */
     overflow-y: scroll;
     background-color: #4A4A4A;
     z-index: 1;
@@ -191,6 +189,40 @@ p + p {
     width: 100%;
     overflow: hidden;
 }
+.sidebar-grip {
+    position: absolute;
+    background: #333;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 6px;  /* DEFINE width of grip */
+    cursor: col-resize;
+    z-index: 2;
+}
+.sidebar-grip-icon,
+.sidebar-grip-icon:before,
+.sidebar-grip-icon:after {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background: #FFF;
+}
+.sidebar-grip-icon {
+    top: 50%;
+    margin: -2px 2px 0;
+}
+.sidebar-grip-icon:before,
+.sidebar-grip-icon:after {
+    content: "";
+    display: inline-block;
+}
+.sidebar-grip-icon:before {
+    top: -6px;
+}
+.sidebar-grip-icon:after {
+    bottom: -6px;
+}
 
 
 .menu-header1,
@@ -217,45 +249,10 @@ p + p {
 }
 .content {
     width: auto;
-    margin-left: 300px;
+    margin-left: 300px;  /* DEFINE initial width of sidebar */
     padding: 0px 20px;
     margin-top: 20px;
     margin-bottom: 40px;
-}
-
-.navigation-resize-container {
-    background: #333;
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 294px;
-    width: 6px;
-    cursor: col-resize;
-    z-index: 2;
-}
-.navigation-resize-icon,
-.navigation-resize-icon:before,
-.navigation-resize-icon:after {
-    position: absolute;
-    width: 2px;
-    height: 2px;
-    border-radius: 50%;
-    background: #FFF;
-}
-.navigation-resize-icon {
-    top: 50%;
-    margin: -2px 2px 0;
-}
-.navigation-resize-icon:before,
-.navigation-resize-icon:after {
-    content: "";
-    display: inline-block;
-}
-.navigation-resize-icon:before {
-    top: -6px;
-}
-.navigation-resize-icon:after {
-    bottom: -6px;
 }
 
 /* Content Headers */
