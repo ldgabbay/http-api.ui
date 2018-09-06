@@ -1,3 +1,9 @@
+code,
+kbd,
+samp {
+  font-family: Roboto Mono,Courier New,monospace;
+}
+
 /* Reset */
 [ng\:cloak],
 [ng-cloak],
