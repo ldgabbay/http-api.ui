@@ -650,7 +650,7 @@ table.object-properties tr.marker-row > td {
     border: 1px solid #CCC;
     /*padding: 4px 0px;*/
     padding: 4px;
-    background-color: rgba(0, 0, 0, 0.05);
+    background-color: rgba(0, 0, 0, 0.025);
     /* box-shadow: 2px 2px 4px 1px rgba(0, 0, 0, 0.2); */
 }
 [show="showKey"] + [show="showValue"] > div,
