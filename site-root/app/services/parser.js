@@ -70,6 +70,13 @@
                 obj.isExpandable = true;
                 obj.extendedView = 'app/directives/hapi-schema-extended/one-of-js.html';
             },
+            exitLiteralJS: function(obj) {
+                obj.shortTextClass = 'literal-js';
+                obj.shortText = JSON.stringify(obj.value);
+                
+                obj.isExpandable = false;
+                obj.extendedView = null;
+            },
             exitNullJS: function(obj) {
                 obj.shortTextClass = 'primitive-js';
                 obj.shortText = 'null';

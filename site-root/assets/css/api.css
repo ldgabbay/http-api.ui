@@ -526,6 +526,11 @@ p + p {
     content: "\25B6";
     font-size: 7px;
 }
+.literal-js {
+    color: #003fff;
+    font-weight: 600;
+    font-family: Roboto Mono,Courier New,monospace;
+}
 .primitive-js {
     color: #c90000;
     font-weight: 600;
@@ -536,7 +541,8 @@ p + p {
     font-style: italic;
 }
 .literal-ss {
-    color: #009900;
+    color: #003fff;
+    font-weight: 600;
     font-family: Roboto Mono,Courier New,monospace;
 }
 .primitive-ss {
