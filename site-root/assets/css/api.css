@@ -170,6 +170,24 @@ p + p {
     background-color: #4A4A4A;
     z-index: 1;
 }
+
+/* fixes unreliable scrollbar rendering, still not on firefox */
+/* https://css-tricks.com/custom-scrollbars-in-webkit/ */
+.sidebar-container::-webkit-scrollbar {
+    width: 0.5em;
+}
+
+.sidebar-container::-webkit-scrollbar-track-piece {
+    background-color: rgba(0,0,0,0.3);
+}
+ 
+.sidebar-container::-webkit-scrollbar-thumb {
+    background-color: rgba(255,255,255,0.5);
+    -webkit-border-radius:0.25em;
+    border-radius:0.25em;
+}
+
+
 .sidebar-body {
     padding: 20px;
 }
