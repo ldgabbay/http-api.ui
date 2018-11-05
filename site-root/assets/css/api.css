@@ -165,6 +165,7 @@ p + p {
     bottom: 0;
     left: 0;
     right: 6px;  /* DEFINE width of grip */
+    overflow-x: hidden;
     overflow-y: scroll;
     background-color: #4A4A4A;
     z-index: 1;
