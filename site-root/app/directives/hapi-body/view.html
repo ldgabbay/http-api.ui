@@ -2,7 +2,39 @@
     <span class="body-content-type-label">Content-Type:</span> <span class="body-content-type-value" ng-bind="body.contentType"></span>
 </div> -->
 <div ng-if="body.type === 'json'" ng-init="showInner = true">
+    
+    <div ng-if="body.description">
+        <span ng-bind-html="body.description | hapiMarkdown"></span>
+    </div>
+    
     <div hapi-schema-short hapi-scope-model="body.schema" hapi-scope-show="showInner"></div>
     <div hapi-schema-extended hapi-scope-model="body.schema" hapi-scope-show="showInner"></div>
+
+<!-- 
+    <table class="object-properties">
+        <thead>
+            <tr>
+                <th>Value</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="object-property">
+                <td>
+                    <div hapi-schema-short hapi-scope-model="body.schema" hapi-scope-show="showInner"></div>
+                </td>
+                <td>
+                    <span ng-bind-html="body.description | hapiMarkdown"></span>
+                </td>
+            </tr>
+            <tr ng-if="(showInner && body.schema.isExpandable)">
+                <td colspan="2">
+                    <div hapi-schema-extended hapi-scope-model="body.schema" hapi-scope-show="showInner"></div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+ -->
+
 </div>
 <div ng-if="body.type === 'form'" hapi-parameter-list hapi-scope-model="body.parameters"></div>
