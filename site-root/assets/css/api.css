@@ -277,6 +277,10 @@ p + p {
     margin-bottom: 40px;
 }
 
+.clickable {
+    cursor: pointer;
+}
+
 /* Content Headers */
 .content-header1 {
     font-size: 24px;
