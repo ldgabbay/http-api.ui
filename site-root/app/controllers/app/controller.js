@@ -30,6 +30,8 @@
         vm.specUrl = null;
         vm.schemaTypes = ['string', 'json'];
         vm.scrollTo = scrollTo;
+        vm.errorMessage = '';
+        vm.errorDetails = '';
 
         activate();
 
@@ -46,8 +48,9 @@
             vm.specUrl = $stateParams.src;
 
             if (!vm.specUrl) {
-                alert('Please specify API spec URL.');
-                $state.go('error');
+                vm.errorMessage = 'Please specify API spec URL.';
+                vm.errorDetails = '';
+                vm.appState = 'error';
             } else {
                 getApiSpecificicationJson(vm.specUrl);                
             }
@@ -68,8 +71,8 @@
                     }
                     catch(e) {
                         if (e instanceof Parser.ParseError) {
-                            alert('An error occurred while parsing API specifications from ' + url + '\n' + e.message);
-                            $state.go('error');
+                            vm.errorMessage = 'An error occurred while parsing API specifications from ' + url;
+                            vm.errorDetails = e.message;
                             vm.appState = 'error';
                         }
                     }
@@ -81,8 +84,8 @@
                     scrollTo(h1, h2, h3);
 
                 }, function(response) {
-                    alert('An error occurred while retrieving API specifications from ' + url);
-                    $state.go('error');
+                    vm.errorMessage = 'An error occurred while retrieving API specifications from ' + url;
+                    vm.errorDetails = '';
                     vm.appState = 'error';
                 })
                 // ['finally'](function() {

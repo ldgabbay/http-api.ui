@@ -27,4 +27,9 @@
         </div><!-- .content -->
     </div><!-- .api-container -->
 
+    <div ng-switch-when="error" class="error-container">
+        <div class="error-message" ng-bind="vm.errorMessage"></div>
+        <div class="error-details" ng-bind="vm.errorDetails"></div>
+    </div><!-- .error-container -->
+
 </div>

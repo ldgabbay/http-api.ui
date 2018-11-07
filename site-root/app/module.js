@@ -12,12 +12,6 @@
         $urlRouterProvider.otherwise('/');
 
         $stateProvider
-            .state('error', {
-                url: '/error',
-                templateUrl: 'app/controllers/error/view.html',
-                controller: 'errorController',
-                controllerAs: 'vm'
-            })
             .state('apiDeeplink3', {
                 url: '/:h1/:h2/:h3?src',
                 templateUrl: 'app/controllers/app/view.html',
