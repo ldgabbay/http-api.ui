@@ -19,12 +19,12 @@
                 <span class="menu-header1" ng-click="vm.scrollTo('schema')">Schemas</span>
                 <ul>
                     <li ng-repeat="type in vm.schemaTypes">
-                            <span class="menu-header2" ng-bind="type" ng-click="vm.scrollTo('schema', type)"></span>
-                            <ul ng-if="vm.ooSpec.schemaTags[type] && vm.ooSpec.schemaTags[type].length">
-                                <li class="menu-entry" ng-repeat="tag in vm.ooSpec.schemaTags[type]" ng-click="vm.scrollTo('schema', type, tag)">
-                                    <span ng-bind="tag"></span>
-                                </li>
-                            </ul>
+                        <span class="menu-header2" ng-bind="type" ng-click="vm.scrollTo('schema', type)"></span>
+                        <ul ng-if="vm.ooSpec.schemaTags[type] && vm.ooSpec.schemaTags[type].length">
+                            <li class="menu-entry" ng-repeat="tag in vm.ooSpec.schemaTags[type]" ng-click="vm.scrollTo('schema', type, tag)">
+                                <span ng-bind="tag"></span>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </li>
