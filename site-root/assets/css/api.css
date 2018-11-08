@@ -516,6 +516,7 @@ p + p {
     background-color: #FFF;
     border-top: 1px solid #DDD;
 }
+
 .expanded {
     /*padding-bottom: 4px;*/
 }
@@ -528,27 +529,26 @@ p + p {
 .expanded,
 .collapsed,
 .not-expandable {
-    padding-left: 0.6em;
+    padding-left: 0.65em;
 }
 .expanded:before,
 .collapsed:before {
-    display: block;
-    height: 14px;
-    line-height: 17px;
-    text-align: center;
     position: absolute;
-    top: 0;
-    left: 0;
-    font-family: Roboto,Helvetica Neue,Hevetica,sans-serif;
+    content: '';
+    left: 0em;
+    background-size: 0.5em 0.5em;
+    width: 0.5em;
+    height: 1em;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 .expanded:before {
-    content: "\25BC";
-    font-size: 8px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22%3E%3Cpath fill=%22%23000000%22 d=%22M1%2C21H23L12%2C2%22 transform=%22rotate%28180%2C12%2C12%29%22/%3E%3C/svg%3E");
 }
 .collapsed:before {
-    content: "\25B6";
-    font-size: 7px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22%3E%3Cpath fill=%22%23000000%22 d=%22M1%2C21H23L12%2C2%22 transform=%22rotate%2890%2C12%2C12%29%22/%3E%3C/svg%3E");
 }
+
 .literal-js {
     color: #003fff;
     font-weight: 600;
