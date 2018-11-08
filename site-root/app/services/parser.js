@@ -30,11 +30,9 @@
 
                 if (obj.description || obj.criteria || obj.examples) {
                     obj.isExpandable = true;
-                    obj.shortText = 'string';
                     obj.extendedView = 'app/directives/hapi-schema-extended/general-ss.html';
                 } else {
                     obj.isExpandable = false;
-                    obj.shortText = 'string';
                     obj.extendedView = null;
                 }
             },
