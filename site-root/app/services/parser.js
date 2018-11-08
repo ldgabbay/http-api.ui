@@ -66,7 +66,7 @@
             exitStringReferenceJS: function(obj) {
                 obj.refObj = this.hapi.schemas.string[obj.sref];
 
-                obj.shortTextClass = 'reference-js';
+                obj.shortTextClass = 'reference-ss';
                 obj.shortText = obj.sref;
 
                 obj.isExpandable = true;
