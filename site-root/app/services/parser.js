@@ -63,6 +63,15 @@
                 obj.isExpandable = true;
                 obj.extendedView = 'app/directives/hapi-schema-extended/reference-js.html';
             },
+            exitStringReferenceJS: function(obj) {
+                obj.refObj = this.hapi.schemas.string[obj.sref];
+
+                obj.shortTextClass = 'reference-js';
+                obj.shortText = obj.sref;
+
+                obj.isExpandable = true;
+                obj.extendedView = 'app/directives/hapi-schema-extended/reference-ss.html';
+            },
             exitOneOfJS: function(obj) {
                 obj.shortTextClass = 'primitive-js';
                 obj.shortText = 'oneOf';
