@@ -5,9 +5,9 @@
                 <span class="menu-header1" ng-click="vm.scrollTo('api')">API</span>
                 <ul>
                     <li ng-repeat="section in vm.ooSpec.sections">
-                        <span class="menu-header2" ng-click="vm.scrollTo('api', section.name)" ng-bind="section.name"></span>
+                        <span class="menu-header2" ng-click="vm.scrollTo('api', section.index)" ng-bind="section.name"></span>
                         <ul ng-if="section.methods && section.methods.length">
-                            <li class="menu-entry" ng-repeat="method in section.methods" ng-click="vm.scrollTo('api', section.name, method.tag)">
+                            <li class="menu-entry" ng-repeat="method in section.methods" ng-click="vm.scrollTo('api', section.index, method.tag)">
                                 <span ng-bind="method.method"></span>
                                 <span ng-bind="method.location" ng-class="{'is-symbolic': method.location_type.toLowerCase() === 'symbolic'}"></span>
                             </li>

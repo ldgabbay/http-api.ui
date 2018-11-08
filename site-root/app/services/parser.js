@@ -183,6 +183,10 @@
                     json: Object.getOwnPropertyNames(obj.schemas.json).sort(),
                 };
 
+                for(var i in obj.sections) {
+                    obj.sections[i].index = i;
+                }
+
                 for(var key in obj.methods) {
                     if(obj.methods.hasOwnProperty(key)) {
                         obj.methods[key].tag = key;
