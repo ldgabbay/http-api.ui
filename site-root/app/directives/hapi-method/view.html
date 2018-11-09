@@ -8,12 +8,12 @@
         </div><!-- .toggle-header-title -->
         <div class="toggle-header-subtitle method-summary" ng-if="method.summary" ng-bind="method.summary"></div>
     </div><!-- .method-header -->
-    <div class="method-body" ng-show="show">
+    <div class="method-body" ng-show="show || !collapsible">
         <div class="method-l1" ng-if="method.description">
             <div class="method-l1-label">Description</div>
             <div class="method-l1-body description method-description" ng-bind-html="method.description | hapiMarkdown"/>
         </div>
-        <div class="method-l1 requests" ng-if="!isEmpty">
+        <div class="method-l1 requests" ng-if="method.hasRequest">
             <div class="method-l1-label">Request</div>
             <div class="method-l1-body">
                 <div class="requests-content">

@@ -17,6 +17,13 @@
                     return self.hapi.methods[tag];
                 });
             },
+            exitMethod: function(obj) {
+                var requestHasPath = obj.request.path && obj.request.path.length;
+                var requestHasQuery = obj.request.query && obj.request.query.length;
+                var requestHasHeader = obj.request.header && obj.request.header.length;
+                var requestHasBody = obj.request.body && obj.request.body.length;
+                obj.hasRequest = (requestHasPath || requestHasQuery || requestHasHeader || requestHasBody);
+            },
             exitLiteralSS: function(obj) {
                 obj.shortTextClass = 'literal-ss';
                 obj.shortText = JSON.stringify(obj.value);

@@ -12,7 +12,8 @@
             templateUrl: 'app/directives/hapi-method/view.html',
             scope: {
                 section: "<hapiScopeSection",
-                method: "<hapiScopeMethod"
+                method: "<hapiScopeMethod",
+                collapsible: "<hapiScopeCollapsible"
             }
         };
 
@@ -20,17 +21,14 @@
 
         function link(scope, iElement, iAttrs, controller, transcludeFn) {
             scope.requestParameterListTypes = ['path', 'query', 'header'];
-            scope.requestHasPath = scope.method.request.path && scope.method.request.path.length;
-            scope.requestHasQuery = scope.method.request.query && scope.method.request.query.length;
-            scope.requestHasHeader = scope.method.request.header && scope.method.request.header.length;
-            scope.requestHasBody = scope.method.request.body && scope.method.request.body.length;
-            scope.isEmpty = !(scope.requestHasPath || scope.requestHasQuery || scope.requestHasHeader || scope.requestHasBody);
 
-            scope.selectedA = 0;
             scope.selectA = function(index) { scope.selectedA = index; };
-
-            scope.selectedB = 0;
             scope.selectB = function(index) { scope.selectedB = index; };
+
+            scope.$watch('method', function(oldVal, newVal) {
+                scope.selectedA = 0;
+                scope.selectedB = 0;
+            });
         }
     }
 })();

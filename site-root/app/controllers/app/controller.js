@@ -5,9 +5,9 @@
         .module('app')
         .controller('appController', appController);
 
-    appController.$inject = ['$anchorScroll', '$scope', '$state', '$stateParams', '$interval', '$timeout', '$filter', 'api', 'Parser'];
+    appController.$inject = ['$window', '$anchorScroll', '$scope', '$state', '$stateParams', '$interval', '$timeout', '$filter', 'api', 'Parser'];
 
-    function appController($anchorScroll, $scope, $state, $stateParams, $interval, $timeout, $filter, api, Parser) {
+    function appController($window, $anchorScroll, $scope, $state, $stateParams, $interval, $timeout, $filter, api, Parser) {
         var vm = this;
         var options = {
             apiContainerSelector: '.api-container',
@@ -26,6 +26,7 @@
         vm.noselect = false;
         vm.hideSchemas = false;
         vm.appState = 'none';
+        vm.contentState = 'original';
         vm.ooSpec = null;
         vm.specUrl = null;
         vm.schemaTypes = ['string', 'json'];
@@ -103,7 +104,19 @@
                     h3: h3
                 }, options.stateChangeOptionsWithOverride);
 
-                scrollToID($filter('escapeID')([h1, h2, h3]));
+                if (h1 === "api") {
+                    vm.content = {
+                        section: vm.ooSpec.sections[h2],
+                        method: vm.ooSpec.methods[h3]
+                    };
+                    vm.contentState = 'api-method';
+                } else if (h1 === "schema") {
+                    vm.content = {
+                        schemaTag: h3,
+                        schema: vm.ooSpec.schemas[h2][h3]
+                    };
+                    vm.contentState = 'schemas-schema';
+                }
             } else if (h2) {
                 $state.go('apiDeeplink2', {
                     src: vm.specUrl,
@@ -111,21 +124,39 @@
                     h2: h2
                 }, options.stateChangeOptionsWithOverride);
 
-                scrollToID($filter('escapeID')([h1, h2]));
+                if (h1 === "api") {
+                    vm.content = {
+                        section: vm.ooSpec.sections[h2]
+                    };
+                    vm.contentState = 'api-section';
+                } else if (h1 === "schema") {
+                    vm.content = {
+                        schemaGroup: h2
+                    };
+                    vm.contentState = 'schemas-group';
+                }
             } else if (h1) {
                 $state.go('apiDeeplink1', {
                     src: vm.specUrl,
                     h1: h1
                 }, options.stateChangeOptionsWithOverride);
 
-                scrollToID($filter('escapeID')(h1));
+                if (h1 === "api") {
+                    vm.content = null;
+                    vm.contentState = 'api';
+                } else if (h1 === "schema") {
+                    vm.content = null;
+                    vm.contentState = 'schemas';
+                }
             } else {
                 $state.go('apiDeeplink0', {
                     src: vm.specUrl
                 }, options.stateChangeOptionsWithOverride);
 
-                scrollToID($filter('escapeID')('api'));
+                vm.content = null;
+                vm.contentState = 'api';
             }
+            $window.scrollTo(0, 0);
         }
 
         function scrollToID(tag, period) {

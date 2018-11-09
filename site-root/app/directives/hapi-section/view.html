@@ -8,6 +8,6 @@
             <div class="section-l1-label">Description</div>
             <div class="section-l1-body description" ng-bind-html="section.description | hapiMarkdown"></div>
         </div>
-        <div ng-repeat="method in section.methods" hapi-method hapi-scope-section="section" hapi-scope-method="method" />
+        <div ng-repeat="method in section.methods" hapi-method hapi-scope-section="section" hapi-scope-method="method" hapi-scope-collapsible="true"/>
     </div><!-- .section-body -->
 </div><!-- .section-container -->
