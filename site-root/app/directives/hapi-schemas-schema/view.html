@@ -1,0 +1,9 @@
+<div class="schema-container" ng-init="show = false">
+    <span ng-class="{'header-expanded': show, 'header-collapsed': !show}" ng-click="show = !show" ng-bind="tag"></span>
+    <div ng-if="show || !collapsible">
+        <span ng-init="showInner = true">
+            <div hapi-schema-short hapi-scope-model="schema" hapi-scope-show="showInner"></div>
+            <div hapi-schema-extended hapi-scope-model="schema" hapi-scope-show="showInner"></div>
+        </span>
+    </div>
+</div>

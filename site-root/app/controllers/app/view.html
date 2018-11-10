@@ -56,15 +56,7 @@
 
 
             <div ng-switch-when="schemas-schema">
-                <div class="schema-container">
-                    <span class="header-expanded" ng-bind="vm.content.schemaTag"></span>
-                    <div>
-                        <span>
-                            <div hapi-schema-short hapi-scope-model="vm.content.schema" hapi-scope-show="true"></div>
-                            <div hapi-schema-extended hapi-scope-model="vm.content.schema" hapi-scope-show="true"></div>
-                        </span>
-                    </div>
-                </div>
+                <div hapi-schemas-schema hapi-scope-tag="vm.content.schemaTag" hapi-scope-schema="vm.content.schema" hapi-scope-collapsible="false"></div>
             </div>
 
         </div><!-- .content -->
