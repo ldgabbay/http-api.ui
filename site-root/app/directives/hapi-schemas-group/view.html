@@ -1,0 +1,10 @@
+<div class="content-header2" ng-bind="type"></div>
+<div class="schema-container" ng-repeat="tag in vm.ooSpec.schemaTags[type]" ng-init="show = false; schema = vm.ooSpec.schemas[type][tag]">
+    <span ng-class="{'header-expanded': show, 'header-collapsed': !show}" ng-click="show = !show" ng-bind="tag"></span>
+    <div ng-if="show">
+        <span ng-init="showInner = true">
+            <div hapi-schema-short hapi-scope-model="schema" hapi-scope-show="showInner"></div>
+            <div hapi-schema-extended hapi-scope-model="schema" hapi-scope-show="showInner"></div>
+        </span>
+    </div>
+</div>
