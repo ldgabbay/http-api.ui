@@ -1,7 +1,7 @@
 code,
 kbd,
 samp {
-  font-family: Roboto Mono,Courier New,monospace;
+  font-family: Roboto Mono,monospace;
 }
 
 /* Reset */
@@ -23,7 +23,7 @@ body,
     height: 100%;
 }
 html {
-    font-family: Roboto,Helvetica Neue,Hevetica,sans-serif;
+    font-family: Roboto,sans-serif;
     font-size: 14px;
     font-weight: 400;
     color: #434A54;
@@ -86,7 +86,7 @@ p + p {
 }
 
 .monospace-text {
-    font-family: Roboto Mono,Courier New,monospace;
+    font-family: Roboto Mono,monospace;
 }
 .toggle-header {
     display: table;
@@ -130,7 +130,7 @@ p + p {
     background-color: #FFF;
 }
 .toggle-tab.selected {
-    font-weight: 600;
+    font-weight: 700;
     cursor: default;
 }
 .toggle-tab.selected:after {
@@ -456,14 +456,14 @@ p + p {
 }
 .body-content-type-value,
 .body-content-type-label {
-    font-family: Roboto Mono,Courier New,monospace;    
+    font-family: Roboto Mono,monospace;    
 }
 .request + .request {
     margin-top: 24px;
 }
 
 .response-status {
-    font-family: Roboto Mono,Courier New,monospace;    
+    font-family: Roboto Mono,monospace;    
 }
 
 /* Parameter Table */
@@ -471,7 +471,7 @@ p + p {
     font-size: 14px;
 }
 .list-container:before {
-    font-weight: 600;
+    font-weight: 700;
 }
 .list-container li {
     word-wrap: break-word;
@@ -549,34 +549,31 @@ p + p {
     background-image: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22%3E%3Cpath fill=%22%23000000%22 d=%22M1%2C21H23L12%2C2%22 transform=%22rotate%2890%2C12%2C12%29%22/%3E%3C/svg%3E");
 }
 
-.literal-js {
-    color: #003fff;
-    font-weight: 600;
-    font-family: Roboto Mono,Courier New,monospace;
+.literal-js,
+.literal-ss {
+    /*color: #003fff;*/
+    color: #3f3f3f;
+    font-weight: 700;
+    font-family: Roboto Mono,monospace;
 }
-.primitive-js {
-    color: #c90000;
-    font-weight: 600;
-}
+
+.primitive-js,
 .reference-js {
     color: #c90000;
-    font-weight: 600;
-    font-style: italic;
+    font-weight: 700;
 }
-.literal-ss {
-    color: #003fff;
-    font-weight: 600;
-    font-family: Roboto Mono,Courier New,monospace;
-}
-.primitive-ss {
-    color: #009900;
-    font-weight: 600;
-}
+
+.primitive-ss,
 .reference-ss {
     color: #009900;
-    font-weight: 600;
+    font-weight: 700;
+}
+
+.reference-js,
+.reference-ss {
     font-style: italic;
 }
+
 .is-symbolic {
     font-style: italic;
 }
@@ -616,7 +613,7 @@ table.parameters > thead,
 table.array-items > thead,
 table.object-properties > thead {
     background-color: #F8F8F8;
-    font-weight: 600;
+    font-weight: 700;
 }
 table.parameters > thead > tr > th,
 table.array-items > thead > tr > th,
