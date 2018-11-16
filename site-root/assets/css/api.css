@@ -552,7 +552,7 @@ p + p {
 .literal-js,
 .literal-ss {
     /*color: #003fff;*/
-    color: #3f3f3f;
+    color: #000000;
     font-weight: 700;
     font-family: Roboto Mono,monospace;
 }
