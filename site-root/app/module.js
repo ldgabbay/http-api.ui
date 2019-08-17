@@ -5,11 +5,12 @@
         .module('app', ['ui.router'])
         .config(config);
 
-    config.$inject = ['$compileProvider', '$stateProvider', '$urlRouterProvider'];
+    config.$inject = ['$compileProvider', '$stateProvider', '$urlRouterProvider', '$locationProvider'];
 
-    function config($compileProvider, $stateProvider, $urlRouterProvider) {
+    function config($compileProvider, $stateProvider, $urlRouterProvider, $locationProvider) {
         $compileProvider.debugInfoEnabled(false);
         $urlRouterProvider.otherwise('/');
+        $locationProvider.hashPrefix('');
 
         $stateProvider
             .state('apiDeeplink3', {
