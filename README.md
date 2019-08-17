@@ -10,6 +10,13 @@ This UI can be hosted statically, as it pulls the API from a query string parame
 The URL can be relative to the site root or absolute.
 
 
+```bash
+npm run local
+```
+
+View the locally hosted code at [http://localhost:8000/](http://localhost:8000/).
+
+
 ## External Dependencies
 
 * JQuery 3.1.1
