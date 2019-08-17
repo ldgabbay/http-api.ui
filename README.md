@@ -14,4 +14,4 @@ The URL can be relative to the site root or absolute.
 npm run local
 ```
 
-View the locally hosted code at [http://localhost:8000/](http://localhost:8000/).
+View the locally hosted code at [http://localhost:8080/](http://localhost:8080/).
