@@ -1,3 +1,0 @@
-[submodule "http-api.specification-standard"]
-	path = specification-standard
-	url = git@github.com:ldgabbay/http-api.specification-standard.git

@@ -1,1 +1,1 @@
-../../../specification-standard/hapi.js
+../../../node_modules/@ldgabbay/http-api.specification-standard/dist/hapi.js

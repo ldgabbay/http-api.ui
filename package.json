@@ -11,6 +11,7 @@
 		"jquery": "3.x",
 		"normalize.css": "*",
 		"showdown": "*",
+		"@ldgabbay/http-api.specification-standard": "1.9.0",
 		"local-web-server": "*"
 	},
 	"scripts": {
